@@ -7,15 +7,32 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{tcolorbox}
-\usepackage{enumitem}
+\usepackage[shortlabels]{enumitem}
+\usepackage{ifthen}
+\usepackage{xcolor}
+
+% change this value to produce answer keys for exams
+\newboolean{make_key}
+\setboolean{make_key}{true}
+
+% set first level of numbering to be letters instead of numbers
+%\setenumerate[1]{label=\alph*.}
 
 % declarations for the different parts of the exam
-\newtcolorbox{instructionbox}{colback=gray!25!white, colframe=black!50!white, boxrule=0.4pt, arc=0pt}
+\newtcolorbox{instructionbox}{
+	colback = gray!25!white, 
+	colframe = black!50!white, 
+	boxrule = 0.4pt, 
+	arc = 0pt
+}
+
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \newcommand{\newquestion}{\vspace{4mm} \noindent}
+\newcommand{\iskey}[1]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{}}
 
 \begin{document}
 
+% remove default page numbers
 \pagestyle{empty}
 
 % show the title information and student name
@@ -23,40 +40,44 @@
 
 % show the instructions for the exam
 \begin{instructionbox}
-\textbf{Instructions:} You are permitted the use of a formula sheet that you create, which may contain formulas or hints as to where to find items in your calculator, but no worked out examples. You may use any calculator you like, including the online Stats Calculator, but may not use any apps on your phone for computations.
+    \textbf{Instructions:} You are permitted the use of a formula sheet that you 
+    create, which may contain formulas or hints as to where to find items in your 
+    calculator, but no worked out examples. You may use any calculator you like, 
+    including the online Stats Calculator, but may not use any apps on your phone 
+    for computations.
 \end{instructionbox}
 
 \raggedright
 
 \newquestion 
-1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a@) = @c@$ and
-$P(X < @b@) = @d@$, then:\vspace{4mm}
-
-a. $P(X > @a@) =$ \vspace{4mm}
-
-b. $P(X > @b@) =$ \vspace{4mm}
-
-c. $P(@a@ < X < @b@) =$ \vspace{4mm}
+1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a1@) = @c1@$ 
+and $P(X < @b1@) = @d1@$, then:\\[4mm]
+\begin{enumerate}[a.]
+    \item $P(X > @a1@) =$ \iskey{$1 - @c1@ = @sol_1a@$} \\[4mm]
+    \item $P(X > @b1@) =$
+    \item $P(@a1@ < X < @b1@) =$
+\end{enumerate}
 
 \newquestion
-2. (4 pts) Given the uniform distribution below, find the probability of the shaded
-region. Give your answer as a decimal or fraction.\vspace{4mm}
+2. (4 pts) Given the uniform distribution below, find the probability of the 
+shaded region. Give your answer as a decimal or fraction.\vspace{4mm}
 %\begin{center}
 %	\includegraphics[width=4.125in,height=1.79167in]{media/image1.png}
 %\end{center}
 
 \newquestion
-3. (6 pts) Evaluate the following probabilities based on the standard normal
-distribution. Round all answers to at least three decimal places.\vspace{4mm}
-
-a. \(P(z < - 2.28) =\) \vspace{4mm}
-
-b. \(P(z > - 0.62) =\) \vspace{4mm}
-
-c. \(P( - 0.97 < z < 2.3) =\) \vspace{4mm}
+3. (6 pts) Evaluate the following probabilities based on the standard normal 
+distribution. Round all answers to at least three decimal places.\\[4mm]
+\begin{enumerate}[a.]
+    \item \(P(z < -2.28) =\) 
+    \item \(P(z > -0.62) =\) 
+    \item \(P( -0.97 < z < 2.3) =\)
+\end{enumerate}
 
 \newquestion
-4. (4 pts) Find the area of the shaded region under the standard normal distribution between the given z-scores. Round your answer to three decimal places. \vspace{4mm}
+4. (4 pts) Find the area of the shaded region under the standard normal 
+distribution between the given z-scores. Round your answer to three decimal 
+places. \vspace{4mm}
 %\begin{center}
 %	\includegraphics[width=4.16667in,height=1.5625in]{media/image2.png}\\
 %\end{center}
@@ -161,7 +182,8 @@ $P(\bar{X} > 240.3) = $
 
 \end{document}
 
-a = rand(2, 8)
-b = rand(10, 20)
-c = rrand(0.20, 0.40, 0.01)
-d = rrand(0.60, 0.80, 0.01)
+a1 = rand(2, 8)
+b1 = rand(10, 20)
+c1 = rrand(0.20, 0.40, 0.01)
+d1 = rrand(0.60, 0.80, 0.01)
+sol_1a = round(1 - c1, 2)

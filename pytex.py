@@ -88,7 +88,7 @@ for i in range(0, eod):
         data[i] = re.sub(r'@\s*' + variable_name + r'\s*@', str(vars[variable_name]), data[i])
         print(data[i])
 
-with open(f'out_{sys.argv[1]}', 'w') as f:
+with open(f'./output/out_{sys.argv[1]}', 'w') as f:
     for i in range(0, eod+1):
         f.write(data[i])
 
