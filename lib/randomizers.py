@@ -1,5 +1,9 @@
 import random
 
+def test():
+    for i in range(1, 50):
+        print(randfrom([-1, 1]), end=" ")
+
 def rand(min, max):
     return random.randint(min, max)
 
@@ -22,7 +26,10 @@ def nonzerorrand(min, max, prec):
     return rval
 
 def randfrom(values):
-    pass
+    if type(values) == str:
+        values = values.split(",")
+        values = list(map(lambda x: x.strip(), values))
+    return random.choice(values)
 
 def rands(min, max, n, order='none'):
     pass
@@ -50,3 +57,7 @@ def nonzerodiffrands(min, max, n, order='none'):
 
 def nonzerodiffrrands(min, max, prec, n, order='none'):
     pass
+
+
+if __name__ == '__main__':
+    test()

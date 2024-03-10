@@ -75,8 +75,8 @@ shaded region. Give your answer as a decimal or fraction.\vspace{4mm}
 
 \newquestion
 %variables
-%a = nonzerorrand(-2.80, 2.80, 0.01)
-%b = nonzerorrand(-2.80, 2.80, 0.01)
+%a = randfrom([-1, 1]) * rrand(0.20, 2.80, 0.01)
+%b = randfrom([-1, 1]) * rrand(0.20, 2.80, 0.01)
 %c = rrand(-2.80, 0.20, 0.01)
 %d = rrand(0.20, 2.80, 0.01)
 %sol_a = round(normalcdf(-1E99, @a@), 3)
@@ -85,8 +85,8 @@ shaded region. Give your answer as a decimal or fraction.\vspace{4mm}
 3. (6 pts) Evaluate the following probabilities based on the standard normal 
 distribution. Round all answers to at least three decimal places.\\[4mm]
 \begin{enumerate}[a.]
-    \item \(P(z < @a@) =\) \iskey{$\text{normalcdf}(-\infty, @a@) = @sol_a@$}
-    \item \(P(z > @b@) =\) \iskey{$\text{normalcdf}(@sol_b@, \infty) = @sol_b@$}
+    \item \(P(z < @a@) =\) \iskey{$\text{normalcdf}(-E99, @a@) = @sol_a@$}
+    \item \(P(z > @b@) =\) \iskey{$\text{normalcdf}(@b@, \infty) = @sol_b@$}
     \item \(P(@c@ < z < @d@) =\) \iskey{$\text{normalcdf}(@c@, @d@) = @sol_c@$}
 \end{enumerate}
 
