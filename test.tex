@@ -51,15 +51,18 @@
 
 \newquestion
 %variables 
+% x = [1, 2, 3]
 %a = rand(2, 8)
 %b = rand(10, 20)
 %c = rrand(0.20, 0.40, 0.01)
 %d = rrand(0.60, 0.80, 0.01)
-%sol_a = round(1 - @c@, 2)
-%sol_b = round(1 - @d@, 2)
-%sol_c = round(@d@ - @c@, 2)
+%sol_a = round(1 - c, 2)
+%sol_b = round(1 - d, 2)
+%sol_c = round(d - c, 2)
+%end
 1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a@) = @c@$ 
 and $P(X < @b@) = @d@$, then:\\[4mm]
+
 \begin{enumerate}[a.]
     \item $P(X > @a@) =$ \iskey{$1 - @c@ = @sol_a@$} \\[4mm]
     \item $P(X > @b@) =$ \iskey{$1 - @d@ = @sol_b@$} \\[4mm]
@@ -79,9 +82,10 @@ shaded region. Give your answer as a decimal or fraction.\vspace{4mm}
 %b = randfrom([-1, 1]) * rrand(0.20, 2.80, 0.01)
 %c = rrand(-2.80, 0.20, 0.01)
 %d = rrand(0.20, 2.80, 0.01)
-%sol_a = round(normalcdf(-1E99, @a@), 3)
-%sol_b = round(normalcdf(@b@, 1E99), 3)
-%sol_c = round(normalcdf(@c@, @d@), 3)
+%sol_a = round(normalcdf(-1E99, a), 3)
+%sol_b = round(normalcdf(b, 1E99), 3)
+%sol_c = round(normalcdf(c, d), 3)
+%end
 3. (6 pts) Evaluate the following probabilities based on the standard normal 
 distribution. Round all answers to at least three decimal places.\\[4mm]
 \begin{enumerate}[a.]
