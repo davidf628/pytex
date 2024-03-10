@@ -49,13 +49,21 @@
 
 \raggedright
 
-\newquestion 
-1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a1@) = @c1@$ 
-and $P(X < @b1@) = @d1@$, then:\\[4mm]
+\newquestion
+%variables 
+%a = rand(2, 8)
+%b = rand(10, 20)
+%c = rrand(0.20, 0.40, 0.01)
+%d = rrand(0.60, 0.80, 0.01)
+%sol_a = round(1 - @c@, 2)
+%sol_b = round(1 - @d@, 2)
+%sol_c = round(@d@ - @c@, 2)
+1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a@) = @c@$ 
+and $P(X < @b@) = @d@$, then:\\[4mm]
 \begin{enumerate}[a.]
-    \item $P(X > @a1@) =$ \iskey{$1 - @c1@ = @sol_1a@$} \\[4mm]
-    \item $P(X > @b1@) =$
-    \item $P(@a1@ < X < @b1@) =$
+    \item $P(X > @a@) =$ \iskey{$1 - @c@ = @sol_a@$} \\[4mm]
+    \item $P(X > @b@) =$ \iskey{$1 - @d@ = @sol_b@$} \\[4mm]
+    \item $P(@a@ < X < @b@) =$ \iskey{$@d@ - @c@ = @sol_c@$} \\[4mm]
 \end{enumerate}
 
 \newquestion
@@ -66,12 +74,20 @@ shaded region. Give your answer as a decimal or fraction.\vspace{4mm}
 %\end{center}
 
 \newquestion
+%variables
+%a = nonzerorrand(-2.80, 2.80, 0.01)
+%b = nonzerorrand(-2.80, 2.80, 0.01)
+%c = rrand(-2.80, 0.20, 0.01)
+%d = rrand(0.20, 2.80, 0.01)
+%sol_a = round(normalcdf(-1E99, @a@), 3)
+%sol_b = round(normalcdf(@b@, 1E99), 3)
+%sol_c = round(normalcdf(@c@, @d@), 3)
 3. (6 pts) Evaluate the following probabilities based on the standard normal 
 distribution. Round all answers to at least three decimal places.\\[4mm]
 \begin{enumerate}[a.]
-    \item \(P(z < -2.28) =\) 
-    \item \(P(z > -0.62) =\) 
-    \item \(P( -0.97 < z < 2.3) =\)
+    \item \(P(z < @a@) =\) \iskey{$\text{normalcdf}(-\infty, @a@) = @sol_a@$}
+    \item \(P(z > @b@) =\) \iskey{$\text{normalcdf}(@sol_b@, \infty) = @sol_b@$}
+    \item \(P(@c@ < z < @d@) =\) \iskey{$\text{normalcdf}(@c@, @d@) = @sol_c@$}
 \end{enumerate}
 
 \newquestion
@@ -181,9 +197,3 @@ $P(\bar{X} > 240.3) = $
 %\fi
 
 \end{document}
-
-a1 = rand(2, 8)
-b1 = rand(10, 20)
-c1 = rrand(0.20, 0.40, 0.01)
-d1 = rrand(0.60, 0.80, 0.01)
-sol_1a = round(1 - c1, 2)
