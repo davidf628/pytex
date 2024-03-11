@@ -15,9 +15,19 @@ def uncommentLine(s):
     else:
         return s
 
+def is_number(n):
+    try:
+        float(n)
+    except ValueError:
+        return False
+    return True
+
 def strsub(target, value, s):
-    start = s.find(target)
-    end = start + len(target)
+    if is_number(value):
+        return re.sub(f'\\@.*?\\@', str(value), s, 1)
+    else:
+        return s.replace(f'@{target}@', value)
+
     
 
 def hasVariableCall(s):

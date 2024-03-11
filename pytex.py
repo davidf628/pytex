@@ -1,5 +1,8 @@
 import sys, re
 from lib import *
+from sympy import latex, factor, expand
+from sympy.parsing.sympy_parser import parse_expr
+from sympy.parsing.sympy_parser import transformations
 
 sys.argv.append('test.tex')
 
@@ -55,8 +58,8 @@ while (i < len(data)):
         while hasPython(data[i]):
             snippet = getPython(data[i])
             result = eval(snippet)
-            #data[i] = strsub(snippet, result, data[i])
-            data[i] = re.sub(f'\\@.*?\\@', str(result), data[i], 1)
+            data[i] = strsub(snippet, result, data[i])
+            #data[i] = re.sub(f'\\@.*?\\@', str(result), data[i], 1)
             print(data[i])
         # while re.search(r'@\s*([A-Za-z_]\w*)\s*@', data[i]):
         #     result = re.search(r'@\s*([A-Za-z_]\w*)\s*@', data[i])

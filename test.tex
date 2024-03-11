@@ -51,10 +51,10 @@
 
 \newquestion
 %variables 
-% x = [1, 2, 3]
-%a = rand(2, 8)
-%b = rand(10, 20)
-%c = rrand(0.20, 0.40, 0.01)
+% x = [2, 8]
+%a = rand(x[0], x[1])
+%b = rand(a, 20)
+%c = .67 #rrand(0.20, 0.40, 0.01)
 %d = rrand(0.60, 0.80, 0.01)
 %sol_a = round(1 - c, 2)
 %sol_b = round(1 - d, 2)
@@ -64,10 +64,25 @@
 and $P(X < @b@) = @d@$, then:\\[4mm]
 
 \begin{enumerate}[a.]
-    \item $P(X > @a@) =$ \iskey{$1 - @c@ = @sol_a@$} \\[4mm]
+    \item $P(X > @a@) =$ \iskey{$1 - @c@ = @ round(1 - c, 2) @$} \\[4mm]
     \item $P(X > @b@) =$ \iskey{$1 - @d@ = @sol_b@$} \\[4mm]
     \item $P(@a@ < X < @b@) =$ \iskey{$@d@ - @c@ = @sol_c@$} \\[4mm]
 \end{enumerate}
+
+\newquestion
+%variables
+%z0 = rand(-5, -1)
+%z1 = rand(z0, 6)
+%c = z0 * z1
+%b = z0 + z1
+%x = symbols('x')
+%fact0 = x - z0
+%fact1 = x - z1
+%poly = expand(fact0 * fact1)
+%print(latex(poly))
+%end
+2. (4 pts) Factor the polynomial $ @latex(poly)@ $.
+\iskey{$@latex(poly)@ = @f'({latex(fact0)})({latex(fact1)})'@$}
 
 \newquestion
 2. (4 pts) Given the uniform distribution below, find the probability of the 
