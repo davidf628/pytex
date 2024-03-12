@@ -4,7 +4,13 @@ from sympy import latex, factor, expand
 from sympy.parsing.sympy_parser import parse_expr
 from sympy.parsing.sympy_parser import transformations
 
-sys.argv.append('test.tex')
+debugging = False
+
+if debugging:
+    sys.argv.append('test.tex')
+    outputfile = f'./output/out_{sys.argv[1]}'
+else:
+    outputfile = f'./out_{sys.argv[1]}'
 
 # Read the .tex file specified from the command line and load it
 
@@ -110,7 +116,7 @@ while (i < len(data)):
     else:
         i += 1
 
-with open(f'./output/out_{sys.argv[1]}', 'w') as f:
+with open(outputfile, 'w') as f:
     for line in data:
         f.write(line)
 
