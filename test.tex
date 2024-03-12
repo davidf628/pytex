@@ -48,9 +48,13 @@
 
 \newquestion
 %variables 
-% x, y = [2, 8]
-%a = 5 # rand(x, y)
-%b = rand(a+2, 10) where b - a == 0
+% x = rand(2, 8)
+%y = x < 5 ? 0 : 1
+%print(f'x == {x}, y == {y}')
+%{
+%  a = rand(1, 5)   
+%  b = rand(0, 10) where a > b
+%} where a - b == 2
 %print(f'a == {a}, b == {b}, b - a == {b - a}')
 %c = .67 #rrand(0.20, 0.40, 0.01)
 %d = rrand(0.60, 0.80, 0.01)

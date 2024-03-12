@@ -1,7 +1,7 @@
 import re
 
 def test():
-    test_isNewVariableDec()
+    print(getCommand('% a = rand(2, 5) where a > b'))
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
@@ -21,6 +21,11 @@ def is_number(n):
     except ValueError:
         return False
     return True
+
+def getCommand(line):
+    line = line.replace('%','').replace('{', '').replace('}','')
+    line = line.split('where')[0].strip()
+    return line
 
 def strsub(target, value, s):
     if is_number(value):

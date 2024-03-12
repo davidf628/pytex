@@ -25,33 +25,60 @@ while (i < len(data)):
     # search for variable declarations
     if isNewVariableSet(data[i]):
 
-        data.pop(i)
-        #i += 1 # advance past the variable declaration
+        #data.pop(i)
+        i += 1 # advance past the variable declaration
+        stack = [] # start a new stack for where blocks
+        count = 0
 
         while not isEndVariableSet(data[i]):
         # remove all the variables from python and start a new variable scope
         #vars = {}
 
-            command = uncommentLine(data.pop(i))
+            #command = uncommentLine(data.pop(i))
+            command = uncommentLine(data[i])
 
-            if 'where' in command:
+            if command.strip() == '{': # begin a 'where' block
+                stack.insert(0, i) # save the location of the start of the block
+                i += 1
+
+            elif 'where' in command:
                 command, condition = command.split('where')
-                exec(command)
-                wheremet = eval(condition)
-                count = 0
-                while not wheremet and count < 200:
-                    exec(command)
-                    eval(condition)
+
+                if command.strip() == '}':
                     count += 1
-                if count >= 200:
-                    print(f'Where condition {condition} not met in 200 iterations.')
-                    quit()
+                    #print(f'count == {count}, stack == {stack}, condition == {condition}')
+                    blockstart = stack.pop()
+                else:
+                    blockstart = i
+                    #print(f'count == {count}, stack == {stack}, condition == {condition}')
+                    exec(command)
+
+                wheremet = eval(condition)
+                #print(f'wheremet == {wheremet}')
+
+                if not wheremet:
+                    i = blockstart
+                else:
+                    i += 1
+
+            elif re.search(r'(.*)\=(.*)\?(.*)\:(.*)', command) != None:
+                result = re.search(r'(.*)\=(.*)\?(.*)\:(.*)', command)
+                variable = result.group(1)
+                test = result.group(2)
+                iftrue = result.group(3)
+                iffalse = result.group(4)
+                if eval(test) == True:
+                    exec(f'{variable}={iftrue}')
+                else:
+                    exec(f'{variable}={iffalse}')
+                i += 1
+
             else:
                 exec(command)
+                i += 1
 
-
-        
-        data.pop(i) # remove %end line
+        i += 1
+        #data.pop(i) # remove %end line
             # advance to next line
             # while data[i].strip() == '': # skip any blank lines
             #     i += 1
@@ -74,7 +101,7 @@ while (i < len(data)):
             result = eval(snippet)
             data[i] = strsub(snippet, result, data[i])
             #data[i] = re.sub(f'\\@.*?\\@', str(result), data[i], 1)
-            print(data[i])
+            #print(data[i])
         # while re.search(r'@\s*([A-Za-z_]\w*)\s*@', data[i]):
         #     result = re.search(r'@\s*([A-Za-z_]\w*)\s*@', data[i])
         #     variable_name = result.group(1)
