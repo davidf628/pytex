@@ -15,9 +15,6 @@
 \newboolean{make_key}
 \setboolean{make_key}{true}
 
-% set first level of numbering to be letters instead of numbers
-%\setenumerate[1]{label=\alph*.}
-
 % declarations for the different parts of the exam
 \newtcolorbox{instructionbox}{
 	colback = gray!25!white, 
@@ -51,9 +48,10 @@
 
 \newquestion
 %variables 
-% x = [2, 8]
-%a = rand(x[0], x[1])
-%b = rand(a, 20)
+% x, y = [2, 8]
+%a = 5 # rand(x, y)
+%b = rand(a+2, 10) where b - a == 0
+%print(f'a == {a}, b == {b}, b - a == {b - a}')
 %c = .67 #rrand(0.20, 0.40, 0.01)
 %d = rrand(0.60, 0.80, 0.01)
 %sol_a = round(1 - c, 2)

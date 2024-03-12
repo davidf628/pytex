@@ -34,7 +34,21 @@ while (i < len(data)):
 
             command = uncommentLine(data.pop(i))
 
-            exec(command)
+            if 'where' in command:
+                command, condition = command.split('where')
+                exec(command)
+                wheremet = eval(condition)
+                count = 0
+                while not wheremet and count < 200:
+                    exec(command)
+                    eval(condition)
+                    count += 1
+                if count >= 200:
+                    print(f'Where condition {condition} not met in 200 iterations.')
+                    quit()
+            else:
+                exec(command)
+
 
         
         data.pop(i) # remove %end line
