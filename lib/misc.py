@@ -33,7 +33,17 @@ def strsub(target, value, s):
     else:
         return s.replace(f'@{target}@', value)
 
-    
+def removeVariableDeclarations(data):
+    i = 0
+    while i < len(data):
+        if isNewVariableSet(data[i]):
+            while not isEndVariableSet(data[i]):
+                data.pop(i)
+            data.pop(i)
+        else:
+            i += 1
+
+    return data
 
 def hasVariableCall(s):
     return re.search(r'\@[A-Za-z_]\w*\@', s) != None

@@ -1,9 +1,14 @@
 from scipy.stats import norm, t, binom
+import numpy as np
+import math
+
+def stats_test():
+    print(stdev([1,2,3,4]))
 
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
 
-def normsinv (p, mean=0, stdev=1):
+def invnorm (p, mean=0, stdev=1):
     return norm.ppf(p, mean, stdev)
 
 def tcdf (lower, upper, df, mean=0, stdev=1):
@@ -23,3 +28,16 @@ def binommean (n, p):
 
 def binomstdev (n, p):
     return binom.stdev(n, p)
+
+def mean (data):
+    return np.mean(data)
+
+def stdevp (data):
+    return np.std(data)
+
+def stdev (data):
+    n = len(data)
+    return np.std(data) * math.sqrt(n/(n-1))
+
+if __name__ == '__main__':
+    stats_test()

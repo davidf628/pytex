@@ -1,10 +1,9 @@
 import sys, re
 from lib import *
-from sympy import latex, factor, expand
-from sympy.parsing.sympy_parser import parse_expr
-from sympy.parsing.sympy_parser import transformations
 
 debugging = False
+
+# https://www.myopenmath.com/help.php?section=writingquestions
 
 if debugging:
     sys.argv.append('test.tex')
@@ -67,21 +66,14 @@ while (i < len(data)):
                 else:
                     i += 1
 
-            elif re.search(r'(.*)\=(.*)\?(.*)\:(.*)', command) != None:
-                result = re.search(r'(.*)\=(.*)\?(.*)\:(.*)', command)
-                variable = result.group(1)
-                test = result.group(2)
-                iftrue = result.group(3)
-                iffalse = result.group(4)
-                if eval(test) == True:
-                    exec(f'{variable}={iftrue}')
-                else:
-                    exec(f'{variable}={iffalse}')
-                i += 1
-
             else:
-                exec(command)
-                i += 1
+                try:
+                    exec(command)
+                    i += 1
+                except Exception as e:
+                    print(f'ERROR on line {i}: {command}')
+                    print(f'\n{e}')
+                    quit()
 
         i += 1
         #data.pop(i) # remove %end line
@@ -115,6 +107,8 @@ while (i < len(data)):
         #     print(data[i])
     else:
         i += 1
+
+data = removeVariableDeclarations(data)
 
 with open(outputfile, 'w') as f:
     for line in data:
