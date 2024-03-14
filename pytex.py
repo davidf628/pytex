@@ -1,7 +1,7 @@
 import sys, re
 from lib import *
 
-debugging = False
+debugging = True
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
@@ -33,6 +33,10 @@ while (i < len(data)):
         #data.pop(i)
         i += 1 # advance past the variable declaration
         stack = [] # start a new stack for where blocks
+
+        # keeps track of how many times a 'where' command has been called in
+        #  order to stop processing at 200 times, which prevents infinite loops
+        repeatcounter = {}
         count = 0
 
         while not isEndVariableSet(data[i]):
@@ -53,10 +57,19 @@ while (i < len(data)):
                     count += 1
                     #print(f'count == {count}, stack == {stack}, condition == {condition}')
                     blockstart = stack.pop()
+                    
                 else:
                     blockstart = i
                     #print(f'count == {count}, stack == {stack}, condition == {condition}')
                     exec(command)
+
+                if blockstart in repeatcounter.keys():
+                    repeatcounter[blockstart] += 1
+                    if repeatcounter[blockstart] >= 200:
+                        print(f'where condition {i+1}: "{uncommentLine(data[i])}" not met in 200 iterations')
+                        quit()
+                else:
+                    repeatcounter[blockstart] = 0
 
                 wheremet = eval(condition)
                 #print(f'wheremet == {wheremet}')
