@@ -48,35 +48,25 @@
 
 \newquestion
 %variables
-%x=rrands(10.0, 25.0, 0.1, 12)
-%end
-1. (8 pts) You are given the following data representing a random sample
-of the amount of coffee a particular person drinks (in ounces) per day.
-Based on the sample data, create a 90\% confidence interval for the
-population mean. Round your answers to one decimal place. \\[4mm]
-
-\hspace*{1cm}
-@showdataarray(x, 5)@
-\vspace{8mm}
-
-\hfill \rule{6cm}{0.15mm} \\[2mm]
-
-\newquestion
-%variables 
-% x = rand(2, 8)
-%y = 1 if x > 5 else 0
-%print(f'x == {x}, y == {y}')
 %{
-%  a = rand(1, 5)   
-%  b = rand(a+1, 10)
-% c = 15
-%} where a < b
-%print(f'a == {a}, b == {b}, b - a == {b - a}')
-%c = .67 #rrand(0.20, 0.40, 0.01)
-%d = rrand(0.60, 0.80, 0.01)
-%sol_a = round(1 - c, 2)
-%sol_b = round(1 - d, 2)
-%sol_c = round(d - c, 2)
+% n = rand(150, 400)
+% p = rrand(.15, .35, .01) where ((n * p > 5) and (n * (1 - p) > 5))
+% q = 1 - p
+% s_err = sqrt(p * q / n)
+% lb = round(p - 3 * s_err, 4)
+% ub = round(p + 3 * s_err, 4)
+% phat = rrand(lb, ub, 0.0001)
+% x = round(phat * n)
+% phat = x / n
+% z = (phat - p) / s_err
+% pval = 2 * (1 - normalcdf(abs(z), 1E99))
+%} where (pval > 0.005) and (pval < 0.15)
+% a = randfrom([0.01, 0.05, 0.1])
+% apct = round(a * 100)
+% ppct = round(p * 100)
+% qpct = round(q * 100)
+% decision = "Reject $H_0$" if pval <= a else "Fail to reject $H_0$"
+% sufficient = "sufficient" if pval <= a else "insufficient"
 %end
 1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a@) = @c@$ 
 and $P(X < @b@) = @d@$, then:\\[4mm]

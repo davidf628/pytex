@@ -1,7 +1,7 @@
 import sys, re
 from lib import *
 
-debugging = True
+debugging = False
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
@@ -55,23 +55,27 @@ while (i < len(data)):
 
                 if command.strip() == '}':
                     count += 1
-                    #print(f'count == {count}, stack == {stack}, condition == {condition}')
                     blockstart = stack.pop()
                     
                 else:
                     blockstart = i
-                    #print(f'count == {count}, stack == {stack}, condition == {condition}')
                     exec(command)
 
                 if blockstart in repeatcounter.keys():
                     repeatcounter[blockstart] += 1
                     if repeatcounter[blockstart] >= 200:
-                        print(f'where condition {i+1}: "{uncommentLine(data[i])}" not met in 200 iterations')
+                        print(f'ERROR "where" condition not met in 200 iterations:\n ==> {i+1}: {uncommentLine(data[i])}')
                         quit()
                 else:
                     repeatcounter[blockstart] = 0
 
-                wheremet = eval(condition)
+                #print(f'count == {repeatcounter[blockstart]}, stack == {stack}, condition == {condition}')
+
+                try:
+                    wheremet = eval(condition)
+                except Exception as e:
+                    print(f'ERROR on line {i+1}: {uncommentLine(data[i])}\n ==> {e}')
+                    quit()
                 #print(f'wheremet == {wheremet}')
 
                 if not wheremet:
@@ -84,25 +88,10 @@ while (i < len(data)):
                     exec(command)
                     i += 1
                 except Exception as e:
-                    print(f'ERROR on line {i}: {command}')
-                    print(f'\n{e}')
+                    print(f'ERROR on line {i+1}: {command}\n ==> {e}')
                     quit()
 
-        i += 1
-        #data.pop(i) # remove %end line
-            # advance to next line
-            # while data[i].strip() == '': # skip any blank lines
-            #     i += 1
-            # result = re.search(r'\s*\%\s*([A-Za-z_]\w*)\s*=\s*(.*)', data[i])
-            # while result: # the current line depicts a variable declaration
-
-            #     #expr = subvars(result.group(2), vars)
-            #     #vars[result.group(1)] = eval(expr) # save a record of the variable 
-            #     i += 1 # advance to next line
-            #     while data[i].strip() == '': # skip any blank lines
-            #         i += 1
-            #     result = re.search(r'\s*\%\s*([A-Za-z_]\w*)\s*=\s*(.*)', data[i])
-            # i -= 1       
+        i += 1    
 
     # if a line is not a variable declaraion, see if it contains any
     #  variables to substitute   
@@ -111,13 +100,7 @@ while (i < len(data)):
             snippet = getPython(data[i])
             result = eval(snippet)
             data[i] = strsub(snippet, result, data[i])
-            #data[i] = re.sub(f'\\@.*?\\@', str(result), data[i], 1)
-            #print(data[i])
-        # while re.search(r'@\s*([A-Za-z_]\w*)\s*@', data[i]):
-        #     result = re.search(r'@\s*([A-Za-z_]\w*)\s*@', data[i])
-        #     variable_name = result.group(1)
-        #     data[i] = re.sub(r'@\s*' + variable_name + r'\s*@', str(vars[variable_name]), data[i])
-        #     print(data[i])
+
     else:
         i += 1
 
