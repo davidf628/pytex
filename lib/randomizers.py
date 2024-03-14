@@ -1,13 +1,11 @@
 import random
 
 def test():
-    p = rrand(0.01, 0.05, 0.001)
-    a = randfrom([ 0.01, 0.05, 0.08, 0.1])
-    apct = round(a * 100)
-    print(type(p))
-    print(type(a))
-    exec('p <= a')
-    #sol = p <= a ? "a. Reject $H_0$" : "b. Fail to reject $H_0$"
+    x = [ "95\%", "90\%", "80\%" ]
+    choices = [ "a.", "b.", "c." ]
+    x = singleshuffle(x)
+    ans = x.index("95\%")
+    print(f'x == {x}\nchoices == {choices}\nanswer: {choices[ans]}{x[ans]}')
 
 def rand(min, max):
     return random.randint(min, max)
@@ -91,11 +89,24 @@ def singleshuffle(array):
     i = 0
     while i < len(array):
         swapIndex = rand(0, len(array)-1)
-        tmp = array[swapIndex]
-        array[swapIndex] = array[i]
-        array[i] = tmp
+        array[swapIndex], array[i] = (array[i], array[swapIndex])
         i += 1
     return array
+
+def jointshuffle(array1, array2):
+    i = 0
+    while i < len(array1):
+        swapIndex = rand(0, len(array1)-1)
+        array1[swapIndex], array1[i] = (array1[i], array1[swapIndex])
+        array2[swapIndex], array2[i] = (array2[i], array2[swapIndex])
+        # tmp1 = array1[swapIndex]
+        # tmp2 = array2[swapIndex]
+        # array1[swapIndex] = array1[i]
+        # array2[swapIndex] = array2[i]
+        # array1[i] = tmp1
+        # array2[i] = tmp2
+        i += 1
+    return [array1, array2]
 
 if __name__ == '__main__':
     test()
