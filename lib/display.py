@@ -1,5 +1,5 @@
 def display_test():
-    print(showdataarray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 15))
+    print(horizshowarrays('data', [1, 2, 3, 4, 5, 6], 'more data', [91, 22, 25]))
 
 def showdataarray(array, columns=1, options=""):
     alignment = "|"
@@ -17,6 +17,42 @@ def showdataarray(array, columns=1, options=""):
     for i in range(0, len(array), columns): 
         row = ' & '.join(array[i:i+columns])
         tablecode += '  ' + row + ' \\\\\n  \\hline\n'
+
+    tablecode += '\\end{tabular}\n'
+        
+    return tablecode
+
+def horizshowarrays(*args):
+    title = ""
+    width = 0
+    data = []
+
+    # combind the string titles and data into one large array
+    for arg in args:
+        if type(arg) == str:
+            title = '\\textbf{' + str(arg) +'}'
+        elif type(arg) == list:
+            newlist = arg.copy()
+            newlist.insert(0, title)
+            width = max(len(newlist), width)
+            data.append(newlist)
+
+    # create a table for that array
+    alignment = "|l|"
+    for _ in range(0, width-1):
+        alignment += "c|"
+
+    tablecode = '\\begin{tabular}' + '{' + alignment + '}\n  \\hline\n' 
+    
+    for row in range(0, len(data)):
+        for col in range(0, len(data[row])):
+            data[row][col] = str(data[row][col])
+
+    for row in data:
+        while len(row) < width:
+            row.append('')
+        line = ' & '.join(row)
+        tablecode += '  ' + line + ' \\\\\n  \\hline\n'
 
     tablecode += '\\end{tabular}\n'
         

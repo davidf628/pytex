@@ -1,7 +1,7 @@
 import sys, re
 from lib import *
 
-debugging = True
+debugging = False
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
