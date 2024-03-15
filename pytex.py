@@ -1,7 +1,7 @@
 import sys, re
 from lib import *
 
-debugging = False
+debugging = True
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
@@ -37,13 +37,9 @@ while (i < len(data)):
         # keeps track of how many times a 'where' command has been called in
         #  order to stop processing at 200 times, which prevents infinite loops
         repeatcounter = {}
-        count = 0
 
         while not isEndVariableSet(data[i]):
-        # remove all the variables from python and start a new variable scope
-        #vars = {}
 
-            #command = uncommentLine(data.pop(i))
             command = uncommentLine(data[i])
 
             if command.strip() == '{': # begin a 'where' block
@@ -54,8 +50,7 @@ while (i < len(data)):
                 command, condition = command.split('where')
 
                 if command.strip() == '}':
-                    count += 1
-                    blockstart = stack.pop()
+                    blockstart = stack.pop(0)
                     
                 else:
                     blockstart = i
@@ -69,14 +64,13 @@ while (i < len(data)):
                 else:
                     repeatcounter[blockstart] = 0
 
-                #print(f'count == {repeatcounter[blockstart]}, stack == {stack}, condition == {condition}')
+                print(f'count == {repeatcounter[blockstart]}, stack == {stack}, condition == {condition}')
 
                 try:
                     wheremet = eval(condition)
                 except Exception as e:
                     print(f'ERROR on line {i+1}: {uncommentLine(data[i])}\n ==> {e}')
                     quit()
-                #print(f'wheremet == {wheremet}')
 
                 if not wheremet:
                     i = blockstart

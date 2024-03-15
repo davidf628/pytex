@@ -7,6 +7,9 @@ def test():
     ans = x.index("95\%")
     print(f'x == {x}\nchoices == {choices}\nanswer: {choices[ans]}{x[ans]}')
 
+def seed(val):
+    random.seed(val)
+
 def rand(min, max):
     return random.randint(min, max)
 

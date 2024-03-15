@@ -48,33 +48,24 @@
 
 \newquestion
 %variables
-%{
-% n = rand(150, 400)
-% p = rrand(.15, .35, .01) where ((n * p > 5) and (n * (1 - p) > 5))
-% q = 1 - p
-% s_err = sqrt(p * q / n)
-% lb = round(p - 3 * s_err, 4)
-% ub = round(p + 3 * s_err, 4)
-% phat = rrand(lb, ub, 0.0001)
-% x = round(phat * n)
-% phat = x / n
-% z = (phat - p) / s_err
-% pval = 2 * (1 - normalcdf(abs(z), 1E99))
-%} where (pval > 0.005) and (pval < 0.15)
-% a = randfrom([0.01, 0.05, 0.1])
-% apct = round(a * 100)
-% ppct = round(p * 100)
-% qpct = round(q * 100)
-% decision = "Reject $H_0$" if pval <= a else "Fail to reject $H_0$"
-% sufficient = "sufficient" if pval <= a else "insufficient"
+%seed(20)
+% {
+% a = rand(2, 10)
+%  { 
+%    b = rand(a, 15)
+%    c = rand(b, 20) 
+%  } where c % 2 == 0
+% d = rand(1, 5)
+ % } where d > a
+
 %end
 1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a@) = @c@$ 
 and $P(X < @b@) = @d@$, then:\\[4mm]
 
 \begin{enumerate}[a.]
     \item $P(X > @a@) =$ \iskey{$1 - @c@ = @ round(1 - c, 2) @$} \\[4mm]
-    \item $P(X > @b@) =$ \iskey{$1 - @d@ = @sol_b@$} \\[4mm]
-    \item $P(@a@ < X < @b@) =$ \iskey{$@d@ - @c@ = @sol_c@$} \\[4mm]
+    \item $P(X > @b@) =$ \iskey{$1 - @d@ = @round(1 - d, 2)@$} \\[4mm]
+    \item $P(@a@ < X < @b@) =$ \iskey{$@d@ - @c@ = @round(d - c, 2)@$} \\[4mm]
 \end{enumerate}
 
 \newquestion
