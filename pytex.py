@@ -78,6 +78,7 @@ while (i < len(data)):
 
             else:
                 try:
+                    #print(f'Globals == \n{globals()}\n\nLocals == \n{locals()}')
                     exec(command)
                     i += 1
                 except Exception as e:
