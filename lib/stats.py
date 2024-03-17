@@ -1,9 +1,10 @@
-from scipy.stats import norm, t, binom
+from scipy.stats import norm, t, binom, linregress
 import numpy as np
 import math
 
 def stats_test():
-    print(stdev([1,2,3,4]))
+    a, b, r, t, p  = linreg([1, 2, 3, 4], [5, 6, 7, 7])
+    print(f'a == {a}, b == {b}, r == {r}')
 
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
@@ -38,6 +39,16 @@ def stdevp (data):
 def stdev (data):
     n = len(data)
     return np.std(data) * math.sqrt(n/(n-1))
+
+def linreg(x_data, y_data):
+    result = linregress(x_data, y_data)
+    r = result.rvalue
+    p = result.pvalue
+    n = len(x_data)
+    df = n - 1
+    t = r * math.sqrt( (n - 2) / (1 - (r) ** 2))
+    pval = 2 * tcdf( abs(t), 1E99, df)
+    return (result.slope, result.intercept, result.rvalue, t, pval)
 
 if __name__ == '__main__':
     stats_test()

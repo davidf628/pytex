@@ -77,7 +77,14 @@ def randsfrom(values, n, order='none'):
     pass
 
 def diffrands(min, max, n, order='none'):
-    pass
+    rands = []
+    for _ in range(0, n):
+        rands.append(rand(min, max))
+    if order == 'inc':
+        rands.sort()
+    elif order == 'dec':
+        rands.sort(reverse=True)
+    return rands
 
 def diffrandsfrom(values, n, order='none'):
     pass

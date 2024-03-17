@@ -30,7 +30,6 @@ while (i < len(data)):
     # search for variable declarations
     if isNewVariableSet(data[i]):
 
-        #data.pop(i)
         i += 1 # advance past the variable declaration
         stack = [] # start a new stack for where blocks
 
@@ -64,7 +63,7 @@ while (i < len(data)):
                 else:
                     repeatcounter[blockstart] = 0
 
-                print(f'count == {repeatcounter[blockstart]}, stack == {stack}, condition == {condition}')
+                # print(f'count == {repeatcounter[blockstart]}, stack == {stack}, condition == {condition}')
 
                 try:
                     wheremet = eval(condition)
@@ -92,8 +91,12 @@ while (i < len(data)):
     elif hasPython(data[i]):
         while hasPython(data[i]):
             snippet = getPython(data[i])
-            result = eval(snippet)
-            data[i] = strsub(snippet, result, data[i])
+            try:
+                result = eval(snippet)
+                data[i] = strsub(snippet, result, data[i])
+            except Exception as e:
+                print(f'ERROR on line {i+1}: {data[i]}\n ==> {e}')
+                quit()
 
     else:
         i += 1
