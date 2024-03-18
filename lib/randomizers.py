@@ -1,11 +1,7 @@
 import random
 
 def test():
-    x = [ "95\%", "90\%", "80\%" ]
-    choices = [ "a.", "b.", "c." ]
-    x = singleshuffle(x)
-    ans = x.index("95\%")
-    print(f'x == {x}\nchoices == {choices}\nanswer: {choices[ans]}{x[ans]}')
+    print(nonzerodiffrrands(-0.5, 0.5, 0.1, 7))
 
 def seed(val):
     random.seed(val)
@@ -70,16 +66,49 @@ def nonzerorands(min, max, n, order='none'):
         values.sort(reverse=True)
     return values
 
-def nonzerorrands(min, max, n, order='none'):
-    pass
+def nonzerorrands(min, max, prec, n, order='none'):
+    values = []
+    for _ in range(0, n):
+        new_val = 0
+        while abs(new_val) < prec:
+            new_val = rrand(min, max, prec)
+        values.append(new_val)
+    if order == 'inc':
+        values.sort()
+    elif order == 'dec':
+        values.sort(reverse=True)
+    return values
 
 def randsfrom(values, n, order='none'):
-    pass
+    choices = []
+    for _ in range(0, n):
+        choices.append(randfrom(values))
+    if order == 'inc':
+        choices.sort()
+    elif order == 'dec':
+        choices.sort(reverse=True)
+    return choices
 
 def diffrands(min, max, n, order='none'):
     rands = []
     for _ in range(0, n):
-        rands.append(rand(min, max))
+        value = rand(min, max)
+        while value in rands:
+            value = rand(min, max)
+        rands.append(value)
+    if order == 'inc':
+        rands.sort()
+    elif order == 'dec':
+        rands.sort(reverse=True)
+    return rands
+
+def diffrrands(min, max, prec, n, order='none'):
+    rands = []
+    for _ in range(0, n):
+        value = rrand(min, max, prec)
+        while value in rands:
+            value = rrand(min, max, prec)
+        rands.append(value)
     if order == 'inc':
         rands.sort()
     elif order == 'dec':
@@ -87,13 +116,43 @@ def diffrands(min, max, n, order='none'):
     return rands
 
 def diffrandsfrom(values, n, order='none'):
-    pass
+    rands = []
+    for _ in range(0, n):
+        value = randfrom(values)
+        while value in rands:
+            value = randfrom(values)
+        rands.append(value)
+    if order == 'inc':
+        rands.sort()
+    elif order == 'dec':
+        rands.sort(reverse=True)
+    return rands
 
 def nonzerodiffrands(min, max, n, order='none'):
-    pass
+    rands = []
+    for _ in range(0, n):
+        value = rand(min, max)
+        while (value in rands) or (value == 0):
+            value = rand(min, max)
+        rands.append(value)
+    if order == 'inc':
+        rands.sort()
+    elif order == 'dec':
+        rands.sort(reverse=True)
+    return rands
 
 def nonzerodiffrrands(min, max, prec, n, order='none'):
-    pass
+    rands = []
+    for _ in range(0, n):
+        value = rrand(min, max, prec)
+        while (value in rands) or (abs(value) < prec):
+            value = rrand(min, max, prec)
+        rands.append(value)
+    if order == 'inc':
+        rands.sort()
+    elif order == 'dec':
+        rands.sort(reverse=True)
+    return rands
 
 def singleshuffle(array):
     i = 0
@@ -109,12 +168,6 @@ def jointshuffle(array1, array2):
         swapIndex = rand(0, len(array1)-1)
         array1[swapIndex], array1[i] = (array1[i], array1[swapIndex])
         array2[swapIndex], array2[i] = (array2[i], array2[swapIndex])
-        # tmp1 = array1[swapIndex]
-        # tmp2 = array2[swapIndex]
-        # array1[swapIndex] = array1[i]
-        # array2[swapIndex] = array2[i]
-        # array1[i] = tmp1
-        # array2[i] = tmp2
         i += 1
     return [array1, array2]
 

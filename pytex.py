@@ -5,6 +5,8 @@ debugging = False
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
+# https://www.myopenmath.com/assessment/libs/libhelp.php
+
 if debugging:
     sys.argv.append('test.tex')
     outputfile = f'./output/out_{sys.argv[1]}'
