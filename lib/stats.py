@@ -50,5 +50,29 @@ def linreg(x_data, y_data):
     pval = 2 * tcdf( abs(t), 1E99, df)
     return (result.slope, result.intercept, result.rvalue, t, pval)
 
+def classranges(data, classes):
+    minval = float(min(data))
+    maxval = float(max(data))
+    class_width = math.floor( ((maxval - minval) / float(classes)) )
+    ranges = []
+    baseline = minval
+    for _ in range(0, classes):
+        ranges.append([ round(baseline), round(baseline + class_width) ])
+        baseline += class_width + 1
+    return ranges
+
+def frequencies(data, classes):
+    bins = classranges(data, classes)
+    freq = np.zeros(classes)
+    for value in data:
+        for i in range(0, len(bins)):
+            bin = bins[i]
+            if (float(value) >= float(bin[0])) and (float(value) <= float(bin[1])):
+                freq[i] += 1
+    ret_freq = []
+    for value in freq:
+        ret_freq.append(round(value))
+    return ret_freq
+
 if __name__ == '__main__':
     stats_test()

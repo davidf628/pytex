@@ -16,36 +16,36 @@ else:
 # Read the .tex file specified from the command line and load it
 
 filename = sys.argv[1]
-data = []
+__data = []
 
 with open(filename, "r") as f:
     for line in f:
-        data.append(line)
+        __data.append(line)
 
 # read through the document looking for variable declarations
-i = 0
-while (i < len(data)):
+__lcv = 0
+while (__lcv < len(__data)):
 
     if re.search(r'\\newquestion', line):
         __debugvar = 15
 
     # search for variable declarations
-    if isNewVariableSet(data[i]):
+    if isNewVariableSet(__data[__lcv]):
 
-        i += 1 # advance past the variable declaration
+        __lcv += 1 # advance past the variable declaration
         stack = [] # start a new stack for where blocks
 
         # keeps track of how many times a 'where' command has been called in
         #  order to stop processing at 200 times, which prevents infinite loops
         repeatcounter = {}
 
-        while not isEndVariableSet(data[i]):
+        while not isEndVariableSet(__data[__lcv]):
 
-            command = uncommentLine(data[i])
+            command = uncommentLine(__data[__lcv])
 
             if command.strip() == '{': # begin a 'where' block
-                stack.insert(0, i) # save the location of the start of the block
-                i += 1
+                stack.insert(0, __lcv) # save the location of the start of the block
+                __lcv += 1
 
             elif 'where' in command:
                 command, condition = command.split('where')
@@ -54,13 +54,13 @@ while (i < len(data)):
                     blockstart = stack.pop(0)
                     
                 else:
-                    blockstart = i
+                    blockstart = __lcv
                     exec(command)
 
                 if blockstart in repeatcounter.keys():
                     repeatcounter[blockstart] += 1
                     if repeatcounter[blockstart] >= 200:
-                        print(f'ERROR "where" condition not met in 200 iterations:\n ==> {i+1}: {uncommentLine(data[i])}')
+                        print(f'ERROR "where" condition not met in 200 iterations:\n ==> {__lcv+1}: {uncommentLine(__data[__lcv])}')
                         quit()
                 else:
                     repeatcounter[blockstart] = 0
@@ -70,43 +70,43 @@ while (i < len(data)):
                 try:
                     wheremet = eval(condition)
                 except Exception as e:
-                    print(f'ERROR on line {i+1}: {uncommentLine(data[i])}\n ==> {e}')
+                    print(f'ERROR on line {__lcv+1}: {uncommentLine(__data[__lcv])}\n ==> {e}')
                     quit()
 
                 if not wheremet:
-                    i = blockstart
+                    __lcv = blockstart
                 else:
-                    i += 1
+                    __lcv += 1
 
             else:
                 try:
                     #print(f'Globals == \n{globals()}\n\nLocals == \n{locals()}')
                     exec(command)
-                    i += 1
+                    __lcv += 1
                 except Exception as e:
-                    print(f'ERROR on line {i+1}: {command}\n ==> {e}')
+                    print(f'ERROR on line {__lcv+1}: {command}\n ==> {e}')
                     quit()
 
-        i += 1    
+        __lcv += 1    
 
     # if a line is not a variable declaraion, see if it contains any
     #  variables to substitute   
-    elif hasPython(data[i]):
-        while hasPython(data[i]):
-            snippet = getPython(data[i])
+    elif hasPython(__data[__lcv]):
+        while hasPython(__data[__lcv]):
+            snippet = getPython(__data[__lcv])
             try:
                 result = eval(snippet)
-                data[i] = strsub(snippet, result, data[i])
+                __data[__lcv] = strsub(snippet, result, __data[__lcv])
             except Exception as e:
-                print(f'ERROR on line {i+1}: {data[i]}\n ==> {e}')
+                print(f'ERROR on line {__lcv+1}: {__data[__lcv]}\n ==> {e}')
                 quit()
 
     else:
-        i += 1
+        __lcv += 1
 
-data = removeVariableDeclarations(data)
+__data = removeVariableDeclarations(__data)
 
 with open(outputfile, 'w') as f:
-    for line in data:
+    for line in __data:
         f.write(line)
 

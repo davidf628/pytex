@@ -1,6 +1,6 @@
 
 def test_maths():
-    print(evalfunc("x**2 + y**2", 'x, y', 7, 2))
+    print(f'frac(-22.55) == {frac(-22.55)}')
 
 def sign(val):
     if val < 0:
@@ -18,6 +18,9 @@ def evalfunc(f, varstr, *vals):
         f = f.replace(var, str(vals[i]))
         i += 1
     return eval(f)
+
+def frac(val):
+    return abs(val) % 1
 
 if __name__ == '__main__':
     test_maths()

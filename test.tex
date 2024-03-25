@@ -48,20 +48,16 @@
 
 \newquestion
 %variables
-%  X = diffrands(925, 1040, 6)
-% #Y = list(map(lambda x: round( -x + 1080 + randfrom([-1, 1]) * rand(10, 30)), X))
-%  Y = calconarray(X, "round( -x + 1080 + randfrom([-1, 1]) * rand(10, 30))")
-%print(f'X == {X}, Y == {Y}')
-%seed(20)
-% {
-% a = rand(2, 10)
-%  { 
-%    b = rand(a, 15)
-%    c = rand(b, 20) 
-%  } where c % 2 == 0
-% d = rand(1, 5)
- % } where d > a
-
+%minv = rand(20, 25)
+%maxv = rand(60, 70) where frac((maxv-minv) / 6) < 0.5
+%cw = round( (maxv - minv) / 6, 2)
+%cwr = round(cw) + 1
+%data = rands(minv+1, maxv-1, 18)
+%data.append(minv)
+%data.append(maxv)
+%data = singleshuffle(data)
+%table = showdataarray(data, 20)
+%rng = classranges(data, 6)
 %end
 1. (6 pts) Suppose $X$ is a continuous random variable. If $P(X < @a@) = @c@$ 
 and $P(X < @b@) = @d@$, then:\\[4mm]
