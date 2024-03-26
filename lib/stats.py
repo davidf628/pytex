@@ -74,5 +74,20 @@ def frequencies(data, classes):
         ret_freq.append(round(value))
     return ret_freq
 
+def relativefreq(freq):
+    total = sum(freq)
+    rel_freq = []
+    for val in freq:
+        rel_freq.append(val / total)
+    return rel_freq
+
+def cumulativefreq(freq):
+    total = 0
+    cum_freq = []
+    for val in freq:
+        cum_freq.append(total + val)
+        total += val
+    return cum_freq
+
 if __name__ == '__main__':
     stats_test()

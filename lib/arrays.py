@@ -5,7 +5,9 @@ def test_arrays():
     a = [1, 2, 3, 4, -1, 0, 15]
     print(calconarray(a, "x + 4"))
 
-def calconarray(array, func):
+def calconarray(array, func, variables):
+    for varname in variables.keys():
+        func = func.replace(varname, str(variables[varname]))
     newarray = array.copy()
     #return list(map(lambda x: eval(func), array))
     for i in range(0, len(array)):
