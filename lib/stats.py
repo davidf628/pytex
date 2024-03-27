@@ -3,8 +3,8 @@ import numpy as np
 import math
 
 def stats_test():
-    a, b, r, t, p  = linreg([1, 2, 3, 4], [5, 6, 7, 7])
-    print(f'a == {a}, b == {b}, r == {r}')
+    classes = classranges(6, minval=7, class_width=9)
+    print(classes)
 
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
@@ -30,39 +30,65 @@ def binommean (n, p):
 def binomstdev (n, p):
     return binom.stdev(n, p)
 
-def mean (data):
-    return np.mean(data)
+def mean (data, weights=[]):
+    if len(weights) == 0:
+        return np.mean(data)
+    else:
+        return np.average(data, weights=weights)
 
-def stdevp (data):
-    return np.std(data)
-
-def stdev (data):
+def stdevp (data, weights=[]):
+    if len(weights) == 0:
+        return np.std(data)
+    else:
+        wavg = np.average(data, weights=weights)
+        wvariance = np.average((data-wavg)**2, weights=weights)
+    return math.sqrt(wvariance)
+    
+def stdev (data, weights=[]):
     n = len(data)
-    return np.std(data) * math.sqrt(n/(n-1))
+    return stdevp(data, weights) * math.sqrt(n/(n-1))
 
 def linreg(x_data, y_data):
     result = linregress(x_data, y_data)
     r = result.rvalue
-    p = result.pvalue
+    #p = result.pvalue
     n = len(x_data)
     df = n - 1
     t = r * math.sqrt( (n - 2) / (1 - (r) ** 2))
     pval = 2 * tcdf( abs(t), 1E99, df)
     return (result.slope, result.intercept, result.rvalue, t, pval)
 
-def classranges(data, classes):
-    minval = float(min(data))
-    maxval = float(max(data))
-    class_width = math.floor( ((maxval - minval) / float(classes)) )
+def classranges(classes, data=[], minval="", class_width=""):
+
+    # if a data set is provided, compute the minimum value and
+    #  the class width from that
+    if len(data) > 0:
+        minval = float(min(data))
+        maxval = float(max(data))
+        class_width = math.floor( ((maxval - minval) / float(classes)) )
+    else:
+        # reduce this by one because we generate the classes from
+        #  the lcl to the ucl, not from one lcl to the next
+        class_width -= 1
+    
     ranges = []
     baseline = minval
     for _ in range(0, classes):
         ranges.append([ round(baseline), round(baseline + class_width) ])
         baseline += class_width + 1
+
     return ranges
 
+def getclasslimits(ranges):
+    lcl = []
+    ucl = []
+    for crange in ranges:
+        lcl.append(crange[0])
+        ucl.append(crange[1])
+    return (lcl, ucl)
+
 def frequencies(data, classes):
-    bins = classranges(data, classes)
+    bins = classranges(classes, data)
     freq = np.zeros(classes)
     for value in data:
         for i in range(0, len(bins)):
@@ -73,6 +99,16 @@ def frequencies(data, classes):
     for value in freq:
         ret_freq.append(round(value))
     return ret_freq
+
+def midpoints(ranges):
+    midpts = []
+    for crange in ranges:
+        lcl, ucl = crange[0], crange[1]
+        midpt = (ucl + lcl) / 2
+        if (ucl + lcl) % 2 == 0:
+            midpt = round(midpt)
+        midpts.append(midpt)
+    return midpts
 
 def relativefreq(freq):
     total = sum(freq)
