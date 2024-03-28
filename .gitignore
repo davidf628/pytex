@@ -1,3 +1,7 @@
 output
 .DS_Store
-lib/__pycache__
+lib/__pycache__/
+test.aux
+test.log
+test.pdf
+test.synctex.gz
