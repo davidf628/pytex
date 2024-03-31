@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PyTeX Documentation</title>
+</head>
+<body>
+
+  <h1>PyTeX Documentation</h1>
+  <hr>
+  
+  <h3>Randomization Functions</h3>
+  <ul>
+    <li><a href="#f_seed">seed</a><b>(value)</b></li>
+    <li><a href="#f_rand">rand</a><b>(min, max, [prec])</b></li>
+    <li><a href="$f_rands">rands</a><b>(min, max, n, [prec])</b></li>
+    <li><a href="#f_diffrands>">diffrands</a><b>(min, max, n, [prec])</b></li>
+
+    <li><a href="#f_nzrand">nzrand</a><b>(min, max, [prec])</b></li>
+    <li><a href="#f_nzrands">nzrands</a><b>(min, max, n, [prec])</b></li>
+    <li><a href="#f_nzdiffrands">nzdiffrands</a><b>(min, max, n, [prec])</b></li>
+
+    <li><a href="#f_randfrom">randfrom</a><b>(values)</b></li>
+    <li><a href="#f_randsfrom">randsfrom</a><b>(values, n)</b></li>
+    <li><a href="#f_diffrandsfrom">diffrandsfrom</a><b>(values, n)</b></li>
+
+    <li><a href="#f_singleshuffle">singleshuffle</a><b>(array)</b></li>
+    <li><a href="#f_jointshuffle">jointshuffle</a><b>(array1, array2)</b></li>
+
+    <li><a href="#f_rsgn">rsgn</a><b>()</b> * Not yet implemented</li>
+    <li><a href="#f_gcdrands">gcdrands</a><b>(min, max, n)</b> * Not yet implemented</li>
+    <li><a href="#f_randprime">randprime</a><b>(min, max)</b> * Not yet implemented</li>
+    <li><a href="#f_randprimes">randprimes</a><b>(min, max, n)</b> * Not yet implemented</li>
+
+  </ul>
+
+  <h2 id="f_seed">seed(value)</h2>
+  <ul>
+    <li><b>value</b> - integer</li>
+  </ul>
+  <p>Uses <i>value</i> as the initial value for the internal randomization process. This
+     would generally be defined at the start of a document and would be useful in making
+     different versions of a document to ensure that the randomized values would stay the 
+     same for repeated creations. For instance, if you have a document that can produce an
+     exam and a key, then you would need to ensure that when you create the exam and it's 
+     key that all the randomized values would be consistent from one run of pytex to the 
+     next. This would be the case if the randomization seed has been set at the start of
+     the document.</p>
+
+  <h2 id="f_rand">rand(min, max, [prec])</h2>
+  <ul>
+    <li><b>min</b> - float or int</li>
+    <li><b>max</b> - float or int</li>
+    <li><b>prec</b> - float [default value = 1]</li>
+  </ul>
+  <p>Choose a random value between the input parameters <i>min</i>, and <i>max</i>,
+     inclusive. If the optional paramter <i>prec</i> is provided, then a random value
+     to a specified number of decimal places will be used. The precision is provided as
+     a power of 10 such as: 1, 0.1, 0.01, 0.001, etc.</p>
+  <p>e.g. rand(20.5, 30.8, 0.1) might return 25.2 and rand(15, 25) might return 18</p>
+
+  <h2 id="f_rands">rands(min, max, n, [prec])</h2>
+  <ul>
+    <li><b>min</b> - float or int</li>
+    <li><b>max</b> - float or int</li>
+    <li><b>n</b> - int</li>
+    <li><b>prec</b> - float [default value = 1]</li>
+  </ul>
+  <p>Chooses a list of <i>n</i> random values between the specified <i>min</i>, and 
+     <i>max</i> values. In addition, if a value for the optional parameter <i>prec</i>
+     is provided, then random values to the specified number of decimals will be chosen.
+     The value of the precision is indicated as a power of 10 such as: 1, 0.1, 0.01, 0.001,
+     etc.</p>
+  <script>
+  </script>
+</body>
+</html>
