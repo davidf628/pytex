@@ -154,9 +154,10 @@
     <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
   </ul>
 
-  <h2 id="f_seed">seed(value)</h2>
+  <h2 id="f_seed">seed(value) => void</h2>
   <ul>
     <li><b>value</b> - integer</li>
+    <li>returns => <i>void</i></li>
   </ul>
   <p>Uses <i>value</i> as the initial value for the internal randomization process. This
      would generally be defined at the start of a document and would be useful in making
@@ -172,6 +173,7 @@
     <li><b>min</b> - float or int</li>
     <li><b>max</b> - float or int</li>
     <li><b>prec</b> - float [default value = 1]</li>
+    <li>returns => <i>float</i> or <i>int</i></li>
   </ul>
   <p>Choose a random value between the input parameters <i>min</i>, and <i>max</i>,
      inclusive. If the optional paramter <i>prec</i> is provided, then a random value
@@ -185,6 +187,7 @@
     <li><b>max</b> - float or int</li>
     <li><b>n</b> - int</li>
     <li><b>prec</b> - float [default value = 1]</li>
+    <li>returns => array of <i>float</i> or <i>int</i></li>
   </ul>
   <p>Chooses a list of <i>n</i> random values between the specified <i>min</i>, and 
      <i>max</i> values. In addition, if a value for the optional parameter <i>prec</i>
@@ -198,11 +201,64 @@
     <li><b>max</b> - float or int</li>
     <li><b>n</b> - int</li>
     <li><b>prec</b> - float [default value = 1]</li>
+    <li>returns => array of <i>float</i> or <i>int</i></li>
   </ul>
   <p>Selects a set of <i>n</i> random values between <i>min</i> and <i>max</i>, inclusive 
     and ensures that none of the values are equal. If the optioanl parameter <i>prec</i> is
     provided, then random values to a specified number of decimals will be chosen. The value
     of the precision is indicated with a power of 10 such as: 1, 0.1, 0.01, 0.001, etc.</p>
+
+    <h2 id="f_nzrand">nzrand(min, max, [prec])</h2>
+    <ul>
+      <li><b>min</b> - float or int</li>
+      <li><b>max</b> - float or int</li>
+      <li><b>prec</b> - float [default value = 1]</li>
+      <li>returns => <i>float</i> or <i>int</i></li>
+    </ul>
+    <p>Choose a random value between the input parameters <i>min</i>, and <i>max</i>,
+       inclusive, but will ensure that the selected value is not zero. If the optional 
+       paramter <i>prec</i> is provided, then a random value to a specified number of 
+       decimal places will be used. The precision is provided as a power of 10 such 
+       as: 1, 0.1, 0.01, 0.001, etc.</p>
+    
+    <h2 id="f_nzrands">nzrands(min, max, n, [prec])</h2>
+    <ul>
+        <li><b>min</b> - float or int</li>
+        <li><b>max</b> - float or int</li>
+        <li><b>n</b> - int</li>
+        <li><b>prec</b> - float [default value = 1]</li>
+        <li>returns => array of <i>float</i> or <i>int</i></li>
+    </ul>
+    <p>Chooses a list of <i>n</i> random values between the specified <i>min</i>, and 
+      <i>max</i> values, but will ensure that none of the selected values will be zero. 
+      In addition, if a value for the optional parameter <i>prec</i> is provided, then 
+      random values to the specified number of decimals will be chosen. The value of 
+      the precision is indicated as a power of 10 such as: 1, 0.1, 0.01, 0.001,
+      etc.</p>
+
+    <h2 id="f_nzdiffrands">nzdiffrands(min, max, n, [prec])</h2>
+    <ul>
+        <li><b>min</b> - float or int</li>
+        <li><b>max</b> - float or int</li>
+        <li><b>n</b> - int</li>
+        <li><b>prec</b> - float [default value = 1]</li>
+        <li>returns => array of <i>float</i> or <i>int</i></li>
+    </ul>
+    <p>Selects a set of <i>n</i> random values between <i>min</i> and <i>max</i>, inclusive 
+    and ensures that none of the values are equal or zero. If the optioanl parameter <i>prec</i> is
+    provided, then random values to a specified number of decimals will be chosen. The value
+    of the precision is indicated with a power of 10 such as: 1, 0.1, 0.01, 0.001, etc.</p>
+
+    <h2 id="f_randfrom">randfrom(values)</h2>
+    <ul>
+        <li><b>values</b> - str or list</li>
+        <li>returns => type varies depending on the items in <i>values</i></li>
+    </ul>
+    <p>Selects a random value from a list of items. The list can be an array, or a comma
+        separated string, and it will choose one of the available items. The advantage here
+        is that you can get random strings, numbers, or any other type of value that exists
+        within your list to choose from.
+    </p>
 
 </body>
 </html>
