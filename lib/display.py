@@ -5,19 +5,20 @@ def display_test():
 
 def showdataarray(array, columns=1, options=""):
     alignment = "|"
+    strarray = []
     for _ in range(0, columns):
         alignment += "c|"
 
     tablecode = '\\begin{tabular}' + '{' + alignment + '}\n  \\hline\n' 
     
     for i in range(0, len(array)):
-        array[i] = str(array[i])
+        strarray.append(str(array[i]))
 
-    while len(array) % columns != 0:
-        array.append('')
+    while len(strarray) % columns != 0:
+        strarray.append('')
 
-    for i in range(0, len(array), columns): 
-        row = ' & '.join(array[i:i+columns])
+    for i in range(0, len(strarray), columns): 
+        row = ' & '.join(strarray[i:i+columns])
         tablecode += '  ' + row + ' \\\\\n  \\hline\n'
 
     tablecode += '\\end{tabular}\n'

@@ -3,8 +3,8 @@ import numpy as np
 import math
 
 def stats_test():
-    classes = classranges(6, minval=7, class_width=9)
-    print(classes)
+    x = modes([5, 18, 9, 10, 4 ], [4, 7, 9, 9, 2])
+    print(f'x == {x}')
 
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
@@ -31,12 +31,93 @@ def binomstdev (n, p):
     return binom.stdev(n, p)
 
 def mean (data, weights=[]):
+    # ensure data is an array of float
+    data = list(map(lambda x: float(x), data))
+    weights = list(map(lambda x: float(x), weights))
     if len(weights) == 0:
         return np.mean(data)
     else:
         return np.average(data, weights=weights)
 
+def weightedsort(data, freq):
+    comb = list(zip(data, freq))
+    comb.sort()
+    data_sorted, freq_sorted = list(zip(*comb))
+    return [data_sorted, freq_sorted]
+
+def median (data, freq=[]):
+    # ensure data is an array of float
+    data = list(map(lambda x: float(x), data))
+    data.sort()
+    if len(freq) != 0: # do a weighted median
+        if len(data) != len(freq):
+            return float('NaN')
+        for val in freq:
+            if val < 0:
+                return float('NaN')
+                
+        data, freq = weightedsort(data, freq)
+        s = sum(freq)
+        mid = s / 2
+        csum = 0
+        i = 0
+        while (csum < mid) and (i < len(freq)):
+            csum += freq[i]
+            i += 1
+        return data[i - 1]
+    else: # do a regular median
+        data.sort()
+        mid = math.floor(len(data) / 2)
+        med = float
+        if len(data) % 2 == 0:
+            med = (data[mid - 1] + data[mid]) / 2
+        else:
+            med = data[math.floor(mid)]
+        return med
+
+def modes (data, freq=[]):
+    # ensure data is an array of float
+    data = list(map(lambda x: float(x), data))
+    freq = list(map(lambda x: float(x), freq))
+
+    if len(freq) == 0: # do a regular mode
+        counts = {}
+        for val in data:
+            if str(val) in counts:
+                counts[str(val)] += 1
+            else:
+                counts[str(val)] = 1
+        max_freq = -1
+        for key in counts.keys():
+            if counts[key] > max_freq:
+                max_freq = counts[key]
+        modes = set()
+        for key in counts.keys():
+            if counts[key] == max_freq:
+                modes.add(float(key))
+        if max_freq == 1:
+            return []
+        else:
+            return list(modes)
+
+    else: # do a weighted mode
+        max_freq = max(freq)
+        modes = []
+        for i in range(0, len(data)):
+            if freq[i] == max_freq:
+                modes.append(data[i])
+        if max_freq == 1:
+            return []
+        else:
+            return modes
+
+
+
+
 def stdevp (data, weights=[]):
+    # ensure data is an array of float
+    data = list(map(lambda x: float(x), data))
+    weights = list(map(lambda x: float(x), weights))
     if len(weights) == 0:
         return np.std(data)
     else:
@@ -45,10 +126,16 @@ def stdevp (data, weights=[]):
     return math.sqrt(wvariance)
     
 def stdev (data, weights=[]):
+    # ensure data is an array of float
+    data = list(map(lambda x: float(x), data))
+    weights = list(map(lambda x: float(x), weights))
     n = len(data)
     return stdevp(data, weights) * math.sqrt(n/(n-1))
 
 def linreg(x_data, y_data):
+    # ensure data is an array of float
+    x_data = list(map(lambda x: float(x), x_data))
+    y_data = list(map(lambda x: float(x), y_data))
     result = linregress(x_data, y_data)
     r = result.rvalue
     #p = result.pvalue
@@ -63,6 +150,8 @@ def classranges(classes, data=[], minval="", class_width=""):
     # if a data set is provided, compute the minimum value and
     #  the class width from that
     if len(data) > 0:
+        # ensure data is an array of float
+        data = list(map(lambda x: float(x), data))
         minval = float(min(data))
         maxval = float(max(data))
         class_width = math.floor( ((maxval - minval) / float(classes)) )
@@ -88,6 +177,8 @@ def getclasslimits(ranges):
     return (lcl, ucl)
 
 def frequencies(data, classes):
+    # ensure data is an array of float
+    data = list(map(lambda x: float(x), data))
     bins = classranges(classes, data)
     freq = np.zeros(classes)
     for value in data:
@@ -111,6 +202,8 @@ def midpoints(ranges):
     return midpts
 
 def relativefreq(freq):
+    # ensure data is an array of float
+    freq = list(map(lambda x: float(x), freq))
     total = sum(freq)
     rel_freq = []
     for val in freq:
@@ -118,6 +211,8 @@ def relativefreq(freq):
     return rel_freq
 
 def cumulativefreq(freq):
+    # ensure data is an array of float
+    freq = list(map(lambda x: float(x), freq))
     total = 0
     cum_freq = []
     for val in freq:

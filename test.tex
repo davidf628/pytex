@@ -10,6 +10,7 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage{ifthen}
 \usepackage{xcolor}
+\usepackage{tasks}
 
 % change this value to produce answer keys for exams
 \newboolean{make_key}
@@ -48,25 +49,28 @@
 
 \newquestion
 %variables
-%minv = rand(20, 25)
-%maxv = rand(60, 70) where frac((maxv-minv) / 6) < 0.5
-%cw = round( (maxv - minv) / 6, 2)
-%cwr = round(cw) + 1
-%data = rands(minv+1, maxv-1, 18)
-%data.append(minv)
-%data.append(maxv)
-%data = singleshuffle(data)
-%table = showdataarray(data, 20)
-%rng = classranges(data, 6)
+%data = rands(18, 55, 8)
+%table = showdataarray(data)
+%avg = mean(data)
+%med = median(data)
+%mode = modes(data)
+%std = stdev(data)
 %end
-1. (6 pts) Suppose $X$ is a random variable. If $P(X < @a@) = @c@$ 
-and $P(X < @b@) = @d@$, then:\\[4mm]
+\item (6 pts) The highway mileage (mpg) for a sample of 8 different models
+of a car company can be found below. Find the mean, median, mode, and
+standard deviation. Round to one decimal place as needed. \\[2mm]
 
-\begin{enumerate}[a.]
-    \item $P(X > @a@) =$ \iskey{$1 - @c@ = @ round(1 - c, 2) @$} \\[4mm]
-    \item $P(X > @b@) =$ \iskey{$1 - @d@ = @round(1 - d, 2)@$} \\[4mm]
-    \item $P(@a@ < X < @b@) =$ \iskey{$@d@ - @c@ = @round(d - c, 2)@$} \\[4mm]
-\end{enumerate}
+@table@
+
+\vspace{2mm}
+
+\begin{tasks}[label={}](2)
+  \task Mean = \rule{4cm}{0.15mm}
+  \task Range = \rule{4cm}{0.15mm}  \\[4mm]
+  \task Median = \rule{4cm}{0.15mm}
+  \task Standard Deviation = \rule{4cm}{0.15mm} \\[4mm]
+  \task Mode = \rule{4cm}{0.15mm}
+\end{tasks}
 
 \newquestion
 %variables
