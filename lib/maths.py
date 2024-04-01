@@ -1,4 +1,6 @@
 
+import math
+
 def test_maths():
     print(f'frac(-22.55) == {frac(-22.55)}')
 
@@ -21,6 +23,11 @@ def evalfunc(f, varstr, *vals):
 
 def frac(val):
     return abs(val) % 1
+
+def reducefraction(num, denom):
+    divisor = math.gcd(num, denom)
+    return [num // divisor, denom // divisor]
+
 
 if __name__ == '__main__':
     test_maths()

@@ -115,6 +115,8 @@
     <li><a href="#f_sgn">sgn</a>(value)</li>
     <li><a href="#f_sign">sign</a>(value)</li>
     <li><a href="#f_frac">frac</a>(value)</li>
+    <li><a href="#f_gcd">gcd</a>(values)</li>
+    <li><a href="#f_reducefraction">reducefraction</a>(numerator, denominator)</li>
     <li><a href="#f_evalfunc">evalfunc</a>(f, variables)</li>
     <li><a href="#f_isnumber">isnumber</a>(value) * Not yet implemented</li>
   </ul>
@@ -260,5 +262,25 @@
         within your list to choose from.
     </p>
 
+    <h2 id="f_gcd">gcd(values)</h2>
+    <ul>
+        <li><b>values</b> - int...</li>
+        <li>returns <i>int</i></li>
+    </ul>
+    <p>Calculates the greatest common divisor for all of the input values. This can be any
+       number of values, separated by commas.
+    </p>
+    <p>for example, gcd(12, 18) would return 3, and gcd(4, 12, 22) would return 2</p>
+
+    <h2 id="f_reducefraction">reducefraction(numerator, denominator)</h2>
+    <ul>
+        <li><b>numerator</b> - int</li>
+        <li><b>denominator</b> - int</li>
+        <li>returns array: <i>[int, int]</i></li>
+    </ul>
+    <p>Reduces a fraction to its lowest terms. The return is an array with two elements,
+        the first of which is the numerator of the reduced fraction, and the second is the
+        denominator of the reduced fraction.
+    </p>
 </body>
 </html>
