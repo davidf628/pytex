@@ -6,7 +6,7 @@ def test_arrays():
     print(calconarray(a, "x + 4"))
 
 
-def calconarray(array, func, variables):
+def calconarray(array, func, variables={}):
     for varname in variables.keys():
         func = func.replace(varname, str(variables[varname]))
     newarray = array.copy()

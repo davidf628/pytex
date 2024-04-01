@@ -30,7 +30,7 @@ while (__lcv < len(__data)):
         __debugvar = 15
 
     # search for variable declarations
-    if isNewVariableSet(__data[__lcv]):
+    if isNewPythonCommands(__data[__lcv]):
 
         __lcv += 1 # advance past the variable declaration
         stack = [] # start a new stack for where blocks
@@ -39,7 +39,7 @@ while (__lcv < len(__data)):
         #  order to stop processing at 200 times, which prevents infinite loops
         repeatcounter = {}
 
-        while not isEndVariableSet(__data[__lcv]):
+        while not isEndPythonCommands(__data[__lcv]):
 
             command = uncommentLine(__data[__lcv])
 

@@ -99,5 +99,8 @@ def jointshuffle(array1, array2):
         i += 1
     return [array1, array2]
 
+def randsgn():
+    return randfrom([-1, 1])
+
 if __name__ == '__main__':
     test()
