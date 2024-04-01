@@ -262,6 +262,38 @@
         within your list to choose from.
     </p>
 
+    <h2 id="f_randsfrom">randsfrom(values, n)</h2>
+    <ul>
+        <li><b>values</b> - str or list</li>
+        <li><b>n</b> - int</li>
+        <li>returns => array of selected items whose type varies depending on the items 
+            in <i>values</i></li>
+    </ul>
+    <p>Selects <i>n</i> random values from a list of items. The list can be an array, or a comma
+        separated string, and it will choose from the available items. 
+    </p>
+
+    <h2 id="f_diffrandsfrom">diffrandsfrom(values, n)</h2>
+    <ul>
+        <li><b>values</b> - str or list</li>
+        <li><b>n</b> - int</li>
+        <li>returns => array of selected items whose type varies depending on the items 
+            in <i>values</i></li>
+    </ul>
+    <p>Selects <i>n</i> random values from a list of items, but this function will ensure that
+        the selected items are unique. The list to select from can be an array, or a comma
+        separated string, and it will choose among the available items. 
+    </p>
+
+    <h2 id="singleshuffle">singleshuffle(array)</h2>
+    <ul>
+        <li><b>array</b> - array of <i>any</i></li>
+        <li>returns => array of <i>any</i></li>
+    </ul>
+    <p>Repositions the items within an array in a randomized order. All the items will be
+        preserved, only the position of the items will be changed.
+    </p>
+
     <h2 id="f_gcd">gcd(values)</h2>
     <ul>
         <li><b>values</b> - int...</li>
@@ -282,5 +314,47 @@
         the first of which is the numerator of the reduced fraction, and the second is the
         denominator of the reduced fraction.
     </p>
+
+    <h2 id="f_showdataarray">showdataarray(array, [columns=1], [options=""])</h2>
+    <ul>
+        <li><b>array</b> - <i>[float]</i></li>
+        <li><b>columns</b> - <i>int</i></b></li>
+        <li><b>options</b> - <i>object</i></li>
+        <li>returns <i>void</i></li>
+    </ul>
+    <p>Creates a rectangular table to display numeric or string values. The table is
+        simple, it is a grid with a specified number of <i>columns</i> and however many
+        rows are needed to display all the data. Currently, the data is fully centered
+        and there are borders drawn around all values.
+    </p>
+
+    <li><a href="f_showarrays">showarrays</a>(title1, array1, title2, array2, [etc.])</li>
+    <h2 id="f_showarrays">(title1, array1, title2, array2, etc...)</h2>
+    <ul>
+        <li><b>title1</b> - <i>str</i></li>
+        <li><b>array1</b> - <i>[float]</i></li>
+        <li><b>title2</b> - <i>str</i></li>
+        <li><b>array2</b> - <i>[float]</i></li>
+        <li>returns <i>LaTeX table object</i></li>
+    </ul>
+    <p>Creates a table for multiple arrays arranged vertically. The title string is created
+        in a bold font and all the data within its corresponding array will appear below. 
+        Additional columns will be created for any additional title/array pairs.
+    </p>
+
+    <li><a href="f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
+    <h2 id="f_showhorizarrays">(title1, array1, title2, array2, etc...)</h2>
+    <ul>
+        <li><b>title1</b> - <i>str</i></li>
+        <li><b>array1</b> - <i>[float]</i></li>
+        <li><b>title2</b> - <i>str</i></li>
+        <li><b>array2</b> - <i>[float]</i></li>
+        <li>returns <i>LaTeX table object</i></li>
+    </ul>
+    <p>Creates a table for multiple arrays arranged horizontally. The title string is created
+        in a bold font and all the data within its corresponding array will appear to the right. 
+        Additional rows are created for any additional title/array pairs.
+    </p>
+
 </body>
 </html>
