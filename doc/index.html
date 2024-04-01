@@ -3,6 +3,42 @@
 <head>
   <meta charset="utf-8">
   <title>PyTeX Documentation</title>
+  <style>
+    body {
+        --txtColor : black;
+        --Bg_color : whitesmoke;
+
+        color            : var(--txtColor);
+        background-color : var(--Bg_color);
+    }
+    h2 {
+        --h3color : black;
+        color : var(--h3color);
+    }
+    p {
+        font-size : 14pt;
+    }
+    li {
+        font-size : 14pt;
+    }
+    a:link {
+        --linkColor : blue;
+        color : var(--linkColor);
+    }
+    @media (prefers-color-scheme: dark) {
+        body {
+            --txtColor : rgb(204, 211, 204);
+            --Bg_color : #1d1e22;
+        }
+        a:link {
+            --linkColor : lightgreen;
+        }
+        h2 {
+            --h3color : orange;
+        }
+    }
+
+  </style>
 </head>
 <body>
 
@@ -32,6 +68,90 @@
     <li><a href="#f_randprime">randprime</a><b>(min, max)</b> * Not yet implemented</li>
     <li><a href="#f_randprimes">randprimes</a><b>(min, max, n)</b> * Not yet implemented</li>
 
+  </ul>
+
+  <h3>Array Functions</h3>
+
+  <ul>
+    <li><a href="#f_len">len</a>(array)</li>
+    <li><a href="#f_sorta">sorta</a>(array)</li>
+    <li><a href="#f_sortd">sortd</a>(array)</li>
+    <li><a href="#f_calconarray">calconarray</a>(array, calculation, variables)</li>
+    <li><a href="#f_pushfirst">pushfirst</a>(list, item) * Not yet implemented</li>
+    <li><a href="#f_pushlast">pushlast</a>(list, item) * Not yet implemented</li>
+    <li><a href="#f_pushat">pushat</a>(list, item, index) * Not yet implemented</li>
+    <li><a href="#f_popfirst">popfirst</a>(list) * Not yet implemented</li>
+    <li><a href="#f_poplast">poplast</a>(list) * Not yet implemented</li>
+    <li><a href="#f_popat">popat</a>(list, index) * Not yet implemented</li>
+    <li><a href="#f_peekfirst">peekfirst</a>(list) * Not yet implemented</li>
+    <li><a href="#f_peeklast">peeklast</a>(list) * Not yet implemented</li>
+    <li><a href="#f_peekat">peekat</a>(list, index) * Not yet implemented</li>
+    <li><a href="#f_clear">clear</a>() * Not yet implemented</li>
+    <li><a href="#f_count">count</a>(item) * Not yet implemented</li>
+    <li><a href="#f_join">join</a>(array, separator) * Not yet implemented</li>
+    <li><a href="#f_indexof">indexof</a>(item) * Not yet implemented</li>
+    <li><a href="#f_indiciesof">indiciesof</a>(item) * Not yet implemented</li>
+    <li><a href="#f_remove">remove</a>(item) * Not yet implemented</li>
+    <li><a href="#f_removall">removeall</a>(item) * Not yet implemented</li>
+    <li><a href="#f_reverse">reverse</a>(list) * Not yet implemented</li>
+    <li><a href="#f_split">split</a>(string) * Not yet implemented</li>
+    <li><a href="#f_arraytostr">arraytostr</a>(array) * Not yet implemented</li>
+    <li><a href="#f_fillarray">fillarray</a>(value, n) * Not yet implemented</li>
+    <li><a href="#f_ones">ones</a>(n) * Not yet implemented</li>
+    <li><a href="#f_zeros">zeros</a>(n)  * Not yet implemented</li>
+    <li><a href="#f_arange">arange</a>(min, max)</li>
+
+  </ul>
+
+  <h3>String Functions</h3>
+
+  <ul>
+    <li></li>
+  </ul>
+
+  <h3>Math Functions</h3>
+
+  <ul>
+    <li><a href="#f_sgn">sgn</a>(value)</li>
+    <li><a href="#f_sign">sign</a>(value)</li>
+    <li><a href="#f_frac">frac</a>(value)</li>
+    <li><a href="#f_evalfunc">evalfunc</a>(f, variables)</li>
+    <li><a href="#f_isnumber">isnumber</a>(value) * Not yet implemented</li>
+  </ul>
+
+  <h3>Statistical Functions</h3>
+
+  <ul>
+    <li>normalcdf(lower, upper, mean=0, stdev=1)</li>
+    <li>invnorm(p, mean=0, stdev=1)</li>
+    <li>tcdf(lower, upper, df, mean=0, stdev=1)</li>
+    <li>invt(p, df, mean=0, stdev=1)</li>
+    <li>binompdf (n, p, x)</li>
+    <li>binomcdf (n, p, x)</li>
+    <li>binommean (n, p)</li>
+    <li>binomstdev (n, p)</li>
+    <li>mean (data, weights=[])</li>
+    <li>weightedsort(data, freq)</li>
+    <li>median (data, freq=[])</li>
+    <li>modes (data, freq=[])</li>
+    <li>stdevp (data, weights=[])</li>
+    <li>stdev (data, weights=[])</li>
+    <li>linreg(x_data, y_data)</li>
+    <li>classranges(classes, data=[], minval="", class_width="")</li>
+    <li>getclasslimits(ranges)</li>
+    <li>frequencies(data, classes)</li>
+    <li>midpoints(ranges)</li>
+    <li>relativefreq(freq)</li>
+    <li>cumulativefreq(freq)</li>
+
+  </ul>
+
+  <h3>Display Functions</h3>
+  
+  <ul>
+    <li><a href="#f_showdataarray">showdataarray</a>(array, [columns=1], [options=""])</li>
+    <li><a href="#f_showarrays">showarrays</a>(title1, array1, title2, array2, [etc.])</li>
+    <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
   </ul>
 
   <h2 id="f_seed">seed(value)</h2>

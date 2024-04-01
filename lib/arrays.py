@@ -5,6 +5,7 @@ def test_arrays():
     a = [1, 2, 3, 4, -1, 0, 15]
     print(calconarray(a, "x + 4"))
 
+
 def calconarray(array, func, variables):
     for varname in variables.keys():
         func = func.replace(varname, str(variables[varname]))
@@ -14,6 +15,16 @@ def calconarray(array, func, variables):
         evalstr = func.replace('x', str(newarray[i]))
         newarray[i] = eval(evalstr)
     return newarray
+
+
+def sorta(array):
+    array.sort()
+    return array
+
+
+def sortd(array):
+    array.sort(reverse = True)
+    return array
 
 if __name__ == '__main__':
     test_arrays()
