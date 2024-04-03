@@ -161,6 +161,7 @@
     <li><a href="#f_showdataarray">showdataarray</a>(array, [columns=1], [options=""])</li>
     <li><a href="#f_showarrays">showarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
+    <li><a href="#f_normalcurve">normalcurve</a>(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</li>
   </ul>
 
   <h2 id="f_seed">seed(value) => void</h2>
@@ -367,7 +368,6 @@
         and there are borders drawn around all values.
     </p>
 
-    <li><a href="f_showarrays">showarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <h2 id="f_showarrays">(title1, array1, title2, array2, etc...)</h2>
     <ul>
         <li><b>title1</b> - <i>str</i></li>
@@ -382,7 +382,6 @@
         Additional columns will be created for any additional title/array pairs.
     </p>
 
-    <li><a href="f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <h2 id="f_showhorizarrays">(title1, array1, title2, array2, etc...)</h2>
     <ul>
         <li><b>title1</b> - <i>str</i></li>
@@ -395,6 +394,26 @@
         Creates a table for multiple arrays arranged horizontally. The title string is created
         in a bold font and all the data within its corresponding array will appear to the right. 
         Additional rows are created for any additional title/array pairs.
+    </p>
+
+    <h2 id="f_normalcurve">(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</h2>
+    <ul>
+        <li><b>leftbound</b> - <i>float</i></li>
+        <li><b>rightbound</b> - <i>float</i></li>
+        <li><b>mean</b> - <i>float</i> (defaults to 0)</li>
+        <li><b>stdev</b> - <i>float</i> (defaults to 1)</li>
+        <li><b>twotail</b> - <i>boolean</i> (defaults to False)</li>
+        <li>returns <i>LaTeX tikz object</i></li>
+    </ul>
+    <p>
+        Creates a plot for a normal distribution curve that can be shaded between the values of
+        <i>leftbound</i>, and <i>rightbound</i>. If <i>twotail</i> is set to true, then the 
+        regions to the left of <i>leftbound</i> and to the right of <i>rightbound</i> will be
+        shaded. A value for the <i>mean</i> and <i>stdev</i> for the distribution can be provided
+        and the drawing will shift accordingly.
+        If you only want the normal distribuion curve to be drawn, you can just set the left and
+        right bounds to both be greater than +4 because any value more than 4 standard deviations
+        from the mean are ignored.
     </p>
 
 </body>

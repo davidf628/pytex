@@ -107,5 +107,47 @@ def showarrays(*args):
     return tablecode
 
 
+def normalcurve(leftbound, rightbound, mean=0, stdev=1, twotail=False):
+    
+    funcstr = r"normal(\x,\m,\s) = 1 / (\s * sqrt(2 * pi)) * exp(-(\x-\m)^2/(2*\s^2));"
+    func = f'normal(x, {mean}, {stdev})'
+    lowerlimit = -4 * stdev + mean
+    upperlimit = 4 * stdev + mean
+
+    labels = f'{mean}'
+    if leftbound < lowerlimit:
+        leftbound = lowerlimit
+    else:
+        labels += f'{leftbound}'
+    
+    if rightbound > upperlimit:
+        rightbound = upperlimit
+    else:
+        labels += f'{rightbound}'
+
+    plotstr = r"\begin{tikzpicture}[ declare function = {" +funcstr+ r"} ]" + "\n"
+    plotstr += r"   \begin{axis}[" + "\n"
+    plotstr += r"      no markers, domain=-4:4, samples=100," + "\n"
+    plotstr += r"      axis lines*=left, xlabel=$x$, ylabel=$y$," + "\n"
+    plotstr += r"      every axis y label/.style={at=(current axis.above origin),anchor=south}," + "\n"
+    plotstr += r"      every axis x label/.style={at=(current axis.right of origin),anchor=west}," + "\n"
+    plotstr += r"      height=5cm, width=12cm," + "\n"
+    plotstr += r"      xtick={" + labels + r"}, ytick=\empty," + "\n"
+    plotstr += r"      enlargelimits=false, clip=false, axis on top," + "\n"
+    plotstr += r"      grid = major ]" + "\n"
+    if twotail:
+        domain = f'{lowerlimit}:{leftbound}'
+        plotstr += r"      \addplot [fill=cyan!20, draw=none, domain=" + domain + r"] {" + func + r"} \closedcycle;" + "\n"
+        domain = f'{rightbound}:{upperlimit}'
+        plotstr += r"      \addplot [fill=cyan!20, draw=none, domain=" + domain + r"] {" + func + r"} \closedcycle;" + "\n"
+    else:
+        domain = f'{leftbound}:{rightbound}'
+        plotstr += r"      \addplot [fill=cyan!20, draw=none, domain=" + domain + r"] {" + func + r"} \closedcycle;" + "\n"
+    plotstr += r"      \addplot [very thick,cyan!50!black] {" + func + r"};" + "\n"
+    plotstr += r"    \end{axis}" + "\n"
+    plotstr += r"\end{tikzpicture}" + "\n"
+
+    return plotstr
+
 if __name__ == '__main__':
     display_test()
