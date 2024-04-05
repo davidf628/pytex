@@ -330,6 +330,7 @@
         than 2.4.
     </p>
 
+    <!-- MATH MACROS --------------------------------------------------------->
 
     <h2 id="f_gcd">gcd(values)</h2>
     <ul>
@@ -353,6 +354,103 @@
         the first of which is the numerator of the reduced fraction, and the second is the
         denominator of the reduced fraction.
     </p>
+
+    <h2 id="f_sgn">sgn(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i></li>
+        <li>returns <i>int - either -1 or +1</i></li>
+    </ul>
+    <p>
+        Checks to see if the input <i>value</i> is positive or negative and returns +1 or -1
+        respectively.
+    </p>
+
+    <h2 id="f_sign">sign(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i></li>
+        <li>returns <i>str - either "-" or "+"</i></li>
+    </ul>
+    <p>
+        Similar to <i>sgn(x)</i>, except that a string is returned rather than a float value.
+        This can be useful when typesetting randomized polynomials in order to ensure the display
+        of the polynomial is nicer.<br/>
+        For instance, if <i>a</i> = -5, then "y=2x+a" will display as: "y=2x+-5", but if you use
+        "y=2x sign(a)" then it will display as "y=2x-5".
+    </p>
+
+    <h2 id="f_frac">frac(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i></li>
+        <li>returns <i>float</i></li>
+    </ul>
+    <p>
+        Returns the fractional (decimal) portion of a float. <br/><br/>
+        e.g. frac(21.51825) returns 0.51825
+    </p>
+
+    <h2 id="f_abs">abs</a>(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>float or int</i></li>
+        <li>returns <i>float or int</i></li>
+    </ul>
+    <p>
+       Returns the absolute value of a floating point number or an integer. For
+       whatever the input <i>value</i> is, the return is an equivalent number in
+       magnitude, but is always positive. 
+    </p>
+
+    <h2 id="f_round">round</a>(value, [decimals = 0])</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i></li>
+        <li><b>decimals</b> - <i>int</i> (defaults to 0)</li>
+        <li>returns <i>float or int</i></li>
+    </ul>
+    <p>
+       Rounds a floating point number to a specified number of <i>decimals</i>.
+       If no <i>decimals</i> are provided, the default is to round to an integer.
+       This function currently uses Python's method of rounding which is called
+       rounding half-even. So 0.5 on an even number will round down, and 0.5 on
+       an odd value will round up. Since this is so different from student
+       expectations, I will eventually override this function for my own that
+       always round 0.5 up.
+    </p>
+
+    <h2 id="f_ceil">ceil</a>(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i></li>
+        <li>returns <i>int</i></li>
+    </ul>
+    <p>
+        Removes the decimal portion of a floating point number and then returns
+        the next integer value. If an integer value is provided, then it is 
+        simply returned unchanged.
+    </p>
+
+    <h2 id="f_floor">floor</a>(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i></li>
+        <li>returns <i>int</i></li>
+    </ul>
+    <p>
+        Removes the decimal portion of a floating point number and returns the
+        integer portion. If an integer is provided, then it is returned unchanged.
+    </p>
+
+    <h2 id="f_evalfunc">evalfunc(f, variables)</h2>
+    <ul>
+        <li><b>f</b> - <i>str</i></li>
+        <li><b>variables</b> - <i>dict</i></li>
+        <li>returns <i>float</i></li>
+    </ul>
+    <p>
+        Takes a function expressed in as a string and evaluates that function
+        to a number. If any variables are contained in the expression, the
+        values must be specified in a <i>dict</i> object so that the values
+        can be substituted.<br/><br/>
+        e.g. evalfunc("2*x**2 - 4*x+15", {'x': -1}) returns 21
+    </p>
+
+    <!-- DISPLAY MACROS ------------------------------------------------------>
 
     <h2 id="f_showdataarray">showdataarray(array, [columns=1], [options=""])</h2>
     <ul>
