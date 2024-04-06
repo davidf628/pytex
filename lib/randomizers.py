@@ -1,4 +1,5 @@
 import random
+import math
 
 def test():
     for _ in range(0, 50):
@@ -11,8 +12,8 @@ def seed(val):
 
 def rand(min, max, prec=1):
     dec = 0 if prec == 1 else len(str(prec)) - 2
-    lowval = round(min / prec, dec)
-    highval = round(max / prec, dec)
+    lowval = math.floor(min / prec)
+    highval = math.floor(max / prec)
     return round(random.randint(lowval, highval) * prec, dec)
 
 

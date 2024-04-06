@@ -49,12 +49,16 @@
 
 \newquestion
 %python
-%data = rands(18, 55, 8)
-%table = showdataarray(data)
-%avg = mean(data)
-%med = median(data)
-%mode = modes(data)
-%std = stdev(data)
+%m = rand(45.0, 53.0, 0.1)
+%s = rand(2.0, 5.0, 0.1)
+%x1 = rand(m - 3 * s, m + 3 * s, 0.1)
+%n = rand(32, 48)
+%x2 = round(rand(m - 3 * s / sqrt(n), m + 3 * s / sqrt(n), 0.1), 1)
+%p = rand(0.2, 0.8, 0.01)
+%ppct = round(p * 100)
+%ans1 = round(normalcdf(x1, 1E99, m, s), 3)
+%ans2 = round(normalcdf(-1E99, x2, m, s / sqrt(n) ), 3)
+%ans3 = invnorm(p, m, s)
 %end
 \item (6 pts) The highway mileage (mpg) for a sample of 8 different models
 of a car company can be found below. Find the mean, median, mode, and
