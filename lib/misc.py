@@ -85,11 +85,12 @@ def isEndPythonCommands(s):
     return re.search(r'^\s*\%\s*end\s*$', s, re.IGNORECASE) != None
 
 def extract_variable_names(code):
+    variable_names = []
     pattern = r'(?<!\.)\b([a-zA-Z_]\w*(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?)\s*=\s*\.*'
     is_assignment_statement = bool(re.search(pattern, code))
 
     if is_assignment_statement:
-        variables, _ = code.split('=')
+        variables = code.split('=')[0]
         variable_names = variables.split(',')
         for i in range(0, len(variable_names)):
             variable_names[i] = re.match(r'(?<!\.)\s*\b([a-zA-Z_]\w*)(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?\s*', variable_names[i]).group(1)
@@ -108,6 +109,7 @@ def test_extract_variable_names():
     code9 = "arr[2] = arr[0] + arr[1]"
     code10 = "m = rand(25, 36)"
     code11 = "avg = mean([a, b, c])"
+    code12 = "sol = 'a. Reject $H_0$' if (p <= a) else 'b. Fail to reject $H_0$'"
 
     print(extract_variable_names(code1))  # Output: ['x']
     print(extract_variable_names(code2))  # Output: ['y']
@@ -120,6 +122,7 @@ def test_extract_variable_names():
     print(extract_variable_names(code9))  # Output: ['arr']
     print(extract_variable_names(code10))  # Output: ['m']
     print(extract_variable_names(code11))  # Output: ['avg']
+    print(extract_variable_names(code12))  # Output: ['sol']
 
 def command_contains_reserved_word(command):
     variables = extract_variable_names(command)
@@ -127,16 +130,6 @@ def command_contains_reserved_word(command):
         if variable in internal_declarations:
             return variable
     return False
-
-def my_exec(command, line):
-    variables = extract_variable_names(command)
-    for variable in variables:
-        if variable in internal_declarations:
-            print(f'ERROR on line {line}: {command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
-            quit()
-        else:
-            exec(command)
-
 
 internal_declarations = ['normalcdf', 'invnorm', 'tcdf', 'invt', 'mean']
 

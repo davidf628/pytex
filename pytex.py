@@ -55,7 +55,12 @@ while (__lcv < len(__data)):
                     
                 else:
                     blockstart = __lcv
-                    my_exec(command, __lcv+1)
+                    variables = extract_variable_names(command)
+                    for variable in variables:
+                        if variable in internal_declarations:
+                            print(f'ERROR on line {__lcv+1}: {command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
+                            quit()
+                    exec(command)
 
                 if blockstart in repeatcounter.keys():
                     repeatcounter[blockstart] += 1
@@ -80,7 +85,12 @@ while (__lcv < len(__data)):
 
             else:
                 try:
-                    my_exec(command, __lcv+1)
+                    variables = extract_variable_names(command)
+                    for variable in variables:
+                        if variable in internal_declarations:
+                            print(f'ERROR on line {__lcv+1}: {command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
+                            quit()
+                    exec(command)
                     __lcv += 1
                 except Exception as e:
                     print(f'ERROR on line {__lcv+1}: {command}\n ==> {e}')
@@ -108,4 +118,3 @@ __data = removeVariableDeclarations(__data)
 with open(outputfile, 'w') as f:
     for line in __data:
         f.write(line)
-
