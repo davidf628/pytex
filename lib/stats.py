@@ -3,8 +3,8 @@ import numpy as np
 import math
 
 def stats_test():
-    x = modes([5, 18, 9, 10, 4 ], [4, 7, 9, 9, 2])
-    print(f'x == {x}')
+    a, b, r, t, p = linreg([951,1011,1031,954,964],[115,46,37,141,86])
+    print(f'a == {a}, b == {b}, r == {r}, t == {t}, p == {p}')
 
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
@@ -138,12 +138,10 @@ def linreg(x_data, y_data):
     y_data = list(map(lambda x: float(x), y_data))
     result = linregress(x_data, y_data)
     r = result.rvalue
-    #p = result.pvalue
     n = len(x_data)
     df = n - 1
     t = r * math.sqrt( (n - 2) / (1 - (r) ** 2))
-    pval = 2 * tcdf( abs(t), 1E99, df)
-    return (result.slope, result.intercept, result.rvalue, t, pval)
+    return (result.slope, result.intercept, result.rvalue, t, result.pvalue)
 
 def classranges(classes, data=[], minval="", class_width=""):
 
