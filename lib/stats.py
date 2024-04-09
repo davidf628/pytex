@@ -15,7 +15,7 @@ def invnorm (p, mean=0, stdev=1):
 def tcdf (lower, upper, df, mean=0, stdev=1):
     return t.cdf(upper, df, mean, stdev) - t.cdf(lower, df, mean, stdev)
 
-def tinv (p, df, mean=0, stdev=1):
+def invt (p, df, mean=0, stdev=1):
     return t.ppf(p, df, mean, stdev)
 
 def binompdf (n, p, x):

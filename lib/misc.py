@@ -1,7 +1,7 @@
 import re
 
 def test():
-    print(getCommand('% a = rand(2, 5) where a > b'))
+    test_extract_variable_names()
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
@@ -83,6 +83,62 @@ def isNewPythonCommands(s):
 
 def isEndPythonCommands(s):
     return re.search(r'^\s*\%\s*end\s*$', s, re.IGNORECASE) != None
+
+def extract_variable_names(code):
+    pattern = r'(?<!\.)\b([a-zA-Z_]\w*(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?)\s*=\s*\.*'
+    is_assignment_statement = bool(re.search(pattern, code))
+
+    if is_assignment_statement:
+        variables, _ = code.split('=')
+        variable_names = variables.split(',')
+        for i in range(0, len(variable_names)):
+            variable_names[i] = re.match(r'(?<!\.)\s*\b([a-zA-Z_]\w*)(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?\s*', variable_names[i]).group(1)
+    
+    return variable_names
+
+def test_extract_variable_names():
+    code1 = "x = 5"
+    code2 = "y = x + 3"
+    code3 = "z = 'hello'"
+    code4 = "arr = [1, 2, 3]"
+    code5 = "a, b, c = 1, 2, 3"
+    code6 = "d, e, f = some_function()"
+    code7 = "arr[0] = 10"
+    code8 = "arr[1] = y"
+    code9 = "arr[2] = arr[0] + arr[1]"
+    code10 = "m = rand(25, 36)"
+    code11 = "avg = mean([a, b, c])"
+
+    print(extract_variable_names(code1))  # Output: ['x']
+    print(extract_variable_names(code2))  # Output: ['y']
+    print(extract_variable_names(code3))  # Output: ['z']
+    print(extract_variable_names(code4))  # Output: ['arr']
+    print(extract_variable_names(code5))  # Output: ['a', 'b', 'c']
+    print(extract_variable_names(code6))  # Output: ['d', 'e', 'f']
+    print(extract_variable_names(code7))  # Output: ['arr']
+    print(extract_variable_names(code8))  # Output: ['arr']
+    print(extract_variable_names(code9))  # Output: ['arr']
+    print(extract_variable_names(code10))  # Output: ['m']
+    print(extract_variable_names(code11))  # Output: ['avg']
+
+def command_contains_reserved_word(command):
+    variables = extract_variable_names(command)
+    for variable in variables:
+        if variable in internal_declarations:
+            return variable
+    return False
+
+def my_exec(command, line):
+    variables = extract_variable_names(command)
+    for variable in variables:
+        if variable in internal_declarations:
+            print(f'ERROR on line {line}: {command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
+            quit()
+        else:
+            exec(command)
+
+
+internal_declarations = ['normalcdf', 'invnorm', 'tcdf', 'invt', 'mean']
 
 if __name__ == '__main__':
     test()

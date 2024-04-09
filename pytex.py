@@ -55,7 +55,7 @@ while (__lcv < len(__data)):
                     
                 else:
                     blockstart = __lcv
-                    exec(command)
+                    my_exec(command, __lcv+1)
 
                 if blockstart in repeatcounter.keys():
                     repeatcounter[blockstart] += 1
@@ -80,8 +80,7 @@ while (__lcv < len(__data)):
 
             else:
                 try:
-                    #print(f'Globals == \n{globals()}\n\nLocals == \n{locals()}')
-                    exec(command)
+                    my_exec(command, __lcv+1)
                     __lcv += 1
                 except Exception as e:
                     print(f'ERROR on line {__lcv+1}: {command}\n ==> {e}')
