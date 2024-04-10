@@ -139,7 +139,6 @@ def linreg(x_data, y_data):
     result = linregress(x_data, y_data)
     r = result.rvalue
     n = len(x_data)
-    df = n - 1
     t = r * math.sqrt( (n - 2) / (1 - (r) ** 2))
     return (result.slope, result.intercept, result.rvalue, t, result.pvalue)
 

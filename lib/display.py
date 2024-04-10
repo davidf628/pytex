@@ -1,7 +1,8 @@
 from numpy import transpose
+import math
 
 def display_test():
-    print(showarrays('data', [1, 2, 3, 4, 5, 6], 'more data', [7, 8, 9, 91, 22]))
+    print((1.23, 8))
 
 def showdataarray(array, columns=1, options=""):
     alignment = "|"
@@ -118,12 +119,58 @@ def normalcurve(leftbound, rightbound, mean=0, stdev=1, twotail=False):
     if leftbound < lowerlimit:
         leftbound = lowerlimit
     else:
-        labels += f'{leftbound}'
+        labels += f',{leftbound}'
     
     if rightbound > upperlimit:
         rightbound = upperlimit
     else:
-        labels += f'{rightbound}'
+        labels += f',{rightbound}'
+
+    plotstr = r"\begin{tikzpicture}[ declare function = {" +funcstr+ r"} ]" + "\n"
+    plotstr += r"   \begin{axis}[" + "\n"
+    plotstr += r"      no markers, domain=-4:4, samples=100," + "\n"
+    plotstr += r"      axis lines*=left, xlabel=$x$, ylabel=$y$," + "\n"
+    plotstr += r"      every axis y label/.style={at=(current axis.above origin),anchor=south}," + "\n"
+    plotstr += r"      every axis x label/.style={at=(current axis.right of origin),anchor=west}," + "\n"
+    plotstr += r"      height=5cm, width=12cm," + "\n"
+    plotstr += r"      xtick={" + labels + r"}, ytick=\empty," + "\n"
+    plotstr += r"      enlargelimits=false, clip=false, axis on top," + "\n"
+    plotstr += r"      grid = major ]" + "\n"
+    if twotail:
+        domain = f'{lowerlimit}:{leftbound}'
+        plotstr += r"      \addplot [fill=cyan!20, draw=none, domain=" + domain + r"] {" + func + r"} \closedcycle;" + "\n"
+        domain = f'{rightbound}:{upperlimit}'
+        plotstr += r"      \addplot [fill=cyan!20, draw=none, domain=" + domain + r"] {" + func + r"} \closedcycle;" + "\n"
+    else:
+        domain = f'{leftbound}:{rightbound}'
+        plotstr += r"      \addplot [fill=cyan!20, draw=none, domain=" + domain + r"] {" + func + r"} \closedcycle;" + "\n"
+    plotstr += r"      \addplot [very thick,cyan!50!black] {" + func + r"};" + "\n"
+    plotstr += r"    \end{axis}" + "\n"
+    plotstr += r"\end{tikzpicture}" + "\n"
+
+    return plotstr
+
+def tcurve(leftbound, rightbound, df, mean=0, stdev=1, twotail=False):
+
+    numerator = math.gamma( (df + 1) / 2)
+    denominator = math.sqrt( math.pi * df) * math.gamma ( df / 2 )
+    factor = numerator / denominator
+   
+    funcstr = r"tpdf(\t,\df) = " + str(factor) + r" * (1 + (\t)^2 / \df)^ ( -(\df + 1) / 2 );"
+    func = f'tpdf(x, {df})'
+    lowerlimit = -4 * stdev + mean
+    upperlimit = 4 * stdev + mean
+
+    labels = f'{mean}'
+    if leftbound < lowerlimit:
+        leftbound = lowerlimit
+    else:
+        labels += f',{leftbound}'
+    
+    if rightbound > upperlimit:
+        rightbound = upperlimit
+    else:
+        labels += f',{rightbound}'
 
     plotstr = r"\begin{tikzpicture}[ declare function = {" +funcstr+ r"} ]" + "\n"
     plotstr += r"   \begin{axis}[" + "\n"
