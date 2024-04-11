@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 
 \usepackage[margin=0.5in]{geometry}
 \usepackage{amsmath}
@@ -12,11 +12,6 @@
 \usepackage{xcolor}
 \usepackage{tasks}
 
-%python
-%seed(1234)
-%n = rand(12, 18)
-%end
-
 % change this value to produce answer keys for exams
 \newboolean{make_key}
 \setboolean{make_key}{true}
@@ -29,8 +24,6 @@
 	arc = 0pt
 }
 
-\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\newcommand{\newquestion}{\vspace{4mm} \noindent}
 \newcommand{\iskey}[1]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{}}
 
 \begin{document}
@@ -52,36 +45,7 @@
 
 \raggedright
 
-\newquestion
-%python
-%mean = rand(45.0, 53.0, 0.1)
-%s = rand(2.0, 5.0, 0.1)
-%x1 = rand(m - 3 * s, m + 3 * s, 0.1)
-%n = rand(32, 48)
-%x2 = round(rand(m - 3 * s / sqrt(n), m + 3 * s / sqrt(n), 0.1), 1)
-%p = rand(0.2, 0.8, 0.01)
-%ppct = round(p * 100)
-%ans1 = round(normalcdf(x1, 1E99, m, s), 3)
-%ans2 = round(normalcdf(-1E99, x2, m, s / sqrt(n) ), 3)
-%ans3 = invnorm(p, m, s)
-%end
-\item (6 pts) The highway mileage (mpg) for a sample of 8 different models
-of a car company can be found below. Find the mean, median, mode, and
-standard deviation. Round to one decimal place as needed. \\[2mm]
-
-@table@
-
-\vspace{2mm}
-
-\begin{tasks}[label={}](2)
-  \task Mean = \rule{4cm}{0.15mm}
-  \task Range = \rule{4cm}{0.15mm}  \\[4mm]
-  \task Median = \rule{4cm}{0.15mm}
-  \task Standard Deviation = \rule{4cm}{0.15mm} \\[4mm]
-  \task Mode = \rule{4cm}{0.15mm}
-\end{tasks}
-
-\newquestion
+\begin{enumerate}[1.]
 %python
 %z0 = rand(-5, -1)
 %z1 = rand(z0, 6)
@@ -91,33 +55,44 @@ standard deviation. Round to one decimal place as needed. \\[2mm]
 %fact0 = x - z0
 %fact1 = x - z1
 %poly = expand(fact0 * fact1)
-%print(latex(poly))
+%sol = latex(joinarray(solve(poly, x)))
 %end
-2. (4 pts) Factor the polynomial $ @latex(poly)@ $.
-\iskey{$@latex(poly)@ = @f'({latex(fact0)})({latex(fact1)})'@$}
+\item (4 pts) Solve the polynomial equation: $ @latex(poly)@ = 0 $. \\[4mm]
+\iskey{
+    \begin{tabular}{ccl}
+        $@latex(poly)@$ & $=$ & $@f'({latex(fact0)})({latex(fact1)})'@$ \\[2mm]
+        & $\Rightarrow$ & $x \in \left\{ @sol@ \right\}$ \\
+    \end{tabular}
+}
 
-\newquestion
-2. (4 pts) Given the distribution below, find the probability of the 
-shaded region. \vspace{4mm}
-%\begin{center}
-%	\includegraphics[width=4.125in,height=1.79167in]{media/image1.png}
-%\end{center}
+\vspace{3cm}
 
+%python
+%x = symbols('x')
+%a = rand(1, 5)
+%b = nzrand(-7, 7)
+%c = nzrand(-25, 25)
+%poly = a*x ** 2 + b*x + c
+%sol = joinarray( solve(poly, x), func=lambda x: latex(x) )
+%step1 = Eq(a*x**2 + b*x, -c)
+%step2 = Eq(x**2 + Rational(b, a) * x, Rational(-c, a))
+%step3 = Eq(x**2 + Rational(b, a) * x + Rational(Rational(b**2, a**2), 4), Rational(-c, a) + Rational(b**2, 4 * a**2))
+%step4 = Eq((x + Rational(b, 2*a))**2, Rational(b**2-4*a*c, 4*a**2) )
+%step5 = Eq( x + Rational(b, 2*a), sp.sqrt(Rational(b**2 - 4*a*c, 4*a**2)))
+%end
 
+\item (4 pts) Solve the polynomial equation: $ @latex(poly)@ = 0 $. \\[4mm]
 
+\iskey{
+    $\displaystyle @latex(step1)@ $ \\[4mm]
+    $\displaystyle @latex(step2)@ $ \\[4mm]
+    $\displaystyle @latex(step3)@ $ \\[4mm]
+    $\displaystyle @latex(step4)@ $ \\[4mm]
+    $\displaystyle @latex(step4)@ $ \\[4mm]
+    $\displaystyle @latex(step5.lhs)@ = \pm @latex(step5.rhs)@ $ \\[4mm]
 
+    $\displaystyle x \in \left\{ @sol@ \right\}$
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+\end{enumerate}
 \end{document}

@@ -1,5 +1,6 @@
 import random
 import math
+from lib.misc import is_number
 
 def test():
     for _ in range(0, 50):
@@ -62,7 +63,11 @@ def randfrom(values):
     if type(values) == str:
         values = values.split(",")
         values = list(map(lambda x: x.strip(), values))
-    return random.choice(values)
+    selection = random.choice(values)
+    if is_number(selection):
+        return float(selection)
+    else:
+        return random.choice(values)
 
 
 def randsfrom(values, n):

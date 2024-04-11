@@ -85,6 +85,10 @@ def isEndPythonCommands(s):
     return re.search(r'^\s*\%\s*end\s*$', s, re.IGNORECASE) != None
 
 def extract_variable_names(code):
+
+    # remove any comments that may exist in the line
+    code = code[:code.find("#")]
+
     variable_names = []
     pattern = r'(?<!\.)\b([a-zA-Z_]\w*(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?)\s*=\s*\.*'
     is_assignment_statement = bool(re.search(pattern, code))
