@@ -111,19 +111,41 @@
 
   <h3>Math Functions</h3>
 
+  <p>
+    Most math functions are provided by Python's built-in math module, and the documentation
+    provided at <a href="https://docs.python.org/3/library/math.html" target="_blank">docs.python.org</a> will
+    provide the most complete reference for these functions. 
+  </p>
+
   <ul>
     <li><a href="#f_sgn">sgn</a>(value)</li>
     <li><a href="#f_sign">sign</a>(value)</li>
     <li><a href="#f_frac">frac</a>(value)</li>
-    <li><a href="#f_gcd">gcd</a>(values)</li>
-    <li><a href="#f_abs">abs</a>(value)</li>
-    <li><a href="#f_round">round</a>(value, decimals)</li>
-    <li><a href="#f_ceil">ceil</a>(value)</li>
-    <li><a href="#f_floor">floor</a>(value)</li>
     <li><a href="#f_reducefraction">reducefraction</a>(numerator, denominator)</li>
     <li><a href="#f_evalfunc">evalfunc</a>(f, variables)</li>
     <li><a href="#f_isnumber">isnumber</a>(value) * Not yet implemented</li>
+    <li><a href="#f_ceil">ceil</a>(x), <a href="#f_floor">floor</a>(x), <b>trunc</b>(x), <a href="f_round">round</a>(x)</li>
+    <li><b>abs</b>(x)</li>
+    <li><b>bin</b>(x), <b>hex</b>(x), <b>oct</b>(x)</li>
+    <li><b>sum</b>(values), <b>prod</b>(values), <b>sumprod</b>(x, y)</li>
+    <li><b>factorial</b>(n), <b>comb</b>(n, k), <b>perm</b>(n, [k=None])</li>
+    <li><a href="#f_gcd">gcd</a>(values), <b>lcm</b>(values)</li>
+    <li><b>isclose</b>(a, b, [rel_tol=1e-09], [abs_tol=0.0])</li>
+    <li><b>isfinite</b>(x), <b>isinf</b>(x), <b>isnan</b>(x)</li>
+    <li><b>exp</b>(x), <b>exp2</b>(x), <b>pow</b>(x, y)</li>
+    <li><b>log</b>(x [, base]), <b>log2</b>(x), <b>log10</b>(x)</li>
+    <li><b>sqrt</b>(x), <b>cbrt</b>(x)</li>
+    <li><b>acos</b>(x), <b>asin</b>(x), <b>atan</b>(x), <b>atan2</b>(y, x)</li>
+    <li><b>sin</b>(x), <b>cos</b>(x), <b>tan</b>(x)</li>
+    <li><b>dist</b>(p, q), <b>hypot</b>(*coordinates)</li>
+    <li><b>degrees</b>(x), <b>radians</b>(x)</li>
+    <li><b>acosh</b>(x), <b>asinh</b>(x), , <b>atanh</b>(x)</li>
+    <li><b>cosh</b>(x), <b>sinh</b>(x), <b>tanh</b>(x)</li>
+    <li><b>erf</b>(x), <b>erfc</b>(x)</li>
+    <li><b>gamma</b>(x), <b>lgamma</b>(x)</li>
+    <li><b>pi</b>, <b>e</b>, <b>tau</b>, <b>inf</b>, <b>nan</b></li>
   </ul>
+
 
   <h3>Statistical Functions</h3>
 
@@ -163,6 +185,16 @@
     <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <li><a href="#f_normalcurve">normalcurve</a>(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</li>
   </ul>
+
+  <h3>Python Built-in Functions</h3>
+
+  <p>
+    The list of built-in functions available at 
+    <a href="https://docs.python.org/3/library/functions.html" target="_blank">docs.python.org</a> 
+    may prove helpful and are available when using pytex. 
+  </p>
+
+<h1>Detailed Documentation</h1>
 
   <h2 id="f_seed">seed(value) => void</h2>
   <ul>

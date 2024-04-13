@@ -131,11 +131,64 @@ def test_extract_variable_names():
 def command_contains_reserved_word(command):
     variables = extract_variable_names(command)
     for variable in variables:
-        if variable in internal_declarations:
+        if variable in __internal_declarations:
             return variable
     return False
 
-internal_declarations = ['normalcdf', 'invnorm', 'tcdf', 'invt', 'mean']
+__internal_declarations = [
+    # internal global variables from pytex.py
+    '__lcv', '__internal_declarations', '__data', 
+    '__filename', '__outputfile', '__debugging', '__line', '__stack', 
+    '__rptcounter', '__blockstart', '__command', '__snippet', '__result',
+    '__f',
+    # python keywords
+    'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break',
+    'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally',
+    'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal',
+    'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield',
+    # python built-in functions
+    'abs', 'aiter', 'all', 'anext', 'any', 'ascii', 'bin', 'bool', 'breakpoint',
+    'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'compile', 'complex',
+    'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'filter',
+    'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash',
+    'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter',
+    'len', 'list', 'locals', 'map', 'max', 'memoryview', 'min', 'next', 'object',
+    'oct', 'open', 'ord', 'pow', 'print', 'property', 'range', 'repr', 'reversed',
+    'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum',
+    'super', 'tuple', 'type', 'vars', 'zip', '__import__',
+    # functions in the python 'math' library
+    'ceil', 'comb', 'copysign', 'fabs', 'factorial', 'floor', 'fmod', 'frexp',
+    'fsum', 'gcd', 'isclose', 'isfinite', 'isinf', 'isnan', 'isqrt', 'lcm',
+    'ldexp', 'modf', 'nextafter', 'perm', 'prod', 'remainder', 'sumprod',
+    'trunc', 'ulp', 'cbrt', 'exp', 'exp2', 'expm1', 'log', 'log1p', 'log2',
+    'log10', 'pow', 'sqrt', 'acos', 'asin', 'atan', 'atan2', 'cos', 'dist',
+    'hypot', 'sin', 'tan', 'degrees', 'radians', 'acosh', 'asinh', 'atanh',
+    'cosh', 'sinh', 'tanh', 'erf', 'erfc', 'gamma', 'lgamma', 'pi', 'e', 'tau',
+    'inf', 'nan', 
+    # functions in the python 'sympy' libary declared globally
+    'symbols', 'latex', 'factor', 'expand', 'solve', 'simplify', 'Eq', 
+    'parse_expr', 'transformations',
+    # functions in arrays.py
+    'calconarray', 'sorta', 'sortd', 'joinarray', 'latexjoinarray',
+    # functions in display.py
+    'showdataarray', 'horizshowarrays', 'showarrays', 'normalcurve', 'tcurve',
+    # functions in maths.py
+    'sign', 'sgn', 'frac', 'reducefraction', 'evalfunc', 
+    # functions in misc.py
+    'hasPython', 'getPython', 'uncommentLine', 'is_number', 'getCommand',
+    'strsub', 'removeVariableDeclarations', 'hasVariableCall', 'getVariableName',
+    'replaceVar', 'hasArrayCall', 'getArrayAndIndex', 'subvars',
+    'isNewPythonCommands', 'isEndPythonCommands', 'extract_variable_names',
+    'command_contains_reserved_word', 
+    # functions in randomizers.py
+    'seed', 'rand', 'rands', 'diffrands', 'nzrand', 'nzrands', 'nzdiffrands',
+    'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 'jointshuffle',
+    'randsgn', 
+    # functions in stats.py
+    'normalcdf', 'invnorm', 'tcdf', 'invt', 'binompdf', 'binomcdf', 'binommean',
+    'binomstdev', 'mean', 'weightedsort', 'median', 'modes', 'stdevp', 'stdev',
+    'linreg', 'classranges', 'getclasslimits', 'frequencies', 'midpoints',
+    'relativefreq', 'cumulativefreq' ]
 
 if __name__ == '__main__':
     test()

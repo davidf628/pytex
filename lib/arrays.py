@@ -1,5 +1,5 @@
 
-#from lib import *
+from lib import *
 from sympy import latex
 
 def test_arrays():

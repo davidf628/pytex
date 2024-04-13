@@ -115,16 +115,19 @@ def normalcurve(leftbound, rightbound, mean=0, stdev=1, twotail=False):
     lowerlimit = -4 * stdev + mean
     upperlimit = 4 * stdev + mean
 
-    labels = f'{mean}'
+    labels = ''
     if leftbound < lowerlimit:
         leftbound = lowerlimit
     else:
-        labels += f',{leftbound}'
+        labels += f'{leftbound}'
     
     if rightbound > upperlimit:
         rightbound = upperlimit
     else:
-        labels += f',{rightbound}'
+        if len(labels) == 0:
+            labels += f'{rightbound}'
+        else:
+            labels += f',{rightbound}'
 
     plotstr = r"\begin{tikzpicture}[ declare function = {" +funcstr+ r"} ]" + "\n"
     plotstr += r"   \begin{axis}[" + "\n"
@@ -161,16 +164,19 @@ def tcurve(leftbound, rightbound, df, mean=0, stdev=1, twotail=False):
     lowerlimit = -4 * stdev + mean
     upperlimit = 4 * stdev + mean
 
-    labels = f'{mean}'
+    labels = ''
     if leftbound < lowerlimit:
         leftbound = lowerlimit
     else:
-        labels += f',{leftbound}'
+        labels += f'{leftbound}'
     
     if rightbound > upperlimit:
         rightbound = upperlimit
     else:
-        labels += f',{rightbound}'
+        if len(labels) == 0:
+            labels = f'{rightbound}'
+        else:
+            labels += f',{rightbound}'
 
     plotstr = r"\begin{tikzpicture}[ declare function = {" +funcstr+ r"} ]" + "\n"
     plotstr += r"   \begin{axis}[" + "\n"
