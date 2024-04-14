@@ -112,8 +112,6 @@ def modes (data, freq=[]):
             return modes
 
 
-
-
 def stdevp (data, weights=[]):
     # ensure data is an array of float
     data = list(map(lambda x: float(x), data))
