@@ -5,3 +5,6 @@ test.aux
 test.log
 test.pdf
 test.synctex.gz
+.eggs/
+build/
+dist/
