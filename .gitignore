@@ -8,3 +8,4 @@ test.synctex.gz
 .eggs/
 build/
 dist/
+pytex.spec
