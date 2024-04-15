@@ -5,3 +5,4 @@ test.aux
 test.log
 test.pdf
 test.synctex.gz
+.DS_Store
