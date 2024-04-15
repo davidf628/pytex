@@ -2,7 +2,7 @@ import sys
 from lib.misc import __internal_declarations
 from lib import *
 
-__debugging = False
+__debugging = True
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
