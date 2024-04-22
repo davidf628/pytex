@@ -3,8 +3,10 @@ import numpy as np
 import math
 
 def stats_test():
-    a, b, r, t, p = linreg([951,1011,1031,954,964],[115,46,37,141,86])
-    print(f'a == {a}, b == {b}, r == {r}, t == {t}, p == {p}')
+    x = [0, 1, 2, 3, 4, 5, 6]
+    f = [10, 19, 7, 7, 2, 1, 4]
+    print(f'stdevp == {stdevp(x, f)}')
+    print(f'stdev == {stdev(x, f)}')
 
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
@@ -121,14 +123,14 @@ def stdevp (data, weights=[]):
     else:
         wavg = np.average(data, weights=weights)
         wvariance = np.average((data-wavg)**2, weights=weights)
-    return math.sqrt(wvariance)
+        return math.sqrt(wvariance)
     
 def stdev (data, weights=[]):
     # ensure data is an array of float
     data = list(map(lambda x: float(x), data))
     weights = list(map(lambda x: float(x), weights))
-    n = len(data)
-    return stdevp(data, weights) * math.sqrt(n/(n-1))
+    n = sum(weights)
+    return math.sqrt(stdevp(data, weights) ** 2 * n/(n - 1))
 
 def linreg(x_data, y_data):
     # ensure data is an array of float
