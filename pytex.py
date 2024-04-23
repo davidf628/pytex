@@ -1,25 +1,28 @@
-import sys
+import sys, os
 from lib.misc import __internal_declarations
 from lib import *
+import lib.cmdline
 
-__debugging = True
+# for debugging, uncomment this line
+sys.argv.append('test.tex')
+
+__version = '0.30.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
 # https://www.myopenmath.com/assessment/libs/libhelp.php
+    
+__parseinfo = lib.cmdline.parseCommandLine(sys.argv, __version)
 
-if __debugging:
-    sys.argv.append('test.tex')
-    __outputfile = f'./output/out_{sys.argv[1]}'
-else:
-    __outputfile = f'./out_{sys.argv[1]}'
+if os.path.isfile(__parseinfo['filename']):
+    if not 'outputfilename' in __parseinfo.keys():
+        __parseinfo['outputfilename'] = f'out_{__parseinfo["filename"]}'
 
 # Read the .tex file specified from the command line and load it
 
-__filename = sys.argv[1]
 __data = []
 
-with open(__filename, "r") as f:
+with open(__parseinfo['filename'], "r") as f:
     for __line in f:
         __data.append(__line)
 
@@ -113,6 +116,13 @@ while (__lcv < len(__data)):
 
 __data = removeVariableDeclarations(__data)
 
-with open(__outputfile, 'w') as __f:
+# add the seed information
+
+# write the output .tex file
+with open(__parseinfo['outputfilename'], 'w') as __f:
     for __line in __data:
         __f.write(__line)
+
+# create the pdf version
+
+# modify "iskey" flag if necessary and create a key

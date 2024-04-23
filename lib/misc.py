@@ -137,10 +137,9 @@ def command_contains_reserved_word(command):
 
 __internal_declarations = [
     # internal global variables from pytex.py
-    '__lcv', '__internal_declarations', '__data', 
-    '__filename', '__outputfile', '__debugging', '__line', '__stack', 
+    '__lcv', '__internal_declarations', '__data', '__line', '__stack', 
     '__rptcounter', '__blockstart', '__command', '__snippet', '__result',
-    '__f',
+    '__f', '__version', '__parseinfo',
     # python keywords
     'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break',
     'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally',
@@ -179,7 +178,7 @@ __internal_declarations = [
     'strsub', 'removeVariableDeclarations', 'hasVariableCall', 'getVariableName',
     'replaceVar', 'hasArrayCall', 'getArrayAndIndex', 'subvars',
     'isNewPythonCommands', 'isEndPythonCommands', 'extract_variable_names',
-    'command_contains_reserved_word', 
+    'command_contains_reserved_word',
     # functions in randomizers.py
     'seed', 'rand', 'rands', 'diffrands', 'nzrand', 'nzrands', 'nzdiffrands',
     'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 'jointshuffle',

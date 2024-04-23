@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage[shortlabels]{enumitem}
+\usepackage{ifthen}
+\usepackage{xcolor}
+\usepackage{tasks}
+
+% change this value to produce answer keys for exams
+\newboolean{make_key}
+\setboolean{make_key}{true}
+
+% declarations for the different parts of the exam
+\newtcolorbox{instructionbox}{
+	colback = gray!25!white, 
+	colframe = black!50!white, 
+	boxrule = 0.4pt, 
+	arc = 0pt
+}
+
+\newcommand{\iskey}[1]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{}}
+
+\begin{document}
+
+% remove default page numbers
+\pagestyle{empty}
+
+% show the title information and student name
+\noindent Not a real exam \hfill Name: \rule{6cm}{0.15mm} \vspace{2mm}
+
+% show the instructions for the exam
+\begin{instructionbox}
+    \textbf{Instructions:} This is just a test of the emergency exam broadcast system.
+    If it were a real exam, this note would be followed by instructions on how to complete
+    the exam and indications about what kinds of resources are available during said exam. 
+\end{instructionbox}
+
+\raggedright
+
+\begin{enumerate}[1.]
+\item (2 pts) Solve the inequality $\frac{5}{x - 4} \geq \frac{7}{x + 3}$: \\[4mm]
+\iskey{$5 x + 15 \geq 7 x - 28$}
+\iskey{$\left(-\infty, -3\right) \cup \left(4, \frac{43}{2}\right]$}
+
+
+
+\item (4 pts) Solve the polynomial equation: $ x^{2} + 6 x + 9 = 0 $. \\[4mm]
+\iskey{
+    \begin{tabular}{ccl}
+        $x^{2} + 6 x + 9$ & $=$ & $(x + 3)(x + 3)$ \\[2mm]
+        & $\Rightarrow$ & $x \in \left\{ \mathtt{\text{-3}} \right\}$ \\
+    \end{tabular}
+}
+
+\vspace{3cm}
+
+
+\item (4 pts) Solve the polynomial equation: $ 5 x^{2} + 2 x + 16 = 0 $. \\[4mm]
+
+\iskey{
+    $\displaystyle 5 x^{2} + 2 x = -16 $ \\[4mm]
+    $\displaystyle x^{2} + \frac{2 x}{5} = - \frac{16}{5} $ \\[4mm]
+    $\displaystyle x^{2} + \frac{2 x}{5} + \frac{1}{25} = - \frac{79}{25} $ \\[4mm]
+    $\displaystyle \left(x + \frac{1}{5}\right)^{2} = - \frac{79}{25} $ \\[4mm]
+    $\displaystyle \left(x + \frac{1}{5}\right)^{2} = - \frac{79}{25} $ \\[4mm]
+    $\displaystyle x + \frac{1}{5} = \pm \frac{\sqrt{79} i}{5} $ \\[4mm]
+
+    $\displaystyle x \in \left\{ - \frac{1}{5} - \frac{\sqrt{79} i}{5}, - \frac{1}{5} + \frac{\sqrt{79} i}{5} \right\}$
+}
+
+\end{enumerate}
+\end{document}
