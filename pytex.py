@@ -1,12 +1,14 @@
-import sys, os
+import sys, os, pathlib
 from lib.misc import __internal_declarations
 from lib import *
 import lib.cmdline
 
-# for debugging, uncomment this line
-sys.argv.append('test.tex')
+# for debugging, uncomment these lines
+# sys.argv.append('test.tex')
+# sys.argv.append('-v=A')
+# sys.argv.append('--seed=12345')
 
-__version = '0.30.0'
+__version = '0.31.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
@@ -14,9 +16,8 @@ __version = '0.30.0'
     
 __parseinfo = lib.cmdline.parseCommandLine(sys.argv, __version)
 
-if os.path.isfile(__parseinfo['filename']):
-    if not 'outputfilename' in __parseinfo.keys():
-        __parseinfo['outputfilename'] = f'out_{__parseinfo["filename"]}'
+# Set the seed for randomization
+exec(f'seed({__parseinfo["seed"]})')
 
 # Read the .tex file specified from the command line and load it
 
@@ -117,6 +118,9 @@ while (__lcv < len(__data)):
 __data = removeVariableDeclarations(__data)
 
 # add the seed information
+__data.insert(0, f"%seed - {__parseinfo['seed']}\n\n")
+
+# update the version data within the document
 
 # write the output .tex file
 with open(__parseinfo['outputfilename'], 'w') as __f:
@@ -124,5 +128,14 @@ with open(__parseinfo['outputfilename'], 'w') as __f:
         __f.write(__line)
 
 # create the pdf version
+os.system(f'pdflatex "{__parseinfo["outputfilename"]}"')
+
+# remove the scrap files
+if os.path.isfile(__parseinfo['aux']):
+    pathlib.Path.unlink(__parseinfo['aux'])
+if os.path.isfile(__parseinfo['log']):
+    pathlib.Path.unlink(__parseinfo['log'])
+if os.path.isfile(__parseinfo['gz']):
+    pathlib.Path.unlink(__parseinfo['gz'])
 
 # modify "iskey" flag if necessary and create a key
