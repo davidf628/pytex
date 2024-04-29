@@ -16,6 +16,8 @@
 \newboolean{make_key}
 \setboolean{make_key}{true}
 
+\newcommand{\version}{C}
+
 % declarations for the different parts of the exam
 \newtcolorbox{instructionbox}{
 	colback = gray!25!white, 
@@ -32,7 +34,7 @@
 \pagestyle{empty}
 
 % show the title information and student name
-\noindent Not a real exam \hfill Name: \rule{6cm}{0.15mm} \vspace{2mm}
+\noindent Not a real exam Version {\version} \hfill Name: \rule{6cm}{0.15mm} \vspace{2mm}
 
 % show the instructions for the exam
 \begin{instructionbox}

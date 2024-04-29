@@ -4,20 +4,21 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-# sys.argv.append('test.tex')
-# sys.argv.append('-v=A')
-# sys.argv.append('--seed=12345')
+#sys.argv.append('test.tex')
+#sys.argv.append('-v=A')
+#sys.argv.append('--seed=12345')
+#sys.argv.append('--key')
+#sys.argv.append('-o=./output/mytestA.tex')
 
-__version = '0.31.0'
+args = lib.cmdline.patchArgs(sys.argv)
+
+__version = '0.4.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
 # https://www.myopenmath.com/assessment/libs/libhelp.php
     
-__parseinfo = lib.cmdline.parseCommandLine(sys.argv, __version)
-
-# Set the seed for randomization
-exec(f'seed({__parseinfo["seed"]})')
+__parseinfo = lib.cmdline.parseCommandLine(args, __version)
 
 # Read the .tex file specified from the command line and load it
 
@@ -26,6 +27,15 @@ __data = []
 with open(__parseinfo['filename'], "r") as f:
     for __line in f:
         __data.append(__line)
+
+# Set the specified version number in the document
+__data = setVersionValue(__data, __parseinfo['version'])
+
+# Set the make_key flag
+__data = setKeyFlag(__data, __parseinfo['key'])
+
+# Set the seed for randomization
+exec(f'seed({__parseinfo["seed"]})')
 
 # read through the document looking for variable declarations
 __lcv = 0

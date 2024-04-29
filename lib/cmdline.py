@@ -42,7 +42,7 @@ def parseCommandLine(args, version):
         elif command == 'v' or command == 'version':
             parseInfo['version'] = value
 
-        elif command == 'key':
+        elif command == 'k' or command == 'key':
             parseInfo['key'] = True
 
         elif command == 'o' or command == 'output':
@@ -60,7 +60,10 @@ def parseCommandLine(args, version):
         parseInfo['basefilename'], parseInfo['extension'] = os.path.splitext(parseInfo['filename'])
         if not 'outputfilename' in parseInfo.keys():
             if 'version' in parseInfo.keys():
-                parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]}{parseInfo["extension"]}'
+                if 'key' in parseInfo.keys():
+                    parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]} Key{parseInfo["extension"]}'
+                else:
+                    parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]}{parseInfo["extension"]}'
             else:
                 parseInfo['outputfilename'] = f'out_{parseInfo["filename"]}'
         parseInfo['baseoutputname'], _ = os.path.splitext(parseInfo['outputfilename'])
@@ -76,4 +79,33 @@ def parseCommandLine(args, version):
     if not 'seed' in parseInfo.keys():
         parseInfo['seed'] = round(random.random() * 100000000000)
 
+    if not 'key' in parseInfo.keys():
+        parseInfo['key'] = False
+
+    if not 'version' in parseInfo.keys():
+        parseInfo['version'] = ''
+
     return parseInfo
+
+
+def patchArgs(args):
+
+    i = 0
+    newargs = []
+
+    while i < len(args):
+        arg = args[i].strip()
+
+        if arg[0] == '"' and arg[-1] != '"':
+            newarg = ""
+            while arg[-1] != '"' and i < len(args):
+                arg = args[i].strip()
+                newarg += f'{arg} '
+                i += 1
+            newargs.append(newarg)
+        else:
+            newargs.append(arg)            
+        i += 1
+
+    return newargs
+

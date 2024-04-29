@@ -129,7 +129,10 @@ def stdev (data, weights=[]):
     # ensure data is an array of float
     data = list(map(lambda x: float(x), data))
     weights = list(map(lambda x: float(x), weights))
-    n = sum(weights)
+    if len(weights) == 0:
+        n = len(data)
+    else:
+        n = sum(weights)
     return math.sqrt(stdevp(data, weights) ** 2 * n/(n - 1))
 
 def linreg(x_data, y_data):

@@ -84,14 +84,39 @@ def isNewPythonCommands(s):
 def isEndPythonCommands(s):
     return re.search(r'^\s*\%\s*end\s*$', s, re.IGNORECASE) != None
 
+def setVersionValue(data, version):
+    i = 0
+    done = False
+    while i < len(data) and not done:
+        if re.search(r'\\newcommand{\\version}{.*}', data[i]) != None:
+            data[i] = '\\newcommand{\\version}{' + version + '}'
+            done = True
+        i += 1
+    return data
+            
+
+def setKeyFlag(data, iskey):
+    i = 0
+    done = False
+    while i < len(data) and not done:
+        if re.search(r'\\setboolean{make_key}{.*}', data[i]) != None:
+            data[i] = '\\setboolean{make_key}{' + str(iskey).lower() + '}'
+            done = True
+        i += 1
+    return data
+
 def extract_variable_names(code):
 
     # remove any comments that may exist in the line
-    code = code[:code.find("#")]
+    if code.find('#') != -1:
+        code = code[:code.find("#")]
 
     variable_names = []
-    pattern = r'(?<!\.)\b([a-zA-Z_]\w*(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?)\s*=\s*\.*'
-    is_assignment_statement = bool(re.search(pattern, code))
+    variable_pattern = r'(?<!\.)\b([a-zA-Z_]\w*(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?)\s*=\s*\.*'
+    function_pattern = r'^\s*\w*\(.*\)'
+    possible_variable = bool(re.search(variable_pattern, code))
+    possible_function = bool(re.search(function_pattern, code))
+    is_assignment_statement = possible_variable and not possible_function
 
     if is_assignment_statement:
         variables = code.split('=')[0]
@@ -114,6 +139,7 @@ def test_extract_variable_names():
     code10 = "m = rand(25, 36)"
     code11 = "avg = mean([a, b, c])"
     code12 = "sol = 'a. Reject $H_0$' if (p <= a) else 'b. Fail to reject $H_0$'"
+    code13 = r"print(f'a == {a}')"
 
     print(extract_variable_names(code1))  # Output: ['x']
     print(extract_variable_names(code2))  # Output: ['y']
@@ -127,6 +153,7 @@ def test_extract_variable_names():
     print(extract_variable_names(code10))  # Output: ['m']
     print(extract_variable_names(code11))  # Output: ['avg']
     print(extract_variable_names(code12))  # Output: ['sol']
+    print(extract_variable_names(code13))  # Output: ['']
 
 def command_contains_reserved_word(command):
     variables = extract_variable_names(command)
