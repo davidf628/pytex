@@ -12,7 +12,7 @@ sys.argv.append('--key')
 
 args = lib.cmdline.patchArgs(sys.argv)
  
-__version = '0.4.0'
+__version = '0.5.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
