@@ -1,4 +1,5 @@
 import re, os
+from random import choice
 
 def test():
     test_getFunctionAndArgs()
@@ -162,7 +163,7 @@ def checkImportStatements(data):
         if 'importpytex' in data[i] or 'importrandpytexfrom' in data[i]:
 
             if inPythonCommands:
-                print('ERROR! You aren''t permitted to import a pytex file into a \%python ... \%end statement block.')
+                print('SORRY! You aren''t permitted to import a pytex file into a \%python ... \%end statement block.')
                 print('  You must use a @ ... @ statement on a single line instead.')
                 
             elif hasPython(data[i]):
@@ -175,7 +176,11 @@ def checkImportStatements(data):
                     newData = [*newData, *load_pytex_file(pytex_file_name)]
                     i += 1
                 elif function_name == 'importrandpytexfrom':
-                    None
+                    data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
+                    newData.append(data[i])
+                    pytex_file_name = remove_quote_marks(choice(argument))
+                    newData = [*newData, *load_pytex_file(pytex_file_name)]
+                    i += 1
         
         else:
             newData.append(data[i])

@@ -48,28 +48,11 @@
 \begin{enumerate}[1.]
 
 
-\item @importpytex("q1.tex")@
+\item (2 pts) @importrandpytexfrom('output/q1.tex', 'output/q2.tex')@
 
-\item @importpytex('q1.tex')@
+\item (2 pts) @importrandpytexfrom("output/q1.tex", "output/q2.tex")@
 
-%python
-%z0 = rand(-5, -1)
-%z1 = rand(z0, 6)
-%c = z0 * z1
-%b = z0 + z1
-%x = symbols('x')
-%fact0 = x - z0
-%fact1 = x - z1
-%poly = expand(fact0 * fact1)
-%sol = latex(joinarray(solve(poly, x)))
-%end
-\item (4 pts) Solve the polynomial equation: $ @latex(poly)@ = 0 $. \\[4mm]
-\iskey{
-    \begin{tabular}{ccl}
-        $@latex(poly)@$ & $=$ & $@f'({latex(fact0)})({latex(fact1)})'@$ \\[2mm]
-        & $\Rightarrow$ & $x \in \left\{ @sol@ \right\}$ \\
-    \end{tabular}
-}
+
 
 \vspace{3cm}
 
