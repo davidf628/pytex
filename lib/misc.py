@@ -1,13 +1,16 @@
-import re
+import re, os
 
 def test():
-    test_extract_variable_names()
+    test_getFunctionAndArgs()
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
 
 def getPython(s):
     return re.search(r'\@(.*?)\@', s).group(1)
+
+def getPythonWithEyes(s):
+    return re.search(r'(\@.*?\@)', s).group(1)
 
 def uncommentLine(s):
     if re.search(r'^\s*\%\s*', s):
@@ -105,6 +108,94 @@ def setKeyFlag(data, iskey):
         i += 1
     return data
 
+import re
+
+def getFunctionAndArgs(line):
+    # Define the regex pattern to match function definitions
+    pattern = r'([a-zA-Z_]\w*)\s*\((.*?)\)'
+    # Search for the pattern in the line
+    match = re.search(pattern, line)
+    
+    if match:
+        # Extract function name
+        function_name = match.group(1)
+        # Extract function arguments
+        args = match.group(2).split(',') if match.group(2) else []
+        args = [arg.strip() for arg in args]  # Trim whitespace
+        
+        return function_name, args
+    else:
+        return None, None
+
+def test_getFunctionAndArgs():
+    line = "my_function(5, 'hello')"
+    function_name, args = getFunctionAndArgs(line)
+    print("Function Name:", function_name)
+    print("Arguments:", args)
+
+def load_pytex_file(filename):
+    data = []
+    if os.path.isfile(filename):
+        with open(filename, "r") as f:
+            for line in f:
+                data.append(line)
+    else:
+        print(f'ERROR: file {filename} not found.')
+        quit()
+    return data
+
+def checkImportStatements(data):
+
+    newData = []
+
+    inPythonCommands = False
+
+    i = 0
+    while i < len(data):
+
+        if isNewPythonCommands(data[i]):
+            inPythonCommands = True        
+
+        if isEndPythonCommands(data[i]):
+            inPythonCommands = False
+
+        if 'importpytex' in data[i] or 'importrandpytexfrom' in data[i]:
+
+            if inPythonCommands:
+                print('ERROR! You aren''t permitted to import a pytex file into a \%python ... \%end statement block.')
+                print('  You must use a @ ... @ statement on a single line instead.')
+                
+            elif hasPython(data[i]):
+                snippet = getPython(data[i])
+                function_name, argument = getFunctionAndArgs(snippet)
+                if function_name == 'importpytex':
+                    data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
+                    newData.append(data[i])
+                    pytex_file_name = remove_quote_marks(argument[0])
+                    newData = [*newData, *load_pytex_file(pytex_file_name)]
+                    i += 1
+                elif function_name == 'importrandpytexfrom':
+                    None
+        
+        else:
+            newData.append(data[i])
+            i += 1
+
+    return newData
+
+def is_function_statement(line):
+    function_pattern = r'^\s*\w*\(.*\)'
+    return bool(re.search(function_pattern, line))
+
+def remove_quote_marks(s):
+    s = s.strip()
+    if s[0] == '"' or s[0] == '\'':
+        s = s[1:]
+    if s[-1] == '"' or s[-1] == '\'':
+        s = s[:-1]
+    return s
+
+
 def extract_variable_names(code):
 
     # remove any comments that may exist in the line
@@ -113,10 +204,8 @@ def extract_variable_names(code):
 
     variable_names = []
     variable_pattern = r'(?<!\.)\b([a-zA-Z_]\w*(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?)\s*=\s*\.*'
-    function_pattern = r'^\s*\w*\(.*\)'
     possible_variable = bool(re.search(variable_pattern, code))
-    possible_function = bool(re.search(function_pattern, code))
-    is_assignment_statement = possible_variable and not possible_function
+    is_assignment_statement = possible_variable and not is_function_statement(code)
 
     if is_assignment_statement:
         variables = code.split('=')[0]
@@ -205,7 +294,9 @@ __internal_declarations = [
     'strsub', 'removeVariableDeclarations', 'hasVariableCall', 'getVariableName',
     'replaceVar', 'hasArrayCall', 'getArrayAndIndex', 'subvars',
     'isNewPythonCommands', 'isEndPythonCommands', 'extract_variable_names',
-    'command_contains_reserved_word',
+    'command_contains_reserved_word', 'importpytex', 'importpytexfrom',
+    'checkImportStatements', 'getFunctionAndArgs', 'is_function_statement',
+    'load_pytex_file', 'getPythonWithEyes', 'remove_quote_marks',
     # functions in randomizers.py
     'seed', 'rand', 'rands', 'diffrands', 'nzrand', 'nzrands', 'nzdiffrands',
     'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 'jointshuffle',

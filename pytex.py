@@ -4,14 +4,14 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-#sys.argv.append('test.tex')
+sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
-#sys.argv.append('--key')
+sys.argv.append('--key')
 #sys.argv.append('-o=./output/mytestA.tex')
 
 args = lib.cmdline.patchArgs(sys.argv)
-
+ 
 __version = '0.4.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
@@ -21,12 +21,10 @@ __version = '0.4.0'
 __parseinfo = lib.cmdline.parseCommandLine(args, __version)
 
 # Read the .tex file specified from the command line and load it
+__data = load_pytex_file(__parseinfo['filename'])
 
-__data = []
-
-with open(__parseinfo['filename'], "r") as f:
-    for __line in f:
-        __data.append(__line)
+# Check for any importpytex statments and process those first
+__data = checkImportStatements(__data)
 
 # Set the specified version number in the document
 __data = setVersionValue(__data, __parseinfo['version'])
@@ -82,8 +80,6 @@ while (__lcv < len(__data)):
                 else:
                     __rptcounter[__blockstart] = 0
 
-                # print(f'count == {__rptcounter[__blockstart]}, __stack == {__stack}, condition == {condition}')
-
                 try:
                     wheremet = eval(condition)
                 except Exception as e:
@@ -110,8 +106,8 @@ while (__lcv < len(__data)):
 
         __lcv += 1    
 
-    # if a line is not a variable declaraion, see if it contains any
-    #  variables to substitute   
+    # if a line is not a python block, check to see if it contains any
+    #  python commands to insert through @ ... @   
     elif hasPython(__data[__lcv]):
         while hasPython(__data[__lcv]):
             __snippet = getPython(__data[__lcv])
@@ -130,8 +126,6 @@ __data = removeVariableDeclarations(__data)
 # add the seed information
 __data.insert(0, f"%seed - {__parseinfo['seed']}\n\n")
 
-# update the version data within the document
-
 # write the output .tex file
 with open(__parseinfo['outputfilename'], 'w') as __f:
     for __line in __data:
@@ -147,5 +141,3 @@ if os.path.isfile(__parseinfo['log']):
     pathlib.Path.unlink(__parseinfo['log'])
 if os.path.isfile(__parseinfo['gz']):
     pathlib.Path.unlink(__parseinfo['gz'])
-
-# modify "iskey" flag if necessary and create a key
