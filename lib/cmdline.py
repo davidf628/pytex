@@ -1,4 +1,4 @@
-import os, random, math
+import os, random, sys
 
 def parseCommandLine(args, version):
 
@@ -73,7 +73,7 @@ def parseCommandLine(args, version):
 
     else:
         print(f'File: {parseInfo["filename"]} not found ==> exiting')
-        quit()
+        sys.exit(-1)
 
     # The third part ensures that a random seed is created
     if not 'seed' in parseInfo.keys():

@@ -1,4 +1,4 @@
-import re, os
+import re, os, sys
 from random import choice
 
 def test():
@@ -142,7 +142,7 @@ def load_pytex_file(filename):
                 data.append(line)
     else:
         print(f'ERROR: file {filename} not found.')
-        quit()
+        sys.exit(-1)
     return data
 
 def checkImportStatements(data):

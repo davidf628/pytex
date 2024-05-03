@@ -4,10 +4,10 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-sys.argv.append('test.tex')
+#sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
-sys.argv.append('--key')
+#sys.argv.append('--key')
 #sys.argv.append('-o=./output/mytestA.tex')
 
 args = lib.cmdline.patchArgs(sys.argv)
@@ -69,14 +69,14 @@ while (__lcv < len(__data)):
                     for variable in variables:
                         if variable in __internal_declarations:
                             print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
-                            quit()
+                            sys.exit(-1)
                     exec(__command)
 
                 if __blockstart in __rptcounter.keys():
                     __rptcounter[__blockstart] += 1
                     if __rptcounter[__blockstart] >= 200:
                         print(f'ERROR "where" condition not met in 200 iterations:\n ==> {__lcv+1}: {uncommentLine(__data[__lcv])}')
-                        quit()
+                        sys.exit(-1)
                 else:
                     __rptcounter[__blockstart] = 0
 
@@ -84,7 +84,7 @@ while (__lcv < len(__data)):
                     wheremet = eval(condition)
                 except Exception as e:
                     print(f'ERROR on line {__lcv+1}: {uncommentLine(__data[__lcv])}\n ==> {e}')
-                    quit()
+                    sys.exit(-1)
 
                 if not wheremet:
                     __lcv = __blockstart
@@ -97,12 +97,12 @@ while (__lcv < len(__data)):
                     for variable in variables:
                         if variable in __internal_declarations:
                             print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
-                            quit()
+                            sys.exit(-1)
                     exec(__command)
                     __lcv += 1
                 except Exception as e:
                     print(f'ERROR on line {__lcv+1}: {__command}\n ==> {e}')
-                    quit()
+                    sys.exit(-1)
 
         __lcv += 1    
 
@@ -116,7 +116,7 @@ while (__lcv < len(__data)):
                 __data[__lcv] = strsub(__snippet, __result, __data[__lcv])
             except Exception as e:
                 print(f'ERROR on line {__lcv+1}: {__data[__lcv]}\n ==> {e}')
-                quit()
+                sys.exit(-1)
 
     else:
         __lcv += 1
