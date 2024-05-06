@@ -42,8 +42,88 @@
 </head>
 <body>
 
-  <h1>PyTeX Documentation</h1>
-  <hr>
+  <h1>PyTeX v0.5.1 Documentation</h1>
+  <hr/>
+
+  <h2>Basic Usage</h2>
+
+  <h3>Installation</h3>
+  <p>
+    The source code and binaries for PyTeX are available for download at the following GitHub link. If you are
+    running PyTeX in a binary (executable) make sure to download the version that corresponds for your system.
+    Binaries are available for Macintosh computers for both the M1/M2 processors and for Intel based Macs. Binaries
+    are also available for Windows PCs and Linux.
+  </p>
+  <p>
+    If you are downloading the source files and running from the Python scripts, please just make sure you have 
+    Python version 3 installed on your system as this is incompatible with version 2. In addtion, you may need at
+    least version 3.11 as that is all this has been tested on. PyTeX relies on NumPy and SymPy for calculation, so
+    those libraries will need to be installed via pip prior to usage.
+  </p>
+  <p>
+    PyTeX is a command line program and your executable file should be saved in a directory that is on your system 
+    path so that it can be run from any folder. Type "echo $PATH$" to get a list of folders on your system path. If
+    you are using source code, then placing a shell script in a folder in your path will be convenient. There is an
+    example shell script for mac users in the /misc folder of the source code.
+  </p>
+  <ul>
+    <li><a href="https://github.com/davidf628/pytex/releases" target="_blank">Source Code/Binaries</a></li>
+  </ul>
+
+  <h3>Adding a Version to a Document</h3>
+  <p>
+    In order to add a version to your document when running PyTeX, for instance if you want to make a version A of
+    an exam, you can do so through the command line option "--version=A". You can name the version anything you like, 
+    but it is not advisable to inlude spaces.
+  </p>
+  <p>
+    In order for this to work, there has to be a line in your LaTeX document that declares \version as a new command:
+    \newcommand{\version}{}
+    PyTeX can find this line and insert the version value you have provided and then you can reference the \version
+    command within your LaTeX code wherever you like and the version you specify will be supplied.
+  </p>
+
+  <h3>Making an answer Key</h3>
+  <p>
+    Sadly, PyTeX cannot automatically create an answer key for you, but it can at least show and hide answer key text
+    through the use of a command line flag. If you would like to provide answer key text, then use the command line
+    option "--key". If you do not want to include any answer key text, then just don't provide this flag.
+  </p>
+  <p>
+    In order fo this to work, you first need to make sure you have provided your LaTeX document the ability to use
+    boolean variables. This is done by including the package:
+    \usepackage{ifthen}
+    Then you must have a variable named make_key declared such as:
+    \newboolean{make_key}
+    \setboolean{make_key}{false}
+    If you supply the command line option "--key" then PyTeX will find this line and set the value of make_key to true.
+    In addition, I define the following commands:
+    \newcommand{\iskey}[1]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{}}
+    \newcommand{\iskeyelse}[2]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{#2}}
+    These are not necessary, but make it very convenient to insert text meant for an answer key when requested and 
+    leaving it hidden otherwise.
+  </p>
+
+  <h3>Working with SymPy</h3>
+  <p>
+    If you are creating questions for algebra classes, then you will very likely have the need to use SymPy to assist.
+    The <a href="https://docs.sympy.org/latest/index.html" target="_blank">SymPy documentation page</a> is going to be 
+    an invaluable resource to help you along. The SymPy library is already loaded into PyTeX for your use, and all functions
+    can be accessed by using sp.<i>function_name</i>, but the following have been imported directly:
+    <ul>
+        <li>symbols</li>
+        <li>latex</li>
+        <li>factor</li>
+        <li>expand</li>
+        <li>solve</li>
+        <li>simplify</li>
+        <li>Eq</li>
+        <li>Rational</li>
+    </ul>
+    In addition to SymPy, NumPy has already been imported as np, so it's functions may be called as necessary.
+  </p>
+
+  <hr/>
   
   <h3>Randomization Functions</h3>
   <ul>
