@@ -12,7 +12,7 @@ import lib.cmdline
 
 args = lib.cmdline.patchArgs(sys.argv)
  
-__version = '0.5.0'
+__version = '0.5.1'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 

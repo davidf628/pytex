@@ -6,6 +6,10 @@ def parseCommandLine(args, version):
 
     # The following part of this function does the command line parsing
 
+    # if no command line args are passed, then display help
+    if len(args) == 1:
+        args.append('-h')
+
     for arg in args[1:]:
 
         # remove all leading dashes for new commands
@@ -36,6 +40,8 @@ def parseCommandLine(args, version):
             print(f'                              "out_" to the original filename. If spaces are to be used,')
             print(f'                              then double quotes are required around the file name.\n')
 
+            sys.exit(0)
+
         elif command == 's' or command == 'seed':
             parseInfo['seed'] = value
         
@@ -56,24 +62,26 @@ def parseCommandLine(args, version):
             parseInfo['filename'] = command
 
     # The second part sets up all the different file names that need to be tracked
-    if os.path.isfile(parseInfo['filename']):
-        parseInfo['basefilename'], parseInfo['extension'] = os.path.splitext(parseInfo['filename'])
-        if not 'outputfilename' in parseInfo.keys():
-            if 'version' in parseInfo.keys():
-                if 'key' in parseInfo.keys():
-                    parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]} Key{parseInfo["extension"]}'
-                else:
-                    parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]}{parseInfo["extension"]}'
-            else:
-                parseInfo['outputfilename'] = f'out_{parseInfo["filename"]}'
-        parseInfo['baseoutputname'], _ = os.path.splitext(parseInfo['outputfilename'])
-        parseInfo['aux'] = f'{parseInfo["baseoutputname"]}.aux'
-        parseInfo['log'] = f'{parseInfo["baseoutputname"]}.log'
-        parseInfo['gz'] = f'{parseInfo["baseoutputname"]}.synctex.gz' 
+    if 'filename' in parseInfo.keys(): 
 
-    else:
-        print(f'File: {parseInfo["filename"]} not found ==> exiting')
-        sys.exit(-1)
+        if os.path.isfile(parseInfo['filename']):
+            parseInfo['basefilename'], parseInfo['extension'] = os.path.splitext(parseInfo['filename'])
+            if not 'outputfilename' in parseInfo.keys():
+                if 'version' in parseInfo.keys():
+                    if 'key' in parseInfo.keys():
+                        parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]} Key{parseInfo["extension"]}'
+                    else:
+                        parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]}{parseInfo["extension"]}'
+                else:
+                    parseInfo['outputfilename'] = f'out_{parseInfo["filename"]}'
+            parseInfo['baseoutputname'], _ = os.path.splitext(parseInfo['outputfilename'])
+            parseInfo['aux'] = f'{parseInfo["baseoutputname"]}.aux'
+            parseInfo['log'] = f'{parseInfo["baseoutputname"]}.log'
+            parseInfo['gz'] = f'{parseInfo["baseoutputname"]}.synctex.gz' 
+
+        else:
+            print(f'File: {parseInfo["filename"]} not found ==> exiting')
+            sys.exit(-1)
 
     # The third part ensures that a random seed is created
     if not 'seed' in parseInfo.keys():

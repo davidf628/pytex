@@ -286,8 +286,7 @@ __internal_declarations = [
     'cosh', 'sinh', 'tanh', 'erf', 'erfc', 'gamma', 'lgamma', 'pi', 'e', 'tau',
     'inf', 'nan', 
     # functions in the python 'sympy' libary declared globally
-    'symbols', 'latex', 'factor', 'expand', 'solve', 'simplify', 'Eq', 
-    'parse_expr', 'transformations',
+    'symbols', 'latex', 'factor', 'expand', 'solve', 'simplify', 'Eq', 'Rational',
     # functions in arrays.py
     'calconarray', 'sorta', 'sortd', 'joinarray', 'latexjoinarray',
     # functions in display.py
