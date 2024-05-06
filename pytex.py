@@ -4,7 +4,7 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-sys.argv.append('test.tex')
+#sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
 #sys.argv.append('--key')
