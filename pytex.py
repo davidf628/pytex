@@ -4,7 +4,7 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Module 1/generator/math104_exam-1_generator.tex')
+#sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Module 1/generator/math104_exam-1_generator.tex')
 #sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
