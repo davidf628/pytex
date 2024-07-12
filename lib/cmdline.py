@@ -21,9 +21,9 @@ def parseCommandLine(args, version):
             command = command.strip().lower()
             value = value.strip()
         else:
-            command = arg.strip().lower()
+            command = arg.strip()
 
-        if command == 'h' or command == 'help':
+        if command.lower() == 'h' or command.lower() == 'help':
 
             print(f'\nPyTeX Copyright David Flenner version: {version}\n')
             print(f'Command Line: pytex [--args] "filename.tex"\n')
@@ -42,16 +42,16 @@ def parseCommandLine(args, version):
 
             sys.exit(0)
 
-        elif command == 's' or command == 'seed':
+        elif command.lower() == 's' or command.lower() == 'seed':
             parseInfo['seed'] = value
         
-        elif command == 'v' or command == 'version':
+        elif command.lower() == 'v' or command.lower() == 'version':
             parseInfo['version'] = value
 
-        elif command == 'k' or command == 'key':
+        elif command.lower() == 'k' or command.lower() == 'key':
             parseInfo['key'] = True
 
-        elif command == 'o' or command == 'output':
+        elif command.lower() == 'o' or command.lower() == 'output':
             value = value[1:] if value[0] == '"' else value
             value = value[:-1] if value[-1] == '"' else value
             parseInfo['outputfilename'] = value
@@ -65,7 +65,9 @@ def parseCommandLine(args, version):
     if 'filename' in parseInfo.keys(): 
 
         if os.path.isfile(parseInfo['filename']):
-            parseInfo['basefilename'], parseInfo['extension'] = os.path.splitext(parseInfo['filename'])
+            parseInfo['filepath'] = os.path.dirname(parseInfo['filename'])
+            parseInfo['relfilename'] = os.path.basename(parseInfo['filename'])
+            parseInfo['basefilename'], parseInfo['extension'] = os.path.splitext(parseInfo['relfilename'])
             if not 'outputfilename' in parseInfo.keys():
                 if 'version' in parseInfo.keys():
                     if 'key' in parseInfo.keys():
@@ -73,8 +75,10 @@ def parseCommandLine(args, version):
                     else:
                         parseInfo['outputfilename'] = f'{parseInfo["basefilename"]} {parseInfo["version"]}{parseInfo["extension"]}'
                 else:
-                    parseInfo['outputfilename'] = f'out_{parseInfo["filename"]}'
+                    parseInfo['outputfilename'] = f'out_{parseInfo["relfilename"]}'
             parseInfo['baseoutputname'], _ = os.path.splitext(parseInfo['outputfilename'])
+            parseInfo['baseoutputname'] = os.path.join(parseInfo['filepath'], parseInfo['baseoutputname'])
+            parseInfo['outputfile'] = f'{parseInfo["baseoutputname"]}.tex'
             parseInfo['aux'] = f'{parseInfo["baseoutputname"]}.aux'
             parseInfo['log'] = f'{parseInfo["baseoutputname"]}.log'
             parseInfo['gz'] = f'{parseInfo["baseoutputname"]}.synctex.gz' 

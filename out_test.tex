@@ -1,4 +1,4 @@
-%seed - 52766329910
+%seed - 68102368615
 
 \documentclass[12pt]{article}
 
@@ -16,7 +16,7 @@
 
 % change this value to produce answer keys for exams
 \newboolean{make_key}
-\setboolean{make_key}{true}
+\setboolean{make_key}{false}
 \newcommand{\version}{}
 % declarations for the different parts of the exam
 \newtcolorbox{instructionbox}{
@@ -48,12 +48,18 @@
 \begin{enumerate}[1.]
 
 
+
+\item
+
+Find the class width of the set: 21, 28, 41, 62, 65, 72, 81, 87 \\[4cm]
+
+
 \item (2 pts) 
-Solve the polynomial equation: $ x^{2} - 3 x - 10 = 0 $. \\[4mm]
+Solve the polynomial equation: $ x^{2} - 1 = 0 $. \\[4mm]
 \iskey{
     \begin{tabular}{ccl}
-        $x^{2} - 3 x - 10$ & $=$ & $(x + 2)(x - 5)$ \\[2mm]
-        & $\Rightarrow$ & $x \in \left\{ \mathtt{\text{-2, 5}} \right\}$ \\
+        $x^{2} - 1$ & $=$ & $(x + 1)(x - 1)$ \\[2mm]
+        & $\Rightarrow$ & $x \in \left\{ \mathtt{\text{-1, 1}} \right\}$ \\
     \end{tabular}
 }
 \item (2 pts) 
@@ -69,17 +75,17 @@ Solve the polynomial equation: $ x^{2} + 3 x = 0 $. \\[4mm]
 \vspace{3cm}
 
 
-\item (4 pts) Solve the polynomial equation: $ 4 x^{2} - 2 x - 14 = 0 $. \\[4mm]
+\item (4 pts) Solve the polynomial equation: $ 4 x^{2} - 2 x - 25 = 0 $. \\[4mm]
 
 \iskey{
-    $\displaystyle 4 x^{2} - 2 x = 14 $ \\[4mm]
-    $\displaystyle x^{2} - \frac{x}{2} = \frac{7}{2} $ \\[4mm]
-    $\displaystyle x^{2} - \frac{x}{2} + \frac{1}{16} = \frac{57}{16} $ \\[4mm]
-    $\displaystyle \left(x - \frac{1}{4}\right)^{2} = \frac{57}{16} $ \\[4mm]
-    $\displaystyle \left(x - \frac{1}{4}\right)^{2} = \frac{57}{16} $ \\[4mm]
-    $\displaystyle x - \frac{1}{4} = \pm \frac{\sqrt{57}}{4} $ \\[4mm]
+    $\displaystyle 4 x^{2} - 2 x = 25 $ \\[4mm]
+    $\displaystyle x^{2} - \frac{x}{2} = \frac{25}{4} $ \\[4mm]
+    $\displaystyle x^{2} - \frac{x}{2} + \frac{1}{16} = \frac{101}{16} $ \\[4mm]
+    $\displaystyle \left(x - \frac{1}{4}\right)^{2} = \frac{101}{16} $ \\[4mm]
+    $\displaystyle \left(x - \frac{1}{4}\right)^{2} = \frac{101}{16} $ \\[4mm]
+    $\displaystyle x - \frac{1}{4} = \pm \frac{\sqrt{101}}{4} $ \\[4mm]
 
-    $\displaystyle x \in \left\{ \frac{1}{4} - \frac{\sqrt{57}}{4}, \frac{1}{4} + \frac{\sqrt{57}}{4} \right\}$
+    $\displaystyle x \in \left\{ \frac{1}{4} - \frac{\sqrt{101}}{4}, \frac{1}{4} + \frac{\sqrt{101}}{4} \right\}$
 }
 
 \end{enumerate}

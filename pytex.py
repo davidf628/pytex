@@ -4,6 +4,7 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
+sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Module 1/generator/math104_exam-1_generator.tex')
 #sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
@@ -12,7 +13,7 @@ import lib.cmdline
 
 args = lib.cmdline.patchArgs(sys.argv)
  
-__version = '0.5.1'
+__version = '0.6.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
@@ -70,6 +71,7 @@ while (__lcv < len(__data)):
                         if variable in __internal_declarations:
                             print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
                             sys.exit(-1)
+                    print(f'{__lcv}: {__command}')
                     exec(__command)
 
                 if __blockstart in __rptcounter.keys():
@@ -91,6 +93,12 @@ while (__lcv < len(__data)):
                 else:
                     __lcv += 1
 
+            elif is_python_code_block(__command):
+                code_block, block_length = get_python_code_block(__data, __lcv)
+                print(f'{__lcv}: {code_block}')
+                exec(code_block)
+                __lcv += block_length
+            
             else:
                 try:
                     variables = extract_variable_names(__command)
@@ -98,6 +106,7 @@ while (__lcv < len(__data)):
                         if variable in __internal_declarations:
                             print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
                             sys.exit(-1)
+                    print(f'{__lcv}: {__command}')
                     exec(__command)
                     __lcv += 1
                 except Exception as e:
@@ -127,14 +136,17 @@ __data = removeVariableDeclarations(__data)
 __data.insert(0, f"%seed - {__parseinfo['seed']}\n\n")
 
 # write the output .tex file
-with open(__parseinfo['outputfilename'], 'w') as __f:
+with open(__parseinfo['outputfile'], 'w') as __f:
     for __line in __data:
         __f.write(__line)
 
 # create the pdf version
-os.system(f'pdflatex "{__parseinfo["outputfilename"]}"')
+os.system(f'pdflatex "{__parseinfo["outputfile"]}"')
 
 # remove the scrap files
+
+##### CHECK FOR SOURCE OF ERRORS
+
 if os.path.isfile(__parseinfo['aux']):
     pathlib.Path.unlink(__parseinfo['aux'])
 if os.path.isfile(__parseinfo['log']):

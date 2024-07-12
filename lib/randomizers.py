@@ -3,8 +3,7 @@ import math
 from lib.misc import is_number
 
 def test():
-    for _ in range(0, 50):
-        print(rand(-20.5, 55.8), end=", ")
+    print(rand("16", 20))
 
 
 def seed(val):
@@ -12,6 +11,8 @@ def seed(val):
 
 
 def rand(min, max, prec=1):
+    min = float(min)
+    max = float(max)
     dec = 0 if prec == 1 else len(str(prec)) - 2
     lowval = math.floor(min / prec)
     highval = math.floor(max / prec)

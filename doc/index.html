@@ -168,7 +168,7 @@
     <li><a href="#f_peekat">peekat</a>(list, index) * Not yet implemented</li>
     <li><a href="#f_clear">clear</a>() * Not yet implemented</li>
     <li><a href="#f_count">count</a>(item) * Not yet implemented</li>
-    <li><a href="#f_join">join</a>(array, separator) * Not yet implemented</li>
+    <li><a href="#f_joinarray">join</a>(array, separator)</li>
     <li><a href="#f_indexof">indexof</a>(item) * Not yet implemented</li>
     <li><a href="#f_indiciesof">indiciesof</a>(item) * Not yet implemented</li>
     <li><a href="#f_remove">remove</a>(item) * Not yet implemented</li>
@@ -275,6 +275,8 @@
   </p>
 
 <h1>Detailed Documentation</h1>
+
+  <!-- RANDOMIZATION FUNCTIONS -->
 
   <h2 id="f_seed">seed(value) => void</h2>
   <ul>
@@ -440,6 +442,19 @@
         e.g. z = randsgn() * rand(1.5, 2.4, 0.1) will choose a random number for a normal distribution
         that is at least 1.5 standard deviations from the mean (in either direction), but no further 
         than 2.4.
+    </p>
+
+    <!-- ARRAY FUNCTIONS ----------------------------------------------------->
+
+    <h2 id="f_joinarray">joinarray(array, separator)</h2>
+    <ul>
+        <li><b>array</b> - array of int or string</li>
+        <li><b>separator</b> - string</li>
+        <li>returns: <i>string</i></li>
+    </ul>
+    <p>
+        Joins the elements of an array into a single string, using the specified
+        separator between each element.
     </p>
 
     <!-- MATH MACROS --------------------------------------------------------->

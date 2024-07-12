@@ -2,7 +2,7 @@ import re, os, sys
 from random import choice
 
 def test():
-    test_getFunctionAndArgs()
+    print(get_indentation_amount("  %  while x > 7:"))
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
@@ -13,9 +13,12 @@ def getPython(s):
 def getPythonWithEyes(s):
     return re.search(r'(\@.*?\@)', s).group(1)
 
-def uncommentLine(s):
+def uncommentLine(s, remove_initial_whitespace=True):
     if re.search(r'^\s*\%\s*', s):
-        return re.search(r'^\s*\%\s*(.*)', s).group(1)
+        if remove_initial_whitespace:
+            return re.search(r'^\s*\%\s*(.*)', s).group(1)
+        else:
+            return re.search(r'^\s*\%(\s*.*)', s).group(1)
     else:
         return s
 
@@ -163,8 +166,10 @@ def checkImportStatements(data):
         if 'importpytex' in data[i] or 'importrandpytexfrom' in data[i]:
 
             if inPythonCommands:
-                print('SORRY! You aren''t permitted to import a pytex file into a \%python ... \%end statement block.')
-                print('  You must use a @ ... @ statement on a single line instead.')
+                print(f'\n-- Error on Line: {i+1} --\n')
+                print('SORRY! You aren\'t permitted to import a pytex file into a \%python ... \%end statement block.')
+                print('  You must use a @ ... @ statement on a single line instead.\n')
+                quit()
                 
             elif hasPython(data[i]):
                 snippet = getPython(data[i])
@@ -200,6 +205,74 @@ def remove_quote_marks(s):
         s = s[:-1]
     return s
 
+
+###############################################################################
+# Determines the amount of initial whitespace present for a command. Used to
+#  figure out when a code block begins and ends
+
+def get_indentation_amount(command):
+    # bypass the initial '%' comment marker and any whitespace before it
+    command = re.search(r'^(\s*%)?(.*)', command).group(2)
+
+    counter = 0
+    while counter < len(command) and (command[counter] == ' ' or command[counter] == '\t'):
+        counter += 1
+    return counter
+
+
+###############################################################################
+# Checks to see if a command is the start of a python code block such as:
+#   while i < len(data):
+# It just checks for the semicolon at the end of the statement
+
+def is_python_code_block(command):
+    # looks for a statement of the form: "while x > 10:"
+    pattern = r'.*:\s*$'
+    return bool(re.search(pattern, command))
+    
+
+###############################################################################
+# Goes through python code and selects sequential lines that are indented,
+#  indicating a continued block of code that needs to be executed as a group
+# 
+#  Returns the code block as a string, ready to be sent to exec()
+
+def get_python_code_block(data, current_line):
+    
+    # get initial statement that begins the code block
+    command = uncommentLine(data[current_line], remove_initial_whitespace=False)
+    block_length = 1
+    base_indentation = get_indentation_amount(command)
+    command = command[base_indentation:] # skip any spaces the user put in for formatting
+    code_block = command
+    
+    # move forward to the next statement, which should be in the code block
+    current_line += 1
+    command = uncommentLine(data[current_line], remove_initial_whitespace=False)
+    command = command[base_indentation:]
+    
+    while current_line < len(data) and (get_indentation_amount(command) > base_indentation or is_else_or_elif(command, base_indentation)):
+        code_block += f'\n{command}'
+        current_line += 1
+        command = uncommentLine(data[current_line], remove_initial_whitespace=False)
+        block_length += 1
+        command = command[base_indentation:]
+        
+    return (code_block, block_length)
+
+###############################################################################
+# Skips all initial spaces and LaTeX comment symbol, and then any additional
+#  spaces and retrieves the first 'word' that exists in a command. Used to 
+#  find any uses of 'else' or 'elif' because you can't tell that an 'if' 
+#  statement block has ended just by spaces alone
+
+def is_else_or_elif (command, base_indentation):
+    indentation_amount = get_indentation_amount(command)
+    if indentation_amount == base_indentation:
+        pattern = r'^\s*%\s*(else|elif):?\s*'
+        return re.search(pattern, command) != None
+    else:
+        return False
 
 def extract_variable_names(code):
 
@@ -300,7 +373,8 @@ __internal_declarations = [
     'isNewPythonCommands', 'isEndPythonCommands', 'extract_variable_names',
     'command_contains_reserved_word', 'importpytex', 'importpytexfrom',
     'checkImportStatements', 'getFunctionAndArgs', 'is_function_statement',
-    'load_pytex_file', 'getPythonWithEyes', 'remove_quote_marks',
+    'load_pytex_file', 'getPythonWithEyes', 'remove_quote_marks', 
+    'is_python_code_block', 'get_python_code_block', 'get_indentation_amount',
     # functions in randomizers.py
     'seed', 'rand', 'rands', 'diffrands', 'nzrand', 'nzrands', 'nzdiffrands',
     'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 'jointshuffle',
