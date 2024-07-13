@@ -205,6 +205,7 @@
     <li><a href="#f_evalfunc">evalfunc</a>(f, variables)</li>
     <li><a href="#f_isnumber">isnumber</a>(value) * Not yet implemented</li>
     <li><a href="#f_ceil">ceil</a>(x), <a href="#f_floor">floor</a>(x), <b>trunc</b>(x), <a href="f_round">round</a>(x)</li>
+    <li><a href="#_rnd">rnd</a>(x, [decimals=0])</li>
     <li><b>abs</b>(x)</li>
     <li><b>bin</b>(x), <b>hex</b>(x), <b>oct</b>(x)</li>
     <li><b>sum</b>(values), <b>prod</b>(values), <b>sumprod</b>(x, y)</li>
@@ -542,6 +543,23 @@
        an odd value will round up. Since this is so different from student
        expectations, I will eventually override this function for my own that
        always round 0.5 up.
+    </p>
+
+    <h2 id="f_rnd">rnd</a>(value, [decimals = 0])</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i> or <i>array</i></li>
+        <li><b>decimals</b> - <i>int</i> (defaults to 0)</li>
+        <li>returns <i>float or int</i></li>
+    </ul>
+    <p>
+       Rounds a floating point number to a specified number of <i>decimals</i>.
+       If no <i>decimals</i> are provided, the default is to round to an integer.
+       This function currently uses Python's method of rounding which is called
+       rounding half-even. So 0.5 on an even number will round down, and 0.5 on
+       an odd value will round up. Since this is so different from student
+       expectations, I will eventually override this function for my own that
+       always round 0.5 up. The advantage to this function currently is that it
+       can be passed an array and it will round all the items in the array.
     </p>
 
     <h2 id="f_ceil">ceil</a>(value)</h2>

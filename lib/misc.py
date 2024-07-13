@@ -366,7 +366,7 @@ __internal_declarations = [
     'showdataarray', 'horizshowarrays', 'showarrays', 'normalcurve', 'tcurve',
     'dotplot',
     # functions in maths.py
-    'sign', 'sgn', 'frac', 'reducefraction', 'evalfunc', 
+    'sign', 'sgn', 'frac', 'reducefraction', 'evalfunc', 'rnd',
     # functions in misc.py
     'hasPython', 'getPython', 'uncommentLine', 'is_number', 'getCommand',
     'strsub', 'removeVariableDeclarations', 'hasVariableCall', 'getVariableName',
