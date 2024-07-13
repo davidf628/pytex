@@ -168,7 +168,7 @@
     <li><a href="#f_peekat">peekat</a>(list, index) * Not yet implemented</li>
     <li><a href="#f_clear">clear</a>() * Not yet implemented</li>
     <li><a href="#f_count">count</a>(item) * Not yet implemented</li>
-    <li><a href="#f_joinarray">join</a>(array, separator)</li>
+    <li><a href="#f_joinarray">joinarray</a>(array, separator)</li>
     <li><a href="#f_indexof">indexof</a>(item) * Not yet implemented</li>
     <li><a href="#f_indiciesof">indiciesof</a>(item) * Not yet implemented</li>
     <li><a href="#f_remove">remove</a>(item) * Not yet implemented</li>
@@ -230,7 +230,7 @@
   <h3>Statistical Functions</h3>
 
   <ul>
-    <li>normalcdf(lower, upper, mean=0, stdev=1)</li>
+    <li><a href="#f_normalcdf">normalcdf</a>(<b>lower, upper, <i>[mean=0]</i>, <i>[stdev=1]</i></b>)</li>
     <li>invnorm(p, mean=0, stdev=1)</li>
     <li>tcdf(lower, upper, df, mean=0, stdev=1)</li>
     <li>invt(p, df, mean=0, stdev=1)</li>
@@ -264,6 +264,7 @@
     <li><a href="#f_showarrays">showarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <li><a href="#f_normalcurve">normalcurve</a>(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</li>
+    <li><a href="#f_tcurve">tcurve</a>(leftbound, rightbound, df, [mean=0], [stdev=1], [twotail=False])</li>
   </ul>
 
   <h3>Python Built-in Functions</h3>
@@ -563,6 +564,22 @@
         integer portion. If an integer is provided, then it is returned unchanged.
     </p>
 
+    <h2 id="f_normalcdf">normalcdf(lower, upper, <i>[mean=0]</i>, <i>[stdev=1]</i>)</h2>
+    <ul>
+        <li><b>lower</b> - <i>float</i></li>
+        <li><b>upper</b> - <i>float</i></li>
+        <li><b>mean</b> - optional <i>float</i></li>
+        <li><b>stdev</b> - optional <i>float</i></li>
+        <li>returns <i>float</i></li>
+    </ul>
+    <p>
+        Calculates the area under a standard normal distribution curve between two
+        given z-scores: the <i>lower</i> and <i>upper</i> bounds. If the optional 
+        <i>mean</i> and standard deviation <i>stdev</i> paramemters are
+        provided, then the area returned will be based on a normal distribution with
+        the given mean and standard deviation. Uses scipy for the computation.
+    </p>
+
     <h2 id="f_evalfunc">evalfunc(f, variables)</h2>
     <ul>
         <li><b>f</b> - <i>str</i></li>
@@ -593,7 +610,7 @@
         and there are borders drawn around all values.
     </p>
 
-    <h2 id="f_showarrays">(title1, array1, title2, array2, etc...)</h2>
+    <h2 id="f_showarrays">showarrays(title1, array1, title2, array2, etc...)</h2>
     <ul>
         <li><b>title1</b> - <i>str</i></li>
         <li><b>array1</b> - <i>[float]</i></li>
@@ -607,7 +624,7 @@
         Additional columns will be created for any additional title/array pairs.
     </p>
 
-    <h2 id="f_showhorizarrays">(title1, array1, title2, array2, etc...)</h2>
+    <h2 id="f_showhorizarrays">showhorizarrays(title1, array1, title2, array2, etc...)</h2>
     <ul>
         <li><b>title1</b> - <i>str</i></li>
         <li><b>array1</b> - <i>[float]</i></li>
@@ -621,7 +638,7 @@
         Additional rows are created for any additional title/array pairs.
     </p>
 
-    <h2 id="f_normalcurve">(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</h2>
+    <h2 id="f_normalcurve">normalcurve(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</h2>
     <ul>
         <li><b>leftbound</b> - <i>float</i></li>
         <li><b>rightbound</b> - <i>float</i></li>
@@ -637,6 +654,27 @@
         shaded. A value for the <i>mean</i> and <i>stdev</i> for the distribution can be provided
         and the drawing will shift accordingly.
         If you only want the normal distribuion curve to be drawn, you can just set the left and
+        right bounds to both be greater than +4 because any value more than 4 standard deviations
+        from the mean are ignored.
+    </p>
+
+    <h2 id="f_tcurve">tcurve(leftbound, rightbound, df, [mean=0], [stdev=1], [twotail=False])</h2>
+    <ul>
+        <li><b>leftbound</b> - <i>float</i></li>
+        <li><b>rightbound</b> - <i>float</i></li>
+        <li><b>df</b> - <i>int</i></li>
+        <li><b>mean</b> - <i>float</i> (defaults to 0)</li>
+        <li><b>stdev</b> - <i>float</i> (defaults to 1)</li>
+        <li><b>twotail</b> - <i>boolean</i> (defaults to False)</li>
+        <li>returns <i>LaTeX tikz object</i></li>
+    </ul>
+    <p>
+        Creates a plot for a t-distribution curve that can be shaded between the values of
+        <i>leftbound</i>, and <i>rightbound</i>. If <i>twotail</i> is set to true, then the 
+        regions to the left of <i>leftbound</i> and to the right of <i>rightbound</i> will be
+        shaded. A value for the <i>mean</i> and <i>stdev</i> for the distribution can be provided
+        and the drawing will shift accordingly.
+        If you only want the t-distribuion curve to be drawn, you can just set the left and
         right bounds to both be greater than +4 because any value more than 4 standard deviations
         from the mean are ignored.
     </p>
