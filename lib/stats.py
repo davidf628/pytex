@@ -8,6 +8,12 @@ def stats_test():
     print(f'stdevp == {stdevp(x, f)}')
     print(f'stdev == {stdev(x, f)}')
 
+###############################################################################
+# Calculates the area under a standard normal distribution curve between two
+#  given z-scores. If the optional mean and standard deviation paramemters are
+#  provided, then the area returned will be based on a normal distribution with
+#  the given mean and standard deviation. Uses scipy for the computation.
+
 def normalcdf (lower, upper, mean=0, stdev=1):
     return norm.cdf(upper, mean, stdev) - norm.cdf(lower, mean, stdev)
 

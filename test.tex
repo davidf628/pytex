@@ -11,6 +11,7 @@
 \usepackage{ifthen}
 \usepackage{xcolor}
 \usepackage{tasks}
+\usepackage{pgfplots}
 
 % change this value to produce answer keys for exams
 \newboolean{make_key}
@@ -47,6 +48,13 @@
 
 \begin{enumerate}[1.]
 
+%python
+% data = rands(13, 38, 20)
+%end
+
+\item This is a dot plot: \\[4mm]
+
+@dotplot(data, xmin=10, xmax=40, xscl=5, xdist="3mm")@
 
 %python
 %
@@ -58,6 +66,7 @@
 % prevmax = set1[6]
 % while frac(range1 / 7) > 0.5:
 %   set1[7] = rand(prevmax + 1, 110)
+%   range1 = max(set1) - min(set1)
 %
 % disp1 = joinarray(set1, ", ") 
 %end

@@ -2,7 +2,7 @@ from numpy import transpose
 import math
 
 def display_test():
-    print((1.23, 8))
+    dotplot([15, 15, 15, 20, 21, 22, 22, 25, 25, 16, 21, 19, 18, 12, 20], xmin=10, xmax=30, xscl=2)
 
 def showdataarray(array, columns=1, options=""):
     alignment = "|"
@@ -199,6 +199,58 @@ def tcurve(leftbound, rightbound, df, mean=0, stdev=1, twotail=False):
     plotstr += r"      \addplot [very thick,cyan!50!black] {" + func + r"};" + "\n"
     plotstr += r"    \end{axis}" + "\n"
     plotstr += r"\end{tikzpicture}" + "\n"
+
+    return plotstr
+
+###############################################################################
+# Draws a basic dot plot from statistics from a given set of data that is 
+#  assummed to be integer based
+#  
+#  The available options are:
+#   - yscale: the physical distance between each y-tick mark (5mm, 6pt, etc)
+
+def dotplot(data, xdist="default", ydist="5mm", xmin="default", xmax="default", xscl="default"):
+
+    counts = {}
+    maxcount = 0
+    # get the count of each data item in the data set
+    for val in data:
+        if counts.get(val, None) == None:
+            counts[val] = 1
+        else:
+            counts[val] += 1
+        if counts[val] > maxcount:
+            maxcount = counts[val]
+
+    # sort the counts and get the minimum and maximum values
+    counts = dict(sorted(counts.items()))
+    
+    if xmin == "default":
+        xmin = list(counts.keys())[0]
+    if xmax == "default":
+        xmax = list(counts.keys())[-1]
+
+    coordinates = ""
+    for xval in counts.keys():
+        for yval in range(1, counts[xval]+1):
+            coordinates += f"({xval},{yval}) "
+    print(coordinates)
+
+    plotstr = r"\begin{tikzpicture}" + "\n"
+    plotstr += r"  \begin{axis}[axis lines=center, axis y line=none," + "\n"
+    if xdist == "default":
+        plotstr += f"     y={ydist},"
+    else:
+        plotstr += f"     x={xdist}, y={ydist},"
+    if xscl != "default":
+        plotstr += f" xtick distance={xscl},\n"
+    plotstr += r"     axis line style={stealth-stealth, thick}," + "\n"
+    plotstr += f"     xmin={xmin}, xmax={xmax}, ymin=0, ymax={maxcount}]" + "\n"
+    plotstr += r"     \addplot [only marks, color=black, thick] coordinates { " + coordinates + r" };" + "\n"
+    plotstr += r"  \end{axis}" + "\n"
+    plotstr += r"\end{tikzpicture}" + "\n"
+
+    print(plotstr)
 
     return plotstr
 

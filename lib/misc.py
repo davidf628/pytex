@@ -364,6 +364,7 @@ __internal_declarations = [
     'calconarray', 'sorta', 'sortd', 'joinarray', 'latexjoinarray',
     # functions in display.py
     'showdataarray', 'horizshowarrays', 'showarrays', 'normalcurve', 'tcurve',
+    'dotplot',
     # functions in maths.py
     'sign', 'sgn', 'frac', 'reducefraction', 'evalfunc', 
     # functions in misc.py

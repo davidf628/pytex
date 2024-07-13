@@ -265,6 +265,7 @@
     <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <li><a href="#f_normalcurve">normalcurve</a>(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</li>
     <li><a href="#f_tcurve">tcurve</a>(leftbound, rightbound, df, [mean=0], [stdev=1], [twotail=False])</li>
+    <li><a href="#f_dotplot">dotplot</a>(data, [xdist="default"], [ydist="default], [xmin="default"], [xmax="default"], [xscl="default"])</li>
   </ul>
 
   <h3>Python Built-in Functions</h3>
@@ -677,6 +678,28 @@
         If you only want the t-distribuion curve to be drawn, you can just set the left and
         right bounds to both be greater than +4 because any value more than 4 standard deviations
         from the mean are ignored.
+    </p>
+
+    <h2 id="f_dotplot">dotplot(data, [xdist="default"], [ydist="5mm"], [xmin="default"], [xmax="default"], [xscl="default"])</h2>
+    <ul>
+        <li><b>data</b> - array of <i>float</i></li>
+        <li><b>xdist</b> - <i>string</i> (defaults to "default")</li>
+        <li><b>ydist</b> - <i>string</i> (defaults to "5mm")</li>
+        <li><b>xmin</b> - <i>int</i> (defaults to "default")</li>
+        <li><b>xmax</b> - <i>int</i> (defaults to "default")</li>
+        <li><b>xscl</b> - <i>int</i> (defaults to "default")</li>
+        <li>returns <i>LaTeX tikz object</i></li>
+    </ul>
+    <p>
+        Creates a basic dot plot of a set of data which is assumed to be integer-based. To
+        control the look of the dot plot you can set the <i>xdist</i>, and <i>ydist</i>
+        parameters, which state how much physical distance should be between each integer
+        value. This should be something like "5mm", "1cm", "2pt", etc. Also, you can control
+        the lowest and highest values that will appear on your axis using <i>xmin</i>, and
+        <i>xmax</i>. <i>xscl</i> will set the distance between each tick mark on the axis.
+        Many of these parameters default to the string "default", which just tells PyTeX to 
+        either include or ignore the parameter altoghether and allow PGF plots to choose the
+        best values it wants.
     </p>
 
 </body>
