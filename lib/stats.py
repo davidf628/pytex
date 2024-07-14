@@ -3,10 +3,9 @@ import numpy as np
 import math
 
 def stats_test():
-    x = [0, 1, 2, 3, 4, 5, 6]
-    f = [10, 19, 7, 7, 2, 1, 4]
-    print(f'stdevp == {stdevp(x, f)}')
-    print(f'stdev == {stdev(x, f)}')
+    x = [  1,   2,   3,    4,   5,    6]
+    f = [.25, .15, 0.2, 0.05, .10, 0.15]
+    print(f'quartiles == {quartiles(x, f)}')
 
 ###############################################################################
 # Calculates the area under a standard normal distribution curve between two
@@ -225,6 +224,79 @@ def cumulativefreq(freq):
         cum_freq.append(total + val)
         total += val
     return cum_freq
+
+
+###############################################################################
+# Calculates the quartiles of a set of data using the median method, which will
+#  agree with the values provided by TI calculators. The input is an array of
+#  float values, and the return is a dict with the keys: min, q1, med, q3, and
+#  max, together with their respective values
+
+def quartiles(data, freq=[]):
+
+    q1val = 0
+    q3val = 0
+
+    if len(freq) == 0:
+        # calculate quartiles on only the values in data
+        data = sorted(data)
+        minval = data[0]
+        maxval = data[-1]
+        medval = median(data)
+        lowermid = math.floor(len(data) / 2) 
+        q1val = median(data[0:lowermid])
+        uppermid = math.ceil(len(data) / 2)
+        q3val = median(data[uppermid:])   
+
+        quart = { 'min': minval, 'q1': q1val, 'med': medval, 'q3': q3val, 'max': maxval }
+
+    else:
+        # calculate quartiles using weighted methods
+        data, freq = weightedsort(data, freq)
+
+        allzero = True
+        for val in freq:
+            if val > 0:
+                allzero = False
+        
+        if not allzero:
+
+            newdata = []
+            newfreq = []
+
+            # remove any frequencies of 0
+            for i in range(0, len(freq)):
+                if freq[i] != 0:
+                    newdata.append(data[i])
+                    newfreq.append(freq[i])
+
+            minval = newdata[0]
+            maxval = newdata[-1]
+            medval = median(newdata, newfreq)
+
+            s = sum(newfreq)
+            q1pos = s / 4;
+            q3pos = 3 * s / 4;
+            csum = 0
+            index = 0
+            while (csum < q1pos and index < len(newfreq)):
+                csum += newfreq[index]
+                index += 1
+            q1val = newdata[index - 1]
+            csum = 0
+            index = 0
+            while (csum < q3pos and index < len(newfreq)):
+                csum += newfreq[index]
+                index += 1
+            q3val = newdata[index - 1]
+
+            quart = { 'min': minval, 'q1': q1val, 'med': medval, 'q3': q3val, 'max': maxval }
+
+        else:
+            quart = None
+
+    return quart
+
 
 if __name__ == '__main__':
     stats_test()

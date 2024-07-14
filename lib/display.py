@@ -1,8 +1,9 @@
 from numpy import transpose
+from lib import *
 import math
 
 def display_test():
-    dotplot([15, 15, 15, 20, 21, 22, 22, 25, 25, 16, 21, 19, 18, 12, 20], xmin=10, xmax=30, xscl=2)
+    boxandwhiskerplot([15, 19, 25, 25, 26, 34, 32, 33, 35, 37, 39, 40, 45, 48, 49, 51, 80])
 
 def showdataarray(array, columns=1, options=""):
     alignment = "|"
@@ -203,13 +204,17 @@ def tcurve(leftbound, rightbound, df, mean=0, stdev=1, twotail=False):
     return plotstr
 
 ###############################################################################
-# Draws a basic dot plot from statistics from a given set of data that is 
+# Draws a basic dot plot from statistics from a single set of data that is 
 #  assummed to be integer based
 #  
 #  The available options are:
-#   - yscale: the physical distance between each y-tick mark (5mm, 6pt, etc)
+#   - xdist: the physical distance between x-tick marks (5mm, 6pt, etc)
+#   - ydist: the physical distance between each y-tick mark
+#   - xmin: the smallest value to use along the x-axis
+#   - xmax: the largest value to use along the x-axis
+#   - xscl: the distance between tick marks
 
-def dotplot(data, xdist="default", ydist="5mm", xmin="default", xmax="default", xscl="default"):
+def dotplot(data, xdist=None, ydist="5mm", xmin=None, xmax=None, xscl=None):
 
     counts = {}
     maxcount = 0
@@ -225,28 +230,78 @@ def dotplot(data, xdist="default", ydist="5mm", xmin="default", xmax="default", 
     # sort the counts and get the minimum and maximum values
     counts = dict(sorted(counts.items()))
     
-    if xmin == "default":
+    if xmin == None:
         xmin = list(counts.keys())[0]
-    if xmax == "default":
+    if xmax == None:
         xmax = list(counts.keys())[-1]
 
     coordinates = ""
     for xval in counts.keys():
         for yval in range(1, counts[xval]+1):
             coordinates += f"({xval},{yval}) "
-    print(coordinates)
 
     plotstr = r"\begin{tikzpicture}" + "\n"
     plotstr += r"  \begin{axis}[axis lines=center, axis y line=none," + "\n"
-    if xdist == "default":
+    if xdist == None:
         plotstr += f"     y={ydist},"
     else:
         plotstr += f"     x={xdist}, y={ydist},"
-    if xscl != "default":
+    if xscl != None:
         plotstr += f" xtick distance={xscl},\n"
     plotstr += r"     axis line style={stealth-stealth, thick}," + "\n"
     plotstr += f"     xmin={xmin}, xmax={xmax}, ymin=0, ymax={maxcount}]" + "\n"
     plotstr += r"     \addplot [only marks, color=black, thick] coordinates { " + coordinates + r" };" + "\n"
+    plotstr += r"  \end{axis}" + "\n"
+    plotstr += r"\end{tikzpicture}" + "\n"
+
+    return plotstr
+
+
+###############################################################################
+# Draws a basic box and whisker plot from statistics for a single data set 
+#  
+#  The available options are:
+#   - fromquartiles: whether or not the data represents quartiles or a set of
+#       data values
+#   - xdist: the physical distance between x-tick marks (5mm, 6pt, etc)
+#   - ydist: the physical distance between each y-tick mark
+#   - xmin: the smallest value to use along the x-axis
+#   - xmax: the largest value to use along the x-axis
+#   - xscl: the distance between tick marks
+
+def boxandwhiskerplot(data, fromquartiles=False, xdist=None, ydist="5mm", xmin=None, xmax=None, xscl=None):
+
+    if fromquartiles:
+        q = { 'min': data[0], 'q1': data[1], 'med': data[2], 'q3': data[3], 'max': data[4] }
+    else:
+        q = quartiles(data)
+    
+    if xmin == None:
+        xmin = q['min']
+    if xmax == None:
+        xmax = q['max']
+
+    plotstr = r"\begin{tikzpicture}" + "\n"
+    plotstr += r"  \begin{axis}[axis lines=center, axis y line=none," + "\n"
+    if xdist == None:
+        plotstr += f"    y={ydist},"
+    else:
+        plotstr += f"    x={xdist}, y={ydist},"
+    if xscl != None:
+        plotstr += f" xtick distance={xscl},\n"
+    else:
+        plotstr += "\n"
+    plotstr += r"    axis line style={stealth-stealth, thick}," + "\n"
+    plotstr += f"    xmin={xmin}, xmax={xmax}, ymin=0, ymax=2]" + "\n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['min']},0.6) -- (axis cs:{q['min']},1.4); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['q1']},0.5) -- (axis cs:{q['q1']},1.5); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['med']},0.5) -- (axis cs:{q['med']},1.5); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['q3']},0.5) -- (axis cs:{q['q3']},1.5); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['max']},0.6) -- (axis cs:{q['max']},1.4); \n" 
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['min']},1.0) -- (axis cs:{q['q1']},1.0); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['q3']},1.0) -- (axis cs:{q['max']},1.0); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['q1']},1.5) -- (axis cs:{q['q3']},1.5); \n"
+    plotstr += f"    \\draw [thick, black] (axis cs:{q['q1']},0.5) -- (axis cs:{q['q3']},0.5); \n"
     plotstr += r"  \end{axis}" + "\n"
     plotstr += r"\end{tikzpicture}" + "\n"
 

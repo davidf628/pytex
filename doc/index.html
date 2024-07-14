@@ -255,6 +255,7 @@
     <li>midpoints(ranges)</li>
     <li>relativefreq(freq)</li>
     <li>cumulativefreq(freq)</li>
+    <li><a href="#f_quartiles">quartiles</a>(data, [freq=[]])</li>
 
   </ul>
 
@@ -266,7 +267,8 @@
     <li><a href="#f_showhorizarrays">showhorizarrays</a>(title1, array1, title2, array2, [etc.])</li>
     <li><a href="#f_normalcurve">normalcurve</a>(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</li>
     <li><a href="#f_tcurve">tcurve</a>(leftbound, rightbound, df, [mean=0], [stdev=1], [twotail=False])</li>
-    <li><a href="#f_dotplot">dotplot</a>(data, [xdist="default"], [ydist="default], [xmin="default"], [xmax="default"], [xscl="default"])</li>
+    <li><a href="#f_dotplot">dotplot</a>(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</li>
+    <li><a href="#f_boxandwhiskerplot">boxandwhiskerplot</a>(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl="default"])</li>
   </ul>
 
   <h3>Python Built-in Functions</h3>
@@ -613,6 +615,27 @@
         e.g. evalfunc("2*x**2 - 4*x+15", {'x': -1}) returns 21
     </p>
 
+    <!-- STATISTICS MACROS --------------------------------------------------->
+
+    <h2 id="f_quartiles">quartiles(data, [freq=[]])</h2>
+    <ul>
+        <li><b>data</b> - array of <i>float</i></li>
+        <li><b>freq</b> - array of <i>int</i></il></li>
+        <li>returns <i>dict</i> of <i>float</i></li>
+    </ul>
+
+    <p>
+        Determines the values of the five-number summary for a given set of data
+        using the median method, which will return the same values as the TI
+        calculators. The return is a dictionary with the keys: min, q1, med, q3,
+        and max, paired together with their values. 
+    </p>
+    <p>
+        If the optional parameter of <i>freq</i> is provided, then the quartiles
+        will be calculated using a weighted method, assuming that <i>freq</i>
+        provides the frequency with which the values in <i>data</i> occur.
+    </p>
+
     <!-- DISPLAY MACROS ------------------------------------------------------>
 
     <h2 id="f_showdataarray">showdataarray(array, [columns=1], [options=""])</h2>
@@ -698,14 +721,14 @@
         from the mean are ignored.
     </p>
 
-    <h2 id="f_dotplot">dotplot(data, [xdist="default"], [ydist="5mm"], [xmin="default"], [xmax="default"], [xscl="default"])</h2>
+    <h2 id="f_dotplot">dotplot(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</h2>
     <ul>
         <li><b>data</b> - array of <i>float</i></li>
-        <li><b>xdist</b> - <i>string</i> (defaults to "default")</li>
+        <li><b>xdist</b> - <i>string</i> (defaults to None)</li>
         <li><b>ydist</b> - <i>string</i> (defaults to "5mm")</li>
-        <li><b>xmin</b> - <i>int</i> (defaults to "default")</li>
-        <li><b>xmax</b> - <i>int</i> (defaults to "default")</li>
-        <li><b>xscl</b> - <i>int</i> (defaults to "default")</li>
+        <li><b>xmin</b> - <i>int</i> (defaults to None)</li>
+        <li><b>xmax</b> - <i>int</i> (defaults to None)</li>
+        <li><b>xscl</b> - <i>int</i> (defaults to None)</li>
         <li>returns <i>LaTeX tikz object</i></li>
     </ul>
     <p>
@@ -715,7 +738,29 @@
         value. This should be something like "5mm", "1cm", "2pt", etc. Also, you can control
         the lowest and highest values that will appear on your axis using <i>xmin</i>, and
         <i>xmax</i>. <i>xscl</i> will set the distance between each tick mark on the axis.
-        Many of these parameters default to the string "default", which just tells PyTeX to 
+        Many of these parameters default to None, which just tells PyTeX to 
+        either include or ignore the parameter altoghether and allow PGF plots to choose the
+        best values it wants.
+    </p>
+
+    <h2 id="f_boxandwhiskerplot">boxandwhiskerplot(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</h2>
+    <ul>
+        <li><b>data</b> - array of <i>float</i></li>
+        <li><b>xdist</b> - <i>string</i> (defaults to None)</li>
+        <li><b>ydist</b> - <i>string</i> (defaults to "5mm")</li>
+        <li><b>xmin</b> - <i>int</i> (defaults to None)</li>
+        <li><b>xmax</b> - <i>int</i> (defaults to None)</li>
+        <li><b>xscl</b> - <i>int</i> (defaults to None)</li>
+        <li>returns <i>LaTeX tikz object</i></li>
+    </ul>
+    <p>
+        Creates a basic box-and-whisker plot of a single set of data. To
+        control the look of the dot plot you can set the <i>xdist</i>, and <i>ydist</i>
+        parameters, which state how much physical distance should be between each integer
+        value. This should be something like "5mm", "1cm", "2pt", etc. Also, you can control
+        the lowest and highest values that will appear on your axis using <i>xmin</i>, and
+        <i>xmax</i>. <i>xscl</i> will set the distance between each tick mark on the axis.
+        Many of these parameters default to None, which just tells PyTeX to 
         either include or ignore the parameter altoghether and allow PGF plots to choose the
         best values it wants.
     </p>

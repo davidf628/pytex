@@ -364,7 +364,7 @@ __internal_declarations = [
     'calconarray', 'sorta', 'sortd', 'joinarray', 'latexjoinarray',
     # functions in display.py
     'showdataarray', 'horizshowarrays', 'showarrays', 'normalcurve', 'tcurve',
-    'dotplot',
+    'dotplot', 'boxandwhiskerplot',
     # functions in maths.py
     'sign', 'sgn', 'frac', 'reducefraction', 'evalfunc', 'rnd',
     # functions in misc.py
@@ -384,7 +384,7 @@ __internal_declarations = [
     'normalcdf', 'invnorm', 'tcdf', 'invt', 'binompdf', 'binomcdf', 'binommean',
     'binomstdev', 'mean', 'weightedsort', 'median', 'modes', 'stdevp', 'stdev',
     'linreg', 'classranges', 'getclasslimits', 'frequencies', 'midpoints',
-    'relativefreq', 'cumulativefreq' ]
+    'relativefreq', 'cumulativefreq', 'quartiles' ]
 
 if __name__ == '__main__':
     test()
