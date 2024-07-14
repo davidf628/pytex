@@ -268,7 +268,7 @@
     <li><a href="#f_normalcurve">normalcurve</a>(leftbound, rightbound, [mean=0], [stdev=1], [twotail=False])</li>
     <li><a href="#f_tcurve">tcurve</a>(leftbound, rightbound, df, [mean=0], [stdev=1], [twotail=False])</li>
     <li><a href="#f_dotplot">dotplot</a>(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</li>
-    <li><a href="#f_boxandwhiskerplot">boxandwhiskerplot</a>(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl="default"])</li>
+    <li><a href="#f_boxandwhiskerplot">boxandwhiskerplot</a>(data, [fromquartiles=False], [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl="default"])</li>
   </ul>
 
   <h3>Python Built-in Functions</h3>
@@ -743,9 +743,10 @@
         best values it wants.
     </p>
 
-    <h2 id="f_boxandwhiskerplot">boxandwhiskerplot(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</h2>
+    <h2 id="f_boxandwhiskerplot">boxandwhiskerplot(data, [fromquartiles=False], [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</h2>
     <ul>
         <li><b>data</b> - array of <i>float</i></li>
+        <li><b>fromquartiles</b> - <i>bool</i></li>
         <li><b>xdist</b> - <i>string</i> (defaults to None)</li>
         <li><b>ydist</b> - <i>string</i> (defaults to "5mm")</li>
         <li><b>xmin</b> - <i>int</i> (defaults to None)</li>
@@ -762,7 +763,8 @@
         <i>xmax</i>. <i>xscl</i> will set the distance between each tick mark on the axis.
         Many of these parameters default to None, which just tells PyTeX to 
         either include or ignore the parameter altoghether and allow PGF plots to choose the
-        best values it wants.
+        best values it wants. The <i>fromquartiles</i> flag will tell the plot to interpret
+        <i>data</i> as either a data set or will expect the five quartiles if this is set.
     </p>
 
 </body>
