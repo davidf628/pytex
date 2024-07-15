@@ -225,6 +225,7 @@
     <li><b>erf</b>(x), <b>erfc</b>(x)</li>
     <li><b>gamma</b>(x), <b>lgamma</b>(x)</li>
     <li><b>pi</b>, <b>e</b>, <b>tau</b>, <b>inf</b>, <b>nan</b></li>
+    <li><a href='#f_prettyint'>prettyint</a>( <b>value</b>) </li>
   </ul>
 
 
@@ -613,6 +614,17 @@
         values must be specified in a <i>dict</i> object so that the values
         can be substituted.<br/><br/>
         e.g. evalfunc("2*x**2 - 4*x+15", {'x': -1}) returns 21
+    </p>
+
+    <h2 id="f_prettyint">prettyint(value)</h2>
+    <ul>
+        <li><b>value</b> - <i>int</i> or <int[]></li>
+        <li>returns <i>string</i></li>
+    </ul>
+    <p>
+        Takes a integer value and returns a nicely formatted integer using
+        a comma separator at the thousdands place, millions place, etc. If 
+        an array of integers is sent, then all numbers are formatted
     </p>
 
     <!-- STATISTICS MACROS --------------------------------------------------->

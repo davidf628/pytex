@@ -2,7 +2,7 @@ import re, os, sys
 from random import choice
 
 def test():
-    print(get_indentation_amount("  %  while x > 7:"))
+    test_extract_variable_names()
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
@@ -274,6 +274,12 @@ def is_else_or_elif (command, base_indentation):
     else:
         return False
 
+###############################################################################
+## Checks to see if a string qualifies as a valid variable name
+
+def is_valid_variable_name (s):
+    return re.search(r'(?<!\.)\s*\b([a-zA-Z_]\w*)(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?\s*', s) != None
+
 def extract_variable_names(code):
 
     # remove any comments that may exist in the line
@@ -289,7 +295,10 @@ def extract_variable_names(code):
         variables = code.split('=')[0]
         variable_names = variables.split(',')
         for i in range(0, len(variable_names)):
-            variable_names[i] = re.match(r'(?<!\.)\s*\b([a-zA-Z_]\w*)(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?\s*', variable_names[i]).group(1)
+            if is_valid_variable_name(variable_names[i]):
+                variable_names[i] = re.match(r'(?<!\.)\s*\b([a-zA-Z_]\w*)(?:\[[0-9a-zA-Z_\*\\\+\-\s]*\])?\s*', variable_names[i]).group(1)
+            else:
+                variable_names[i] = ''
     
     return variable_names
 
@@ -307,6 +316,7 @@ def test_extract_variable_names():
     code11 = "avg = mean([a, b, c])"
     code12 = "sol = 'a. Reject $H_0$' if (p <= a) else 'b. Fail to reject $H_0$'"
     code13 = r"print(f'a == {a}')"
+    code14 = 'balance.append(rand(1000, 2000, prec=10))'
 
     print(extract_variable_names(code1))  # Output: ['x']
     print(extract_variable_names(code2))  # Output: ['y']
@@ -321,6 +331,7 @@ def test_extract_variable_names():
     print(extract_variable_names(code11))  # Output: ['avg']
     print(extract_variable_names(code12))  # Output: ['sol']
     print(extract_variable_names(code13))  # Output: ['']
+    print(extract_variable_names(code14))  # Output: ['balance']
 
 def command_contains_reserved_word(command):
     variables = extract_variable_names(command)
@@ -376,6 +387,7 @@ __internal_declarations = [
     'checkImportStatements', 'getFunctionAndArgs', 'is_function_statement',
     'load_pytex_file', 'getPythonWithEyes', 'remove_quote_marks', 
     'is_python_code_block', 'get_python_code_block', 'get_indentation_amount',
+    'is_valid_variable_name',
     # functions in randomizers.py
     'seed', 'rand', 'rands', 'diffrands', 'nzrand', 'nzrands', 'nzdiffrands',
     'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 'jointshuffle',

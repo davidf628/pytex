@@ -18,20 +18,19 @@ def rnd(val, decimals=0):
     if type(val) == str:
         val = float(val)
 
-    if type(val) == float:
-        val = round(val, decimals)
-        if decimals == 0:
-            return int(val)
-        else:
-            return val
-        
     if type(val) == list:
         if decimals == 0:
             return [int(round(i, decimals)) for i in val]
         else:
             return [round(i, decimals) for i in val]
 
-
+    else:
+        val = round(val, decimals)
+        if decimals == 0:
+            return int(val)
+        else:
+            return val
+        
 
 def sgn(val):
     return 1 if val >= 0 else -1    
@@ -53,6 +52,24 @@ def evalfunc(f, varstr, *vals):
         f = f.replace(var, str(vals[i]))
         i += 1
     return eval(f)
+
+
+###############################################################################
+# Formats a integer using thousands place commas
+
+def prettyint(value):
+    if type(value) == str:
+        value = int(value)
+        
+    if type(value) == list:
+        values = []
+        for item in value:
+            if type(item) == str:
+                item = int(item)
+            values.append('{:,}'.format(item))
+        return values
+    else:
+        return '{:,}'.format(value)
 
 if __name__ == '__main__':
     test_maths()
