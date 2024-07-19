@@ -4,7 +4,7 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-#sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Module 1/generator/math104_exam-1_generator.tex')
+#sys.argv.append('/Users/flennerdr/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Module 1/generator/math104_exam-1_generator.tex')
 #sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
@@ -40,6 +40,10 @@ exec(f'seed({__parseinfo["seed"]})')
 __lcv = 0
 while (__lcv < len(__data)):
 
+    # use for debugging
+    if __lcv == 458:
+        breakpoint = True
+
     # search for variable declarations
     if isNewPythonCommands(__data[__lcv]):
 
@@ -53,6 +57,10 @@ while (__lcv < len(__data)):
         while not isEndPythonCommands(__data[__lcv]):
 
             __command = uncommentLine(__data[__lcv])
+
+            # use for debugging
+            if __lcv == 457:
+                breakpoint = True
 
             if __command.strip() == '{': # begin a 'where' block
                 __stack.insert(0, __lcv) # save the location of the start of the block

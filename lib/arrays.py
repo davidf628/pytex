@@ -18,6 +18,19 @@ def calconarray(array, func, variables={}):
     return newarray
 
 
+###############################################################################
+# Searches an array to find the index of a specified item. Returns the index
+#  as an integer if it was found, or None if it was not found
+
+def indexof(item, array):
+    
+    try:
+        index = array.index(item)
+        return index
+    except (ValueError):
+        return None
+
+
 def sorta(array):
     array.sort()
     return array
