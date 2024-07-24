@@ -1,6 +1,6 @@
 import random
 import math
-#from lib.misc import is_number
+from lib.misc import is_number
 
 def test():
     print(rand(1000, 2000, prec=100))
