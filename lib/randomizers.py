@@ -109,5 +109,30 @@ def jointshuffle(array1, array2):
 def randsgn():
     return randfrom([-1, 1])
 
+
+###############################################################################
+# When randomly choosing a word from a list, you often need to put 'a' or 'an'
+#  before that word in the context of the problem, this chooses the correct
+#  indefinite article based on whether the next word begins with a vowel or
+#  not.
+
+def indefinitearticle(word):
+
+    word = word.lower()
+
+    aexcep = ['europe', 'european', 'unicorn', 'url', 'eulogy', 'one',
+              'once']
+    anexcep = ['honor', 'heir', 'hourglass']
+
+    if word in aexcep:
+        return 'a'
+    elif word in anexcep:
+        return 'an'
+
+    if word[0] in ['a', 'e', 'i', 'o', 'u']:
+        return 'an'
+    else:
+        return 'a'
+
 if __name__ == '__main__':
     test()

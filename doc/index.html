@@ -148,6 +148,7 @@
     <li><a href="#f_randprime">randprime</a><b>(min, max)</b> * Not yet implemented</li>
     <li><a href="#f_randprimes">randprimes</a><b>(min, max, n)</b> * Not yet implemented</li>
 
+    <li><a href="#f_indefinitearticle">indefinitearticle</a><b>(word)</b></li>
   </ul>
 
   <h3>Array Functions</h3>
@@ -448,6 +449,18 @@
         e.g. z = randsgn() * rand(1.5, 2.4, 0.1) will choose a random number for a normal distribution
         that is at least 1.5 standard deviations from the mean (in either direction), but no further 
         than 2.4.
+    </p>
+
+    <h2 id="f_indefinitearticle">indefinitearticle(word)</h2>
+    <ul>
+        <li><b>word</b> - <i>&lt;string&gt;</i> - the word to determine the best article to use with 'a' or 'an'</li>
+        <li>returns: <i>&lt;string&gt;</i> - 'a' or 'an'</li>
+    </ul>
+    <p>
+        Tries to choose the best indefinite article to use before a word based on
+        some rudimetary rules. It chooses 'an' if the word begins with a vowel, or
+        'a' if the word begins with a consonent. There are some exceptions programmed
+        but not many. 
     </p>
 
     <!-- ARRAY FUNCTIONS ----------------------------------------------------->
