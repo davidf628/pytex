@@ -237,6 +237,7 @@
     <li>invnorm(p, mean=0, stdev=1)</li>
     <li>tcdf(lower, upper, df, mean=0, stdev=1)</li>
     <li>invt(p, df, mean=0, stdev=1)</li>
+    <li><a href="#f_binomdist">binomdist</a> (n, p)</li>
     <li>binompdf (n, p, x)</li>
     <li>binomcdf (n, p, x)</li>
     <li>binommean (n, p)</li>
@@ -653,10 +654,23 @@
 
     <!-- STATISTICS MACROS --------------------------------------------------->
 
+    <h2 id="f_binomdist">binomdist(n, p)</h2>
+    <ul>
+        <li><b>n</b> <i>int</i> the number of trials of the experiment</li>
+        <li><b>p</b> <i>float</i> the probability of success on any given trial</li>
+        <li>returns <i>array</i> of <i>float</i></li>
+    </ul>
+
+    <p>
+        Calculates the binomial probabilities for a distribution with <i>n</i> trials
+        and probability of success <i>p</i>. The return is an array containing the
+        probability of <i>x</i> successes starting from 0 and ranging up to <i>n</i>.
+    </p>
+
     <h2 id="f_quartiles">quartiles(data, [freq=[]])</h2>
     <ul>
         <li><b>data</b> - array of <i>float</i></li>
-        <li><b>freq</b> - array of <i>int</i></il></li>
+        <li><b>freq</b> - array of <i>int</i></li>
         <li>returns <i>dict</i> of <i>float</i></li>
     </ul>
 

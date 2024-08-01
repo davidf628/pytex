@@ -25,6 +25,17 @@ def tcdf (lower, upper, df, mean=0, stdev=1):
 def invt (p, df, mean=0, stdev=1):
     return t.ppf(p, df, mean, stdev)
 
+###############################################################################
+# Creates a set of binomial probabilities for the given values of n and p
+#  n - the number of trials of the binomial experiment
+#  p - the probability of success on any given trial
+#  returns an array containing the binomial probabilities
+def binomdist (n, p):
+    probs = []
+    for i in range(0, n+1):
+        probs.append(binompdf(n, p, i))
+    return probs
+
 def binompdf (n, p, x):
     return binom.pmf(x, n, p)
 
