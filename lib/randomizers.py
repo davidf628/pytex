@@ -3,7 +3,7 @@ import math
 from lib.misc import is_number
 
 def test():
-    print(rand(1000, 2000, prec=100))
+    print(indefinitearticle('orange'))
 
 
 def seed(val):
