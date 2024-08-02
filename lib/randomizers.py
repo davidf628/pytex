@@ -1,61 +1,78 @@
 import random
 import math
 from lib.misc import is_number
+from lib.maths import rnd
+#from misc import is_number
+#from maths import rnd
 
 def test():
-    print(indefinitearticle('orange'))
+    print(rand(15, 25,n=4, prec=0.001))
 
 
 def seed(val):
     random.seed(val)
 
+###############################################################################
+# Private function that chooses a single random number based on a given 
+#  minimum and maxmimum value, and to a specific precision. All other numeric
+#  randomizers call this function
 
-def rand(min, max, prec=1):
-    min = float(min)
-    max = float(max)
-    dec = 0 if prec == 1 else len(str(prec)) - 2
-    lowval = math.floor(min / prec)
-    highval = math.floor(max / prec)
-    return round(random.randint(lowval, highval) * prec, dec)
+def __randval(minimum, maximum, prec=1):
+    minval = float(minimum)
+    maxval = float(maximum)
+    decimals = 0 if prec == 1 else len(str(prec)) - 2
+    minval = math.floor(minval / prec)
+    maxval = math.floor(maxval / prec)
+    return rnd(random.randint(minval, maxval) * prec, decimals)
 
 
-def rands(min, max, n, prec=1):
+def rand(minimum, maximum, /, prec=1, n=1, diff=True):
+    if n == 1:
+        return __randval(minimum, maximum, prec=prec)
+    else:
+        if diff:
+            return diffrands(minimum, maximum, n=n, prec=prec)
+        else:
+            return rands(minimum, maximum, n=n, prec=prec)
+
+
+def rands(minimum, maximum, n, prec=1):
     values = []
     for _ in range(0, n):
-        values.append(rand(min, max, prec))
+        values.append(__randval(minimum, maximum, prec))
     return values
 
 
-def diffrands(min, max, n, prec=1):
+def diffrands(minimum, maximum, n, prec=1):
     rands = []
     for _ in range(0, n):
-        value = rand(min, max, prec)
+        value = __randval(minimum, maximum, prec)
         while value in rands:
-            value = rand(min, max, prec)
+            value = __randval(minimum, maximum, prec)
         rands.append(value)
     return rands
 
 
-def nzrand(min, max, prec=1):
-    rval = rand(min, max, prec)
+def nzrand(minimum, maximum, prec=1):
+    rval = __randval(minimum, maximum, prec)
     while abs(rval) < prec:
-        rval = rand(min, max, prec)
+        rval = __randval(minimum, maximum, prec)
     return rval
 
 
-def nzrands(min, max, n, prec=1):
+def nzrands(minimum, maximum, n, prec=1):
     rands = []
     for _ in range(0, n):
-        rands.append(nzrand(min, max, prec))
+        rands.append(nzrand(minimum, maximum, prec))
     return rands
 
 
-def nzdiffrands(min, max, n, prec=1):
+def nzdiffrands(minimum, maximum, n, prec=1):
     rands = []
     for _ in range(0, n):
-        value = nzrand(min, max, prec)
+        value = nzrand(minimum, maximum, prec)
         while value in rands:
-            value = nzrand(min, max, prec)
+            value = nzrand(minimum, maximum, prec)
         rands.append(value)
     return rands
 

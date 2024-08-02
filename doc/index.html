@@ -128,7 +128,7 @@
   <h3>Randomization Functions</h3>
   <ul>
     <li><a href="#f_seed">seed</a><b>(value)</b></li>
-    <li><a href="#f_rand">rand</a><b>(min, max, [prec])</b></li>
+    <li><a href="#f_rand">rand</a><b>(min, max, [prec], [n], [diff])</b></li>
     <li><a href="$f_rands">rands</a><b>(min, max, n, [prec])</b></li>
     <li><a href="#f_diffrands>">diffrands</a><b>(min, max, n, [prec])</b></li>
 
@@ -286,32 +286,46 @@
 
   <!-- RANDOMIZATION FUNCTIONS -->
 
-  <h2 id="f_seed">seed(value) => void</h2>
-  <ul>
-    <li><b>value</b> - integer</li>
-    <li>returns => <i>void</i></li>
-  </ul>
-  <p>Uses <i>value</i> as the initial value for the internal randomization process. This
+    <h2 id="f_seed">seed(value) => void</h2>
+    <ul>
+        <li><b>value</b> - integer</li>
+        <li>returns => <i>void</i></li>
+    </ul>
+    <p>Uses <i>value</i> as the initial value for the internal randomization process. This
      would generally be defined at the start of a document and would be useful in making
      different versions of a document to ensure that the randomized values would stay the 
      same for repeated creations. For instance, if you have a document that can produce an
      exam and a key, then you would need to ensure that when you create the exam and it's 
      key that all the randomized values would be consistent from one run of pytex to the 
      next. This would be the case if the randomization seed has been set at the start of
-     the document.</p>
+     the document.
+    </p>
 
-  <h2 id="f_rand">rand(min, max, [prec])</h2>
-  <ul>
-    <li><b>min</b> - float or int</li>
-    <li><b>max</b> - float or int</li>
-    <li><b>prec</b> - float [default value = 1]</li>
-    <li>returns => <i>float</i> or <i>int</i></li>
-  </ul>
-  <p>Choose a random value between the input parameters <i>min</i>, and <i>max</i>,
-     inclusive. If the optional paramter <i>prec</i> is provided, then a random value
-     to a specified number of decimal places will be used. The precision is provided as
-     a power of 10 such as: 1, 0.1, 0.01, 0.001, etc.</p>
-  <p>e.g. rand(20.5, 30.8, 0.1) might return 25.2 and rand(15, 25) might return 18</p>
+    <h2 id="f_rand">rand(min, max, [prec], [n], [diff])</h2>
+    <ul>
+        <li><b>min</b> - float or int</li>
+        <li><b>max</b> - float or int</li>
+        <li><b>prec</b> - float [default value = 1]</li>
+        <li><b>n</b> <i>int</i> [default = 1] set this value if you want multiple random numbers</li>
+        <li><b>diff</b> <i>boolean</i> [default = True] when choosing multiple random values, set this to true
+            if you want to ensure the values are all unique</li>
+        <li>returns => <i>float</i> or <i>int</i>, or if <i>n</i> > 1, a <i>list</i></li>
+    </ul>
+    <p>
+        Choose a random value between the input parameters <i>min</i>, and <i>max</i>,
+        inclusive. If the optional paramter <i>prec</i> is provided, then a random value
+        to a specified number of decimal places will be used. The precision is provided as
+        a power of 10 such as: 1, 0.1, 0.01, 0.001, etc.
+    </p>
+    <p>
+        If <i>n</i> is set to a value bigger than 1, then an array of random values will
+        be returned. If you want all the items in the array to be unique, set <i>diff</i>
+        to True (default), but if you want the possibility of repeated values, then set
+        this to False. When selecting a single item, the value of <i>diff</i> has no effect.
+    </p>
+    <p>
+        e.g. rand(20.5, 30.8, 0.1) might return 25.2 and rand(15, 25) might return 18
+    </p>
 
   <h2 id="f_rands">rands(min, max, n, [prec])</h2>
   <ul>

@@ -389,9 +389,9 @@ __internal_declarations = [
     'is_python_code_block', 'get_python_code_block', 'get_indentation_amount',
     'is_valid_variable_name',
     # functions in randomizers.py
-    'seed', 'rand', 'rands', 'diffrands', 'nzrand', 'nzrands', 'nzdiffrands',
-    'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 'jointshuffle',
-    'randsgn', 
+    'seed', 'rand', '__randval', 'rands', 'diffrands', 'nzrand', 'nzrands', 
+    'nzdiffrands', 'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 
+    'jointshuffle', 'randsgn', 
     # functions in stats.py
     'normalcdf', 'invnorm', 'tcdf', 'invt', 'binompdf', 'binomcdf', 'binommean',
     'binomstdev', 'mean', 'weightedsort', 'median', 'modes', 'stdevp', 'stdev',
