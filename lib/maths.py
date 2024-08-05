@@ -2,9 +2,11 @@
 import math
 
 def test_maths():
-    print(f'frac(-22.55) == {frac(-22.55)}')
-    print(rnd([1.24, 56.6, 21.2, 15.5]))
-    print(rnd(2.28))
+
+    print(towords(21))
+
+    for i in range(0, 100):
+        print(f'i == {i}, {towords(i)}')
 
 
 def sign(val):
@@ -70,6 +72,36 @@ def prettyint(value):
         return values
     else:
         return '{:,}'.format(value)
+
+
+###############################################################################
+# Writes a number out in an equivalent statment in English
+
+def towords(value):
+    value_str = str(value)
+    ones = { '0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four',
+             '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine' }
+    teens = { '10': 'ten', '11': 'eleven', '12': 'twelve', '13': 'thirteen',
+              '14': 'fourteen', '15': 'fifteen', '16': 'sixteen', 
+              '17': 'seventeen', '18': 'eighteen', '19': 'nineteen' }
+    tens = { '10' : 'ten', '20': 'twenty', '30': 'thirty', '40': 'fourty',
+             '50' : 'fifty', '60': 'sixty', '70': 'seventy', '80': 'eighty',
+             '90' : 'ninety' }
+    
+    if value < 0 or value > 99:
+        return value_str
+
+    if len(value_str) == 1:
+        return ones[value_str]
+    elif len(value_str) == 2 and (value > 9) and (value < 20):
+        return teens[value_str]
+    elif len(value_str) == 2 and (value % 10 == 0):
+        return tens[value_str]
+    elif len(value_str) == 2:
+        tens_place = f'{value_str[0]}0'
+        ones_place = value_str[1]
+        return f'{tens[tens_place]}-{ones[ones_place]}'
+  
 
 if __name__ == '__main__':
     test_maths()

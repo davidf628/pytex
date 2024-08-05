@@ -207,6 +207,7 @@
     <li><a href="#f_isnumber">isnumber</a>(value) * Not yet implemented</li>
     <li><a href="#f_ceil">ceil</a>(x), <a href="#f_floor">floor</a>(x), <b>trunc</b>(x), <a href="f_round">round</a>(x)</li>
     <li><a href="#_rnd">rnd</a>(x, [decimals=0])</li>
+    <li><a href="#_towords">towords</a>(value)</li>
     <li><b>abs</b>(x)</li>
     <li><b>bin</b>(x), <b>hex</b>(x), <b>oct</b>(x)</li>
     <li><b>sum</b>(values), <b>prod</b>(values), <b>sumprod</b>(x, y)</li>
@@ -602,6 +603,18 @@
        expectations, I will eventually override this function for my own that
        always round 0.5 up. The advantage to this function currently is that it
        can be passed an array and it will round all the items in the array.
+    </p>
+
+    <h2 id="f_towords">towords</a>(value)</h2>
+    <ul>
+        <li><b>value</b> <i>int</i> - limited to: (0 through 99)</li>
+        <li>returns <i>str</i></li>
+    </ul>
+    <p>
+        Converts a number into a string in English that reprsents the value.
+        This makes it nicer when creating questions that you don't want to print 
+        the value inside a question but rather a text-based representation of that
+        value. Mostly for word problems.
     </p>
 
     <h2 id="f_ceil">ceil</a>(value)</h2>
