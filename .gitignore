@@ -5,6 +5,8 @@ test.aux
 test.log
 test.pdf
 test.synctex.gz
+test.fdb_latexmk
+test.fls
 .eggs/
 build/
 dist/
