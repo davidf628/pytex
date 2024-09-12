@@ -11,3 +11,4 @@ test.fls
 build/
 dist/
 pytex.spec
+test A Key.*
