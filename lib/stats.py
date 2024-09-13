@@ -1,6 +1,7 @@
 from scipy.stats import norm, t, binom, linregress
 import numpy as np
 import math
+from lib.maths import rnd
 
 def stats_test():
     x = [  1,   2,   3,    4,   5,    6]
@@ -226,13 +227,13 @@ def relativefreq(freq):
         rel_freq.append(val / total)
     return rel_freq
 
-def cumulativefreq(freq):
+def cumulativefreq(freq, decimals=0):
     # ensure data is an array of float
     freq = list(map(lambda x: float(x), freq))
     total = 0
     cum_freq = []
     for val in freq:
-        cum_freq.append(total + val)
+        cum_freq.append(rnd(total + val, decimals))
         total += val
     return cum_freq
 

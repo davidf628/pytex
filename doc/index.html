@@ -258,7 +258,7 @@
     <li>frequencies(data, classes)</li>
     <li>midpoints(ranges)</li>
     <li>relativefreq(freq)</li>
-    <li>cumulativefreq(freq)</li>
+    <li><a href="#f_cumulativefreq">cumulativefreq</a>(freq, [decimals=0])</li>
     <li><a href="#f_quartiles">quartiles</a>(data, [freq=[]])</li>
 
   </ul>
@@ -693,6 +693,20 @@
         Calculates the binomial probabilities for a distribution with <i>n</i> trials
         and probability of success <i>p</i>. The return is an array containing the
         probability of <i>x</i> successes starting from 0 and ranging up to <i>n</i>.
+    </p>
+
+    <h2 id="f_cumulativefreq">cumulativefreq(freq, [decimals=0])</h2>
+    <ul>
+        <li><b>freq</b> - array of <i>int</i></li>
+        <li><b>decimals</b> - <i>int</i></li>
+        <li>returns <i>list</i> of <i>int</i></li>
+    </ul>
+    <p>
+        Calculates the cumulative frequencies for a list of data. The data
+        provided are assumed to be integer-based frequencies, but you can
+        calculate cumulative values for any array of float. You can specify
+        the number of decimals to display in the second parameter, but the 
+        default is to return integers.
     </p>
 
     <h2 id="f_quartiles">quartiles(data, [freq=[]])</h2>
