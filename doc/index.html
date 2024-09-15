@@ -273,6 +273,7 @@
     <li><a href="#f_tcurve">tcurve</a>(leftbound, rightbound, df, [mean=0], [stdev=1], [twotail=False])</li>
     <li><a href="#f_dotplot">dotplot</a>(data, [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl=None])</li>
     <li><a href="#f_boxandwhiskerplot">boxandwhiskerplot</a>(data, [fromquartiles=False], [xdist=None], [ydist="5mm"], [xmin=None], [xmax=None], [xscl="default"])</li>
+    <li><a href="#f_histogram">histogram</a>(xlabels, freq, ymax, yscl, [scale=1.5], [color='black'], [fillcolor=None])</li>
   </ul>
 
   <h3>Python Built-in Functions</h3>
@@ -859,5 +860,24 @@
         <i>data</i> as either a data set or will expect the five quartiles if this is set.
     </p>
 
+    <h2 id="#f_histogram">histogram(xlabels, freq, ymax, yscl, [scale=1.5], [color='black'], [fillcolor=None])</h2>
+    <ul>
+        <li><b>xlabels</b> - array of <i>str</i> - labels along the x-axis</li>
+        <li><b>freq</b> - array of <i>float</i> - frequencies along the y-axis</li>
+        <li><b>ymax</b> - <i>float</i> - the highest value to use along the y-axis</li>
+        <li><b>yscl</b> - <i>float</i> - the number of values to skip between y-axis major tick marks</li>
+        <li><b>scale</b> - <i>float</i> - a multiplier for how large to draw the histogram</li>
+        <li><b>color</b> - <i>string</i> - the color to draw the axes and labels. Defaults to 'black'</li>
+        <li><b>fillcolor</b> - <i>string</i> - the color to draw the histogram bars. Defaults to <i>color</i></li>
+        <li>returns <i>LaTeX tikz object</i></li>
+    </ul>
+    <p>
+        Draws a basic histogram for a set of frequencies. The frequencies can be
+        specified through the array <i>freq</i>. You must also provide labels to
+        go along the x-axis. This should be an array of string, which matches the
+        length of the frequencies array. Lastly, the scale along the y-axis must
+        be specified by choosing a maximum value for y, and the number of units to
+        skip between each tick mark.
+    </p>
 </body>
 </html>

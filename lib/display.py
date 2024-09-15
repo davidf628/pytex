@@ -1,9 +1,9 @@
 from numpy import transpose
-from lib import *
+#from lib import *
 import math
 
 def display_test():
-    boxandwhiskerplot([15, 19, 25, 25, 26, 34, 32, 33, 35, 37, 39, 40, 45, 48, 49, 51, 80])
+    print(histogram(['a', 'b', 'c'], [5, 7, 2], 10, 5))
 
 def showdataarray(array, columns=1, options=""):
     alignment = "|"
@@ -308,6 +308,68 @@ def boxandwhiskerplot(data, fromquartiles=False, xdist=None, ydist="5mm", xmin=N
     print(plotstr)
 
     return plotstr
+
+###############################################################################
+## Draws a basic looking histogram for specified labels that go along the 
+##  x-axis and a set scale for the y axis frequencies. 
+##
+## xlabels - a set of strings for the labels along the horizontal axis
+## freq - the coordinatig set of frequencies for each xlabel
+## ymax - the maximum value to use along the y-axis
+## yscl - the number of values to skip per each tick mark on the y-axis
+## scale - a scale factor allowing bigger or smaller histograms defaults to 1.5
+## color - the color of the axes and labels
+## fillcolor - the color of the histogram bars
+## 
+## Expansion ideas:
+##  1. Allow use of xsize and ysize to specify exactly how wide or tall the 
+##     chart should be
+##  2. Allow use of ybuffer to add some space along the y-axis above the last
+##     tick mark
+##  3. Allow the use of ysubtick to add unlabeled tick marks between major ticks
+##  4. Allow for drawing in of horizontal axis title, vertical axis title, and
+##     chart title
+
+def histogram(xlabels, freq, ymax, yscl, scale=1.5, color='black', fillcolor=None):
+
+    nbars = len(xlabels)
+    maxfreq = max(freq)
+
+    yscale = 0.618 * nbars / maxfreq
+
+    bordercolor = color if fillcolor == None else fillcolor
+    fillcolor = f'{bordercolor}!20!white'
+
+    nyticks = ymax // yscl
+    yticks = []
+    for i in range(1, nyticks + 1):
+        yticks.append(str(i * yscl))
+    for i in range(1, len(xlabels)+1):
+        xlabels[i-1] = f'{i}/{xlabels[i-1]}'
+    for i in range(1, len(freq)+1):
+        freq[i-1] = f'{i}/{freq[i-1]}'
+
+    chart = ""
+    chart += r"\begin{tikzpicture}" + f'[scale={scale}, yscale = {yscale}]' + '\n'
+
+    chart += f'  \draw [thin, {color}] (0,0)--({nbars+1},0);' + '\n'
+    chart += f'  \draw [thin, {color}] (0,0)--(0,{ymax});' + '\n'
+
+    chart += r'  \foreach \y in {' + f'{",".join(yticks)}' + r'} {' + '\n'
+    chart += r'    \draw[-] (0, \y)--(-2pt, \y) node[left] {$\y$};' + '\n'
+    chart += r'  }' + '\n'
+
+    chart += r'  \foreach \x/\l in {' + f'{",".join(xlabels)}' + r'} {' + '\n'
+    chart += r'    \draw [-] (\x, 0)--(\x,-6pt) (\x, -1 )node {\l};' + '\n'
+    chart += r'  }' + '\n'
+  
+    chart += r'  \foreach \x/\y in {' + f'{",".join(freq)}' + r'} {' + '\n'
+    chart += r'    \draw [' + f'{bordercolor}' + r', fill=' + f'{fillcolor}' + r'] (\x-0.5,0) rectangle (\x+0.5,\y);' + '\n'
+    chart += r'  }' + '\n'
+
+    chart += r'\end{tikzpicture}' + '\n'
+
+    return chart
 
 if __name__ == '__main__':
     display_test()
