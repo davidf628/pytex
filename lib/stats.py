@@ -227,13 +227,13 @@ def relativefreq(freq):
         rel_freq.append(val / total)
     return rel_freq
 
-def cumulativefreq(freq, decimals=0):
+def cumulativefreq(freq):
     # ensure data is an array of float
     freq = list(map(lambda x: float(x), freq))
     total = 0
     cum_freq = []
     for val in freq:
-        cum_freq.append(rnd(total + val, decimals))
+        cum_freq.append(total + val)
         total += val
     return cum_freq
 
