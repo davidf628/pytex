@@ -2,11 +2,14 @@ from scipy.stats import norm, t, binom, linregress
 import numpy as np
 import math
 from lib.maths import rnd
+#from maths import rnd
 
 def stats_test():
     x = [  1,   2,   3,    4,   5,    6]
     f = [.25, .15, 0.2, 0.05, .10, 0.15]
     print(f'quartiles == {quartiles(x, f)}')
+
+    print(f'tcdf: {round(tcdf(-1.34,999999,12),3)}')
 
 ###############################################################################
 # Calculates the area under a standard normal distribution curve between two
