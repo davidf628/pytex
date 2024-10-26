@@ -12,3 +12,5 @@ build/
 dist/
 pytex.spec
 test A Key.*
+.DS_Store
+.DS_Store
