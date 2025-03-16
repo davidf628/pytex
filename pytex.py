@@ -24,13 +24,15 @@ __parseinfo = lib.cmdline.parseCommandLine(args, __version)
 __data = []
 
 if __parseinfo['command']:
-    print(f'\n\nEnter commands for PyTeX to execute.  Type "done" to run the commands.\n')
+    print(f'\n\nEnter commands for PyTeX to execute.  Type "done" to run the commands. ',end='')
+    print(f'Variables can be declared in %python...%end blocks, and and code to display ',end='')
+    print(f'must be in @...@ blocks.\n')
     while True:
         command = input('==> ')
         if command.lower() == 'done':
             break
         else:
-            __data.append(f'@{command}@')
+            __data.append(command)
 else:
     # Read the .tex file specified from the command line and load it
     __data = load_pytex_file(__parseinfo['filename'])
@@ -66,10 +68,6 @@ while (__lcv < len(__data)):
         while not isEndPythonCommands(__data[__lcv]):
 
             __command = uncommentLine(__data[__lcv])
-
-            # use for debugging
-            if __lcv == 457:
-                breakpoint = True
 
             if __command.strip() == '{': # begin a 'where' block
                 __stack.insert(0, __lcv) # save the location of the start of the block
@@ -123,8 +121,8 @@ while (__lcv < len(__data)):
                         if variable in __internal_declarations:
                             print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
                             sys.exit(-1)
-                    print(f'{__lcv}: {__command}')
                     exec(__command)
+                    print(f'{__lcv}: {__command} ==> {variable} == {eval(variable)}')
                     __lcv += 1
                 except Exception as e:
                     print(f'ERROR on line {__lcv+1}: {__command}\n ==> {e}')
