@@ -42,7 +42,7 @@
 </head>
 <body>
 
-  <h1>PyTeX v0.5.1 Documentation</h1>
+  <h1>PyTeX v0.7.0 Documentation</h1>
   <hr/>
 
   <h2>Basic Usage</h2>
@@ -102,6 +102,14 @@
     \newcommand{\iskeyelse}[2]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{#2}}
     These are not necessary, but make it very convenient to insert text meant for an answer key when requested and 
     leaving it hidden otherwise.
+  </p>
+
+  <h3>Command Line Mode</h3>
+  <p>
+    New in version 0.7.0 is the ability to run PyTeX in command line mode. This is useful if you want to run a single
+    PyTeX command to generate the output LaTeX. This can then be copy and pasted into an existing LaTeX document. This
+    can enable you to quickly create a chart, simply by providing the data, instead of having to create the commands 
+    within your LaTeX document manually. 
   </p>
 
   <h3>Working with SymPy</h3>

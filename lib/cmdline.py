@@ -2,7 +2,13 @@ import os, random, sys
 
 def parseCommandLine(args, version):
 
-    parseInfo = {}
+    # Set default values for the parseInfo dictionary
+    parseInfo = {
+        'seed' : round(random.random() * 100000000000),
+        'key' : False,
+        'version' : '',
+        'command' : False,
+    }
 
     # The following part of this function does the command line parsing
 
@@ -39,6 +45,8 @@ def parseCommandLine(args, version):
             print(f' --o=*, or --output=*   :  The name of the output file to create. The default is to append')
             print(f'                              "out_" to the original filename. If spaces are to be used,')
             print(f'                              then double quotes are required around the file name.\n')
+            print(f' --c, or --command      :  Runs PyTeX in command line mode, allowing the user to enter')
+            print(f'                             PyTeX commands and the output is shown on screen.\n')
 
             sys.exit(0)
 
@@ -50,6 +58,9 @@ def parseCommandLine(args, version):
 
         elif command.lower() == 'k' or command.lower() == 'key':
             parseInfo['key'] = True
+
+        elif command.lower() == 'c' or command.lower() == 'command':
+            parseInfo['command'] = True
 
         elif command.lower() == 'o' or command.lower() == 'output':
             value = value[1:] if value[0] == '"' else value
@@ -86,16 +97,6 @@ def parseCommandLine(args, version):
         else:
             print(f'File: {parseInfo["filename"]} not found ==> exiting')
             sys.exit(-1)
-
-    # The third part ensures that a random seed is created
-    if not 'seed' in parseInfo.keys():
-        parseInfo['seed'] = round(random.random() * 100000000000)
-
-    if not 'key' in parseInfo.keys():
-        parseInfo['key'] = False
-
-    if not 'version' in parseInfo.keys():
-        parseInfo['version'] = ''
 
     return parseInfo
 

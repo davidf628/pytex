@@ -10,39 +10,48 @@ import lib.cmdline
 #sys.argv.append('--seed=12345')
 #sys.argv.append('--key')
 #sys.argv.append('-o=./output/mytestA.tex')
+sys.argv.append('-c')
 
 args = lib.cmdline.patchArgs(sys.argv)
  
-__version = '0.6.1'
+__version = '0.7.0'
 
 # https://www.myopenmath.com/help.php?section=writingquestions
 
 # https://www.myopenmath.com/assessment/libs/libhelp.php
     
 __parseinfo = lib.cmdline.parseCommandLine(args, __version)
+__data = []
 
-# Read the .tex file specified from the command line and load it
-__data = load_pytex_file(__parseinfo['filename'])
+if __parseinfo['command']:
+    print(f'\n\nEnter commands for PyTeX to execute.  Type "done" to run the commands.\n')
+    while True:
+        command = input('==> ')
+        if command.lower() == 'done':
+            break
+        else:
+            __data.append(f'@{command}@')
+else:
+    # Read the .tex file specified from the command line and load it
+    __data = load_pytex_file(__parseinfo['filename'])
 
-# Check for any importpytex statments and process those first
-__data = checkImportStatements(__data)
+    # Check for any importpytex statments and process those first
+    __data = checkImportStatements(__data)
 
-# Set the specified version number in the document
-__data = setVersionValue(__data, __parseinfo['version'])
+    # Set the specified version number in the document
+    __data = setVersionValue(__data, __parseinfo['version'])
 
-# Set the make_key flag
-__data = setKeyFlag(__data, __parseinfo['key'])
+    # Set the make_key flag
+    __data = setKeyFlag(__data, __parseinfo['key'])
 
-# Set the seed for randomization
-exec(f'seed({__parseinfo["seed"]})')
+    # Set the seed for randomization
+    exec(f'seed({__parseinfo["seed"]})')
+
+# Execute the PyTeX commands
 
 # read through the document looking for variable declarations
 __lcv = 0
 while (__lcv < len(__data)):
-
-    # use for debugging
-    if __lcv == 458:
-        breakpoint = True
 
     # search for variable declarations
     if isNewPythonCommands(__data[__lcv]):
@@ -140,24 +149,30 @@ while (__lcv < len(__data)):
 
 __data = removeVariableDeclarations(__data)
 
-# add the seed information
-__data.insert(0, f"%seed - {__parseinfo['seed']}\n\n")
-
-# write the output .tex file
-with open(__parseinfo['outputfile'], 'w') as __f:
+# In command line mode, we just output the results, otherwise we write the
+#  results to a file and compile it to a pdf
+if __parseinfo['command']:
     for __line in __data:
-        __f.write(__line)
+        print(__line)
+else:
+    # add the seed information
+    __data.insert(0, f"%seed - {__parseinfo['seed']}\n\n")
 
-# create the pdf version
-os.system(f'pdflatex "{__parseinfo["outputfile"]}"')
+    # write the output .tex file
+    with open(__parseinfo['outputfile'], 'w') as __f:
+        for __line in __data:
+            __f.write(__line)
 
-# remove the scrap files
+    # create the pdf version
+    os.system(f'pdflatex "{__parseinfo["outputfile"]}"')
 
-##### CHECK FOR SOURCE OF ERRORS
+    # remove the scrap files
 
-if os.path.isfile(__parseinfo['aux']):
-    pathlib.Path.unlink(__parseinfo['aux'])
-if os.path.isfile(__parseinfo['log']):
-    pathlib.Path.unlink(__parseinfo['log'])
-if os.path.isfile(__parseinfo['gz']):
-    pathlib.Path.unlink(__parseinfo['gz'])
+    ##### CHECK FOR SOURCE OF ERRORS
+
+    if os.path.isfile(__parseinfo['aux']):
+        pathlib.Path.unlink(__parseinfo['aux'])
+    if os.path.isfile(__parseinfo['log']):
+        pathlib.Path.unlink(__parseinfo['log'])
+    if os.path.isfile(__parseinfo['gz']):
+        pathlib.Path.unlink(__parseinfo['gz'])
