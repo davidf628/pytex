@@ -7,7 +7,9 @@ def parseCommandLine(args, version):
         'seed' : round(random.random() * 100000000000),
         'key' : False,
         'version' : '',
-        'command' : False,
+        'repl' : False,
+        'outputfilename' : '',
+        'compile' : False,
     }
 
     # The following part of this function does the command line parsing
@@ -23,7 +25,7 @@ def parseCommandLine(args, version):
             arg = arg[1:]
 
         if '=' in arg:
-            command, value = arg.split('=')
+            command, value = arg.split('=', 1)
             command = command.strip().lower()
             value = value.strip()
         else:
@@ -45,9 +47,12 @@ def parseCommandLine(args, version):
             print(f' --o=*, or --output=*   :  The name of the output file to create. The default is to append')
             print(f'                              "out_" to the original filename. If spaces are to be used,')
             print(f'                              then double quotes are required around the file name.\n')
-            print(f' --c, or --command      :  Runs PyTeX in command line mode, allowing the user to enter')
+            print(f' --r, or --repl         :  Runs PyTeX in command line mode, allowing the user to enter')
             print(f'                             PyTeX commands and the output is shown on screen.\n')
-
+            print(f' --c=*, or --compile=*  :  Compiles a pytex .tex file into LaTeX. The result can be copy ')
+            print(f'                             and pasted into a LaTeX editor for further editing.\n')
+            print(f'                        :    You can add the flag ?n=[value] and ?sep=[text] to run the')
+            print(f'                             command n times and separate the output with the text specified.\n')
             sys.exit(0)
 
         elif command.lower() == 's' or command.lower() == 'seed':
@@ -59,8 +64,28 @@ def parseCommandLine(args, version):
         elif command.lower() == 'k' or command.lower() == 'key':
             parseInfo['key'] = True
 
-        elif command.lower() == 'c' or command.lower() == 'command':
-            parseInfo['command'] = True
+        elif command.lower() == 'r' or command.lower() == 'repl':
+            parseInfo['repl'] = True
+
+        elif command.lower() == 'c' or command.lower() == 'compile':
+            parseInfo['compile'] = True
+            parseInfo['n'] = 1
+            parseInfo['sep'] = ''
+            if '?' in value: 
+                param = value.split('?')
+                for p in param[1:]:
+                    if 'n=' in p:
+                        try:
+                            parseInfo['n'] = int(p.split('=')[1])
+                        except ValueError:
+                            print(f'Error: The value for n must be an integer ==> exiting')
+                            sys.exit(-1)
+                    if 'sep=' in p:
+                        parseInfo['sep'] = p.split('=')[1]
+                param = param[0]
+            param = param[1:] if param[0] == '"' else param
+            param = param[:-1] if param[-1] == '"' else param
+            parseInfo['filename'] = param
 
         elif command.lower() == 'o' or command.lower() == 'output':
             value = value[1:] if value[0] == '"' else value
