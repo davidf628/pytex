@@ -5,11 +5,11 @@ import lib.cmdline
 
 # for debugging, uncomment these lines
 #sys.argv.append('/Users/flennerdr/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Module 1/generator/math104_exam-1_generator.tex')
-sys.argv.append('test.tex')
+#sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
 #sys.argv.append('--key')
-sys.argv.append('-o=./output/mytestA.tex')
+#sys.argv.append('-o=./output/mytestA.tex')
 #sys.argv.append('-r')
 #sys.argv.append('-c=q1.tex?n=2?sep=\\item')
 
