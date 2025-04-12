@@ -396,7 +396,9 @@ __internal_declarations = [
     'normalcdf', 'invnorm', 'tcdf', 'invt', 'binompdf', 'binomcdf', 'binommean',
     'binomstdev', 'mean', 'weightedsort', 'median', 'modes', 'stdevp', 'stdev',
     'linreg', 'classranges', 'getclasslimits', 'frequencies', 'midpoints',
-    'relativefreq', 'cumulativefreq', 'quartiles' ]
+    'relativefreq', 'cumulativefreq', 'quartiles',
+     # import functions
+     'importpytex', 'importrandpytexfrom' ]
 
 if __name__ == '__main__':
     test()

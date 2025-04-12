@@ -8,7 +8,7 @@ def parseCommandLine(args, version):
         'key' : False,
         'version' : '',
         'repl' : False,
-        'outputfilename' : '',
+        'outputfilename' : 'output',
         'compile' : False,
     }
 
