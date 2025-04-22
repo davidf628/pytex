@@ -1,8 +1,8 @@
 import re, os, sys
-from random import choice
+from random import choice, choices, sample
 
 def test():
-    test_extract_variable_names()
+    test_getFunctionAndArgs()
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
@@ -116,7 +116,7 @@ import re
 
 def getFunctionAndArgs(line):
     # Define the regex pattern to match function definitions
-    pattern = r'([a-zA-Z_]\w*)\s*\((.*?)\)'
+    pattern = r'([a-zA-Z_]\w*)\s*\(([^()]*(?:\([^()]*\)[^()]*)*)\)'
     # Search for the pattern in the line
     match = re.search(pattern, line)
     
@@ -132,7 +132,7 @@ def getFunctionAndArgs(line):
         return None, None
 
 def test_getFunctionAndArgs():
-    line = "my_function(5, 'hello')"
+    line = "my_function('afile.tex', 'bfile.tex', prefixcode='\item (2 pts)')"
     function_name, args = getFunctionAndArgs(line)
     print("Function Name:", function_name)
     print("Arguments:", args)
@@ -173,20 +173,44 @@ def checkImportStatements(data):
                 
             elif hasPython(data[i]):
                 snippet = getPython(data[i])
-                function_name, argument = getFunctionAndArgs(snippet)
+                function_name, argument_list = getFunctionAndArgs(snippet)
+
                 if function_name == 'importpytex':
+                    
+                    # remove the importpytex statement
                     data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
+                    
+                    # add the rest of the line to the return buffer
                     newData.append(data[i])
-                    pytex_file_name = remove_quote_marks(argument[0])
-                    newData = [*newData, *load_pytex_file(pytex_file_name)]
-                    i += 1
-                elif function_name == 'importrandpytexfrom':
-                    data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
-                    newData.append(data[i])
-                    pytex_file_name = remove_quote_marks(choice(argument))
-                    newData = [*newData, *load_pytex_file(pytex_file_name)]
-                    i += 1
-        
+                    
+                    # parse the arguments supplied to importpytex
+                    choose = 1
+                    withreplacement = False
+                    prefixcode = ''
+                    files_to_pick_from = []
+                    files_to_import = []
+                    for arg in argument_list:
+                        if arg.lower().startswith('withreplacement'):
+                            _, value = arg.split('=')
+                            withreplacement = value.lower() == 'True'.lower() 
+                        elif arg.lower().startswith('choose'):
+                            _, value = arg.split('=')
+                            choose = int(value)
+                        elif arg.lower().startswith('prefixcode'):
+                            _, value = arg.split('=')
+                            prefixcode = remove_quote_marks(value)
+                        else:
+                            files_to_pick_from.append(remove_quote_marks(arg))
+
+                    # choose the pytex files to import
+                    if withreplacement:
+                        files_to_import = choices(files_to_pick_from, k=choose)
+                    else:
+                        files_to_import = sample(files_to_pick_from, k=choose)
+
+                    for filename in files_to_import:
+                        newData = [*newData, prefixcode, *load_pytex_file(filename)]
+                    i += 1 
         else:
             newData.append(data[i])
             i += 1

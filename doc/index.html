@@ -112,6 +112,23 @@
     within your LaTeX document manually. 
   </p>
 
+  <h3>Importing another PyTex Document into the Current Document</h3>
+  <p>
+    If you want to separate the PyTeX code into separate files, you can do this and import them into the current document using
+    the command:
+    <code>@importpytex('file1','file2','file3',..., choose=1, withreplacement=False, prefixcode='')@</code>
+    Please note that you can only run this command within the '@...@' snippet environment, and not within a %Python...%end block.
+    You can import as many files as you like by simply supplying the names of the files as strings. The function will then import 
+    the supplied file if only one name is provided, or pick among the files based on the optional input parameters. By default,
+    PyTeX will choose only a single file from the options. However, if you want to import multiple files, you can set the "choose" 
+    parameter to a number greater than 1. By default, the choice will be made without replacement, but if you want to allow for the 
+    possibility of choosing the same file more than once, you can set the "withreplacement" parameter to True.
+
+    Prefixcode is a way of inserting some LaTeX code into the document prior to the question insertion. This is useful when you want
+    to place a group of questions in a itemized list for instance. In that case you can set prefixcode='\item ' and each insertion will
+    be prefaced with the \item LaTeX code.
+  </p>
+
   <h3>Working with SymPy</h3>
   <p>
     If you are creating questions for algebra classes, then you will very likely have the need to use SymPy to assist.
