@@ -83,6 +83,8 @@ def parseCommandLine(args, version):
                     if 'sep=' in p:
                         parseInfo['sep'] = p.split('=')[1]
                 param = param[0]
+            else:
+                param = value
             param = param[1:] if param[0] == '"' else param
             param = param[:-1] if param[-1] == '"' else param
             parseInfo['filename'] = param

@@ -107,12 +107,36 @@ def diffrandsfrom(values, n):
 
 def singleshuffle(array):
     i = 0
-    while i < len(array):
-        swapIndex = rand(0, len(array)-1)
-        array[swapIndex], array[i] = (array[i], array[swapIndex])
-        i += 1
-    return array
+    new_index = diffrands(0, len(array)-1, n=len(array))
+    new_array = []
+    for i in new_index:
+        new_array.append(array[i])
+    return new_array
 
+
+# This function randomizes multiple choice answers. The default placement
+#  of the original solution is expected to be the 0th index of the array
+#  but this can be specified in sol_index if another value is used.
+# choice_type is a parameter like '1', 'a', or 'A' indicating what kind
+#  of choice lettering is used. If this is specified then the return
+#  will the be converted to a index of an array created with this 
+#  starting point, relative to the offset of solution_index
+# Returns the new array of multiple chioce values and the new index of
+#  where the solution is now located
+
+def multiplechoiceshuffle(choices, solution_index=0, choice_type=None):
+    solution_value = choices[solution_index]
+    choices = singleshuffle(choices)
+    solution_index = choices.index(solution_value)
+    
+    if choice_type != None:
+        start_code = ord(choice_type)
+        count = len(choices)
+        choice_values = [chr(start_code + i) for i in range(count)]
+        solution = choice_values[solution_index]
+        return choices, solution
+    
+    return choices, solution_index
 
 def jointshuffle(array1, array2):
     i = 0

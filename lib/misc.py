@@ -415,7 +415,7 @@ __internal_declarations = [
     # functions in randomizers.py
     'seed', 'rand', '__randval', 'rands', 'diffrands', 'nzrand', 'nzrands', 
     'nzdiffrands', 'randfrom', 'randsfrom', 'diffrandsfrom', 'singleshuffle', 
-    'jointshuffle', 'randsgn', 
+    'jointshuffle', 'multiplechoiceshuffle', 'randsgn', 
     # functions in stats.py
     'normalcdf', 'invnorm', 'tcdf', 'invt', 'binompdf', 'binomcdf', 'binommean',
     'binomstdev', 'mean', 'weightedsort', 'median', 'modes', 'stdevp', 'stdev',

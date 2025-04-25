@@ -4,7 +4,7 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-#sys.argv.append('/Users/flennerdr/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 104/exams/Final Exam/generator/MATH 104 Final Exam Generator.tex')
+sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/committees/Calculus/Placement/placement_exam/placement_exam.tex')
 #sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
@@ -12,6 +12,7 @@ import lib.cmdline
 #sys.argv.append('-o=./output/mytestA.tex')
 #sys.argv.append('-r')
 #sys.argv.append('-c=q1.tex?n=2?sep=\\item')
+#sys.argv.append('-c=/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/committees/Calculus/Placement/placement_exam/questions/fraction-sum-1.tex')
 
 def main():
     args = lib.cmdline.patchArgs(sys.argv)

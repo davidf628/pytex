@@ -167,6 +167,7 @@
 
     <li><a href="#f_singleshuffle">singleshuffle</a><b>(array)</b></li>
     <li><a href="#f_jointshuffle">jointshuffle</a><b>(array1, array2)</b></li>
+    <li><a href="#f_multiplechioceshuffle">multiplechoiceshuffle</a><b>(choices, [solution_index], [choice_type])</b></li>
 
     <li><a href="#f_randsgn">randsgn</a><b>()</b></li>
     <li><a href="#f_gcdrands">gcdrands</a><b>(min, max, n)</b> * Not yet implemented</li>
@@ -477,6 +478,25 @@
         array2 originally will still correspond after the shuffling is complete. In effect,
         only array1 is shuffled, and the corresponding elements in array2 will follow 
         accordingly.
+    </p>
+
+    <h2 id="f_multiplechoiceshuffle">multiplechoiceshuffle(choices, [solution_index], [chioce_type])</h2>
+    <ul>
+        <li><b>choices</b> - array of <i>string</i></li>
+        <li><b>solution_index</b> - <i>int</i></li>
+        <li><b>choice_type</b> - <i>string</i></li>
+        <li>returns => a tuple of a reordered array, and the new solution index</li>
+    </ul>
+    <p>
+        This function is desinged to make the creation of multiple choice questions easier.
+        It will take an array that are the multiple choice items and reorder them. The function
+        returns the new array and the index of the original solution. The original solution is
+        by default assumed to be in position 0, but that can be overriden by setting the optional
+        <i>solution_index</i> paramter.<br/><br/>
+        One additional feature is the optional parameter <i>choice_type</i>. This is expected to
+        be a string such as: '1', 'a', or 'A', indicating what the solution choices will look like.
+        If this is provided then <i>solution_index</i> will be converted into an item representing
+        the solution as a string (such as 'A', 'B', 'C', etc.).
     </p>
 
     <h2 id="f_randsgn">randsgn()</h2>
