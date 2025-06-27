@@ -1,4 +1,4 @@
-import sys, os, pathlib
+import sys, os, pathlib, sympy
 from lib.misc import __internal_declarations
 from lib import *
 import lib.cmdline
