@@ -5,7 +5,7 @@ import lib.cmdline
 
 # for debugging, uncomment these lines
 #sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/committees/Calculus/Placement/placement_exam/placement_exam.tex')
-#sys.argv.append('test.tex')
+sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
 #sys.argv.append('--key')
@@ -166,12 +166,17 @@ def __run_pytex_commands(__data):
                 else:
                     try:
                         variables = extract_variable_names(__command)
-                        for variable in variables:
-                            if variable in __internal_declarations:
-                                print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
-                                sys.exit(-1)
-                        exec(__command)
-                        print(f'{__lcv}: {__command} ==> {variable} == {eval(variable)}')
+                        if len(variables) > 0:
+                            for variable in variables:
+                                if variable in __internal_declarations:
+                                    print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
+                                    sys.exit(-1)
+                            exec(__command)
+                            for variable in variables:    
+                                print(f'{__lcv}: {__command} ==> {variable} == {eval(variable)}')
+                        else:
+                            exec(__command)
+                            print(f'{__lcv}: {__command}')
                         __lcv += 1
                     except Exception as e:
                         print(f'ERROR on line {__lcv+1}: {__command}\n ==> {e}')
