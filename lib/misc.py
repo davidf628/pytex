@@ -292,8 +292,8 @@ def get_python_code_block(data, current_line):
 
 def is_else_or_elif (command, base_indentation):
     indentation_amount = get_indentation_amount(command)
-    if indentation_amount == base_indentation:
-        pattern = r'^\s*%\s*(else|elif):?\s*'
+    if indentation_amount <= base_indentation:
+        pattern = r'^\s*%?\s*(else|elif):?\s*'
         return re.search(pattern, command) != None
     else:
         return False

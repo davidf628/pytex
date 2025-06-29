@@ -5,7 +5,7 @@ import lib.cmdline
 
 # for debugging, uncomment these lines
 #sys.argv.append('/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/committees/Calculus/Placement/placement_exam/placement_exam.tex')
-sys.argv.append('test.tex')
+#sys.argv.append('test.tex')
 #sys.argv.append('-v=A')
 #sys.argv.append('--seed=12345')
 #sys.argv.append('--key')
