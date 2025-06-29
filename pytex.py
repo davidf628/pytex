@@ -79,7 +79,7 @@ def main():
     #  results to a file and compile it to a pdf
     if __parseinfo['repl'] or __parseinfo['compile']:
         for __line in __data:
-            print(__line)
+            print(__line, end='')
     else:
         
         # write the output .tex file
