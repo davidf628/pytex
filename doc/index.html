@@ -129,6 +129,22 @@
     be prefaced with the \item LaTeX code.
   </p>
 
+  <h3>Python Strings</h3>
+  <p>
+    When you try to insert strings into a latex document, an extremely common symbol to use is the backslash: '\'. This can be very
+    problematic with Python because the backslash has very different meanings there. Within Python, this is the start of an escape
+    sequence. For example, Python interprets the string '\n' as a new line, and if you try to insert '\newpage' using PyTeX, then Python
+    will see this as a new line plus the string 'ewpage', thus giving very different results than expected.<br/><br/>
+    To work around this, there are two options:
+    <ol>
+        <li>Use double-backslashes in your strings: '\\newpage' will be interpreted properly in LaTeX</li>
+        <li>Use r-strings: r'\newpage' will also be interpreted properly</li>
+    </ol>
+    r-strings tell Python to interpret each character in a string literally and to not apply any escape sequences. These are extremely
+    helpful in writing regular expressions in Python (which is probably why they are called r-strings), so that the author doesn't have
+    to insert endless double-backslashes, but their use is is extremely helpful as well.
+  </p>
+
   <h3>Working with SymPy</h3>
   <p>
     If you are creating questions for algebra classes, then you will very likely have the need to use SymPy to assist.
