@@ -172,8 +172,9 @@ def __run_pytex_commands(__data):
                                     print(f'ERROR on line {__lcv+1}: {__command}\n ==> "{variable}" is a reserved word or the name of a function and cannot be used as a variable name.')
                                     sys.exit(-1)
                             exec(__command)
-                            for variable in variables:    
-                                print(f'{__lcv}: {__command} ==> {variable} == {eval(variable)}')
+                            for variable in variables:  
+                                if variable in globals() or variable in locals():  
+                                    print(f'{__lcv}: {__command} ==> {variable} == {eval(variable)}')
                         else:
                             exec(__command)
                             print(f'{__lcv}: {__command}')
