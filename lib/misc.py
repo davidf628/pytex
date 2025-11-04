@@ -148,14 +148,32 @@ def load_pytex_file(filename):
         sys.exit(-1)
     return data
 
+# This function looks for import statements like @importpytex(...)@ and loads
+#  requested files into the main data file so that these get compiled and
+#  processed inline.
+#
+# There is only one import statement:
+#   importpytex('file1', 'file2', ..., choose=int, withreplacement=bool,
+#      prefixcode=string)
+#
+# However, there is one additional statement that can add folders to 
+#  check for existing files called:
+#    setlibraryfolder('foldername')
+#  You can set as many library folders as you like and pytex will search
+#   all of them when looking for files to import.
+
 def checkImportStatements(data):
 
     newData = []
+    library_folders = []
 
     inPythonCommands = False
 
     i = 0
     while i < len(data):
+
+        if i == 97:
+            a = 'apple'
 
         if isNewPythonCommands(data[i]):
             inPythonCommands = True        
@@ -163,7 +181,7 @@ def checkImportStatements(data):
         if isEndPythonCommands(data[i]):
             inPythonCommands = False
 
-        if 'importpytex' in data[i] or 'importrandpytexfrom' in data[i]:
+        if 'importpytex' in data[i] or 'setlibraryfolder' in data[i]:
 
             if inPythonCommands:
                 print(f'\n-- Error on Line: {i+1} --\n')
@@ -179,6 +197,7 @@ def checkImportStatements(data):
                     
                     # remove the importpytex statement
                     data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
+                    data[i] = data[i].replace('\n', '')
                     
                     # add the rest of the line to the return buffer
                     newData.append(data[i])
@@ -209,8 +228,27 @@ def checkImportStatements(data):
                         files_to_import = sample(files_to_pick_from, k=choose)
 
                     for filename in files_to_import:
-                        newData = [*newData, prefixcode, *load_pytex_file(filename)]
+                        filepath = filename
+                        if not os.path.isfile(filepath):
+                            filepath = ''
+                            paths = list(map(lambda x: os.path.join(x, filename), library_folders))
+                            for path in paths:
+                                if os.path.isfile(path):
+                                    filepath = path
+                            if filepath == '':
+                                SystemError(f'\n\n -- ERROR: No file named {filename} located.')
+                        newData = [*newData, prefixcode, *load_pytex_file(filepath)]
                     i += 1 
+                
+                if function_name == 'setlibraryfolder':
+                    # remove the importpytex statement
+                    data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
+                    data[i] = data[i].replace('\n', '')
+                    # add the rest of the line to the return buffer
+                    newData.append(data[i])                    
+                    for arg in argument_list:
+                        library_folders.append(remove_quote_marks(arg))
+
         else:
             newData.append(data[i])
             i += 1
@@ -422,7 +460,7 @@ __internal_declarations = [
     'linreg', 'classranges', 'getclasslimits', 'frequencies', 'midpoints',
     'relativefreq', 'cumulativefreq', 'quartiles',
      # import functions
-     'importpytex', 'importrandpytexfrom' ]
+     'importpytex', 'setlibraryfolder' ]
 
 if __name__ == '__main__':
     test()
