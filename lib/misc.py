@@ -172,7 +172,7 @@ def checkImportStatements(data):
     i = 0
     while i < len(data):
 
-        if i == 97:
+        if i == 33:
             a = 'apple'
 
         if isNewPythonCommands(data[i]):
@@ -236,7 +236,7 @@ def checkImportStatements(data):
                                 if os.path.isfile(path):
                                     filepath = path
                             if filepath == '':
-                                SystemError(f'\n\n -- ERROR: No file named {filename} located.')
+                                raise SystemExit(f'\n\n -- ERROR: No file named {filename} located.')
                         newData = [*newData, prefixcode, *load_pytex_file(filepath)]
                     i += 1 
                 
