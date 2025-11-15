@@ -243,6 +243,7 @@
   <ul>
     <li><a href="#f_sgn">sgn</a>(value)</li>
     <li><a href="#f_sign">sign</a>(value)</li>
+    <li><a href="#f_sqr">sqr</a>(value or list)</li>
     <li><a href="#f_frac">frac</a>(value)</li>
     <li><a href="#f_reducefraction">reducefraction</a>(numerator, denominator)</li>
     <li><a href="#f_evalfunc">evalfunc</a>(f, variables)</li>
@@ -611,6 +612,17 @@
         of the polynomial is nicer.<br/>
         For instance, if <i>a</i> = -5, then "y=2x+a" will display as: "y=2x+-5", but if you use
         "y=2x sign(a)" then it will display as "y=2x-5".
+    </p>
+
+    <h2 id="f_sqr">sqr(value or list)</h2>
+    <ul>
+        <li><b>value</b> - <i>float</i> or <i>list</i></li>
+        <li>returns <i>float</i> or <i>list</i></li>
+    </ul>
+    <p>
+        This function will simply square a number, but a nice feature is that it will check
+        the input to see if a list of values has been provided and if so, return the square of
+        all the values in the list. This is helpful when randomly generating a bunch of squares.
     </p>
 
     <h2 id="f_frac">frac(value)</h2>

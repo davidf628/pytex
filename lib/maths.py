@@ -34,6 +34,13 @@ def rnd(val, decimals=0):
             return val
         
 
+def sqr(val):
+    if type(val) == list:
+        return map(lambda x: x**2, val) 
+    else:
+        return val**2
+
+
 def sgn(val):
     return 1 if val >= 0 else -1    
 

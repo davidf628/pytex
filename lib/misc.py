@@ -439,7 +439,7 @@ __internal_declarations = [
     'showdataarray', 'horizshowarrays', 'showarrays', 'normalcurve', 'tcurve',
     'dotplot', 'boxandwhiskerplot',
     # functions in maths.py
-    'sign', 'sgn', 'frac', 'reducefraction', 'evalfunc', 'rnd', 'towords'
+    'sign', 'sgn', 'sqr', 'frac', 'reducefraction', 'evalfunc', 'rnd', 'towords'
     # functions in misc.py
     'hasPython', 'getPython', 'uncommentLine', 'is_number', 'getCommand',
     'strsub', 'removeVariableDeclarations', 'hasVariableCall', 'getVariableName',
