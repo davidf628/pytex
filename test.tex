@@ -1,33 +1,12 @@
 \documentclass[12pt]{article}
 
 \usepackage[margin=0.5in]{geometry}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{tcolorbox}
-\usepackage[shortlabels]{enumitem}
-\usepackage{ifthen}
-\usepackage{xcolor}
-\usepackage{tasks}
-\usepackage{pgfplots}
+\usepackage{mymath}
+\usepackage{pytex}
 
 % change this value to produce answer keys for exams
-\newboolean{make_key}
 \setboolean{make_key}{true}
-
-\newcommand{\version}{C}
-
-% declarations for the different parts of the exam
-\newtcolorbox{instructionbox}{
-	colback = gray!25!white, 
-	colframe = black!50!white, 
-	boxrule = 0.4pt, 
-	arc = 0pt
-}
-
-\newcommand{\iskey}[1]{\ifthenelse{\boolean{make_key}}{{\color{red}#1}}{}}
+\renewcommand{\version}{C}
 
 \begin{document}
 
@@ -49,6 +28,7 @@ Is this just fantasy?
 \begin{enumerate}
 
 %python
+% # this is a comment where an error might happen
 % l = []
 % l.append(rand(0, 100, prec=10))
 %text='$\\frac{2}{3}$'

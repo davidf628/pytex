@@ -2,7 +2,9 @@ import re, os, sys
 from random import choice, choices, sample
 
 def test():
-    test_getFunctionAndArgs()
+    print(strip_python_comments('x = 15 # this is a comment'))
+    print(strip_python_comments('#this is just a comment'))
+    print(strip_python_comments('if a < 10: # do this x = 1'))
 
 def hasPython(s):
     return re.search(r'\@.*\@', s) != None
@@ -147,6 +149,10 @@ def load_pytex_file(filename):
         print(f'ERROR: file {filename} not found.')
         sys.exit(-1)
     return data
+
+def strip_python_comments(command):
+    return re.sub(r'\#.*', '', command)
+
 
 # This function looks for import statements like @importpytex(...)@ and loads
 #  requested files into the main data file so that these get compiled and

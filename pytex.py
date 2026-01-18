@@ -118,6 +118,8 @@ def __run_pytex_commands(__data):
 
                 __command = uncommentLine(__data[__lcv])
 
+                __command = strip_python_comments(__command)
+
                 if __command.strip() == '{': # begin a 'where' block
                     __stack.insert(0, __lcv) # save the location of the start of the block
                     __lcv += 1
