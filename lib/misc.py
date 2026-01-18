@@ -167,10 +167,10 @@ def setKeyFlag(data, iskey):
             raise SystemExit("\n\nERROR: There was no \\begin{documet} line found in source LaTeX document.\n\n")
         else:
             if pytex_imported:
-                data.insert(begin_document_line-1, '\\setbool{make_key}{' + iskey + '}\n')
+                data.insert(begin_document_line-1, '\\setbool{make_key}{' + str(iskey).lower() + '}\n')
             else:
                 data.insert(begin_document_line-1, '\\newbool{make_key}\n')
-                data.insert(begin_document_line-1, '\\setbool{make_key}{' + iskey + '}\n')
+                data.insert(begin_document_line-1, '\\setbool{make_key}{' + str(iskey).lower() + '}\n')
     
     return data
 
