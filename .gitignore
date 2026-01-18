@@ -16,3 +16,4 @@ test A Key.*
 *.gz
 *.out
 combined.tex
+test.tex

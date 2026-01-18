@@ -96,22 +96,82 @@ def isEndPythonCommands(s):
 def setVersionValue(data, version):
     i = 0
     done = False
+    pytex_imported = False
+
+    newcommand_pattern = r'(\s*\\(?:re)?newcommand\s*{\s*\\version\s*}\s*{)(.*)(}.*)'
+    importpytex_pattern = r'\s*\\usepackage{\s*pytex\s*}'
+    begindocument_pattern = r'\s*\\begin\s*{\s*document\s*}\.*'
+
+    def repl(match):
+        return match.group(1) + version + match.group(3)
+
+    # first try to find the \newcommand declaration and update it
     while i < len(data) and not done:
-        if re.search(r'\\newcommand{\\version}{.*}', data[i]) != None:
-            data[i] = '\\newcommand{\\version}{' + version + '}'
+        if re.search(newcommand_pattern, data[i]) != None:
+            data[i] = re.sub(newcommand_pattern, repl, data[i])
             done = True
+        if re.search(importpytex_pattern, data[i]) != None:
+            pytex_imported = True
         i += 1
+
+    # if that didn't exist, then generate the line and insert it
+    if not done: 
+        i = 0
+        begin_document_line = -1
+        while i < len(data) and begin_document_line == -1:
+            if re.search(begindocument_pattern, data[i]) != None:
+                begin_document_line = i
+            i += 1
+        if begin_document_line == -1:
+            raise SystemExit("\n\nERROR: There was no \\begin{documet} line found in source LaTeX document.\n\n")
+        else:
+            if pytex_imported:
+                data.insert(begin_document_line-1, '\\renewcommand{\\version}{' + version + '}\n')
+            else:
+                data.insert(begin_document_line-1, '\\newcommand{\\version}{' + version + '}\n')
+    
     return data
             
 
 def setKeyFlag(data, iskey):
     i = 0
     done = False
+    pytex_imported = False
+
+    keyflag_pattern = r'(\s*\\setbool(?:ean)?\s*{\s*make_key\s*}{).*(}.*)'
+    importpytex_pattern = r'\s*\\usepackage{\s*pytex\s*}'
+    begindocument_pattern = r'\s*\\begin\s*{\s*document\s*}\.*'
+    
+    def repl(match):
+        return match.group(1) + str(iskey).lower() + match.group(2)
+
+    # first try to find the \setboolean command and update it
     while i < len(data) and not done:
-        if re.search(r'\\setboolean{make_key}{.*}', data[i]) != None:
-            data[i] = '\\setboolean{make_key}{' + str(iskey).lower() + '}'
+        if re.search(keyflag_pattern, data[i]) != None:
+            data[i] = re.sub(keyflag_pattern, repl, data[i])
             done = True
+        if re.search(importpytex_pattern, data[i]) != None:
+            pytex_imported = True
         i += 1
+
+    # if that doesn't exist, then we must insert it
+        # if that didn't exist, then generate the line and insert it
+    if not done: 
+        i = 0
+        begin_document_line = -1
+        while i < len(data) and begin_document_line == -1:
+            if re.search(begindocument_pattern, data[i]) != None:
+                begin_document_line = i
+            i += 1
+        if begin_document_line == -1:
+            raise SystemExit("\n\nERROR: There was no \\begin{documet} line found in source LaTeX document.\n\n")
+        else:
+            if pytex_imported:
+                data.insert(begin_document_line-1, '\\setbool{make_key}{' + iskey + '}\n')
+            else:
+                data.insert(begin_document_line-1, '\\newbool{make_key}\n')
+                data.insert(begin_document_line-1, '\\setbool{make_key}{' + iskey + '}\n')
+    
     return data
 
 import re
