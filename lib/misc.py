@@ -224,8 +224,8 @@ def strip_python_comments(command):
 #
 # However, there is one additional statement that can add folders to 
 #  check for existing files called:
-#    setlibraryfolder('foldername')
-#  You can set as many library folders as you like and pytex will search
+#    addquestionbank('foldername')
+#  You can set as many question banks as you like and pytex will search
 #   all of them when looking for files to import.
 
 def checkImportStatements(data):
@@ -247,7 +247,7 @@ def checkImportStatements(data):
         if isEndPythonCommands(data[i]):
             inPythonCommands = False
 
-        if 'importpytex' in data[i] or 'setlibraryfolder' in data[i]:
+        if 'importpytex' in data[i] or 'addquestionbank' in data[i]:
 
             if inPythonCommands:
                 print(f'\n-- Error on Line: {i+1} --\n')
@@ -306,7 +306,7 @@ def checkImportStatements(data):
                         newData = [*newData, prefixcode, *load_pytex_file(filepath)]
                     i += 1 
                 
-                if function_name == 'setlibraryfolder':
+                if function_name == 'addquestionbank':
                     # remove the importpytex statement
                     data[i] = data[i].replace(getPythonWithEyes(data[i]), '')
                     data[i] = data[i].replace('\n', '')

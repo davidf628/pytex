@@ -116,7 +116,9 @@
   <p>
     If you want to separate the PyTeX code into separate files, you can do this and import them into the current document using
     the command:
-    <code>@importpytex('file1','file2','file3',..., choose=1, withreplacement=False, prefixcode='')@</code>
+    <br/>
+        <code>@importpytex('file1','file2','file3',..., choose=1, withreplacement=False, prefixcode='')@</code>
+    <br/>
     Please note that you can only run this command within the '@...@' snippet environment, and not within a %Python...%end block.
     You can import as many files as you like by simply supplying the names of the files as strings. The function will then import 
     the supplied file if only one name is provided, or pick among the files based on the optional input parameters. By default,
@@ -127,6 +129,14 @@
     Prefixcode is a way of inserting some LaTeX code into the document prior to the question insertion. This is useful when you want
     to place a group of questions in a itemized list for instance. In that case you can set prefixcode='\item ' and each insertion will
     be prefaced with the \item LaTeX code.
+
+    When importing many files it can be convenient to provide a folder that contains many files. This is called a Question Bank and
+    can be provided to PyTeX with the command:
+    <br>
+        <code>@addquestionbank('[Path to Folder]')@</code>
+    <br/>
+    By default PyTeX will search the current folder for import files first, and then will check supplied question banks if a matching
+    file name cannot be found there. Finally, an error will be thrown if no matching file can be found. 
   </p>
 
   <h3>Python Strings</h3>
