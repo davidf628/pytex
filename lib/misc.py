@@ -247,6 +247,9 @@ def checkImportStatements(data):
         if isEndPythonCommands(data[i]):
             inPythonCommands = False
 
+        if 'setlibraryfolder' in data[i]:
+            raise SystemExit(f'\n\n--> WARNING [line: {i+1}] function "setlibraryfolder" has been deprecated, please use "addquestionbank" instead.')
+
         if 'importpytex' in data[i] or 'addquestionbank' in data[i]:
 
             if inPythonCommands:
