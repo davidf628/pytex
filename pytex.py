@@ -4,12 +4,12 @@ from lib import *
 import lib.cmdline
 
 # for debugging, uncomment these lines
-sys.argv.append('/Users/flennerdr/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 120/quizzes/quiz4/quiz4-generator.tex')
+#sys.argv.append('/Users/flennerdr/Library/CloudStorage/OneDrive-CollegeofCharleston/Courses/MATH 120/quizzes/quiz4/quiz4-generator.tex')
 #sys.argv.append('test.tex')
-sys.argv.append('-v=C')
+#sys.argv.append('-v=C')
 #sys.argv.append('--seed=12345')
 #sys.argv.append('--key')
-sys.argv.append('-o=./output/version-c.tex')
+#sys.argv.append('-o=./output/version-c.tex')
 #sys.argv.append('-r')
 #sys.argv.append('-c=q1.tex?n=2?sep=\\item')
 #sys.argv.append('-c=/Users/davidflenner/Library/CloudStorage/OneDrive-CollegeofCharleston/committees/Calculus/Placement/placement_exam/questions/fraction-sum-1.tex')
