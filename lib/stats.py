@@ -1,7 +1,8 @@
 from scipy.stats import norm, t, binom, linregress
 import numpy as np
 import math
-from lib.maths import rnd
+import lib.maths as maths
+#from lib.maths import rnd
 #from maths import rnd
 
 def stats_test():
@@ -164,6 +165,35 @@ def linreg(x_data, y_data):
     n = len(x_data)
     t = r * math.sqrt( (n - 2) / (1 - (r) ** 2))
     return (result.slope, result.intercept, result.rvalue, t, result.pvalue)
+
+
+def two_sample_t_test(xbar1, s1, n1, xbar2, s2, n2, type, pooled=False):
+    
+    serr = 0
+    p = 0
+    df = 0
+
+    if (pooled):
+        df = n1 + n2 - 2
+        pooledsd = math.sqrt( ((n1 - 1) * maths.sqr(s1) + (n2 - 1) * maths.sqr(s2)) / df )
+        serr = math.sqrt( maths.sqr(pooledsd) / n1 + maths.sqr(pooledsd) / n2 )
+    else:
+        serr = math.sqrt( maths.sqr(s1) / n1 + maths.sqr(s2) / n2 )
+        num = maths.sqr( maths.sqr(s1) / n1 + maths.sqr(s2) / n2 )
+        denom1 = (1 / (n1 - 1)) * maths.sqr( maths.sqr(s1) / n1 )
+        denom2 = (1 / (n2 - 1)) * maths.sqr( maths.sqr(s2) / n2 )
+        df = num / (denom1 + denom2)
+	
+    t = (xbar1 - xbar2) / serr
+
+    if (type == "two"):
+        p = 2 * tcdf(maths.abs(t), math.inf, df)
+    elif (type == "left"):
+        p = tcdf(-math.inf, t, df)
+    else:
+        p = tcdf(t, math.inf, df)
+
+    return (t, p)
 
 def classranges(classes, data=[], minval="", class_width=""):
 

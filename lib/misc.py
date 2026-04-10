@@ -527,7 +527,7 @@ __internal_declarations = [
     'normalcdf', 'invnorm', 'tcdf', 'invt', 'binompdf', 'binomcdf', 'binommean',
     'binomstdev', 'mean', 'weightedsort', 'median', 'modes', 'stdevp', 'stdev',
     'linreg', 'classranges', 'getclasslimits', 'frequencies', 'midpoints',
-    'relativefreq', 'cumulativefreq', 'quartiles',
+    'relativefreq', 'cumulativefreq', 'quartiles', 'two_sample_t_test'
      # import functions
      'importpytex', 'setlibraryfolder' ]
 

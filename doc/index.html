@@ -313,6 +313,7 @@
     <li>relativefreq(freq)</li>
     <li><a href="#f_cumulativefreq">cumulativefreq</a>(freq)</li>
     <li><a href="#f_quartiles">quartiles</a>(data, [freq=[]])</li>
+    <li><a href="#f_two_sample_t_test">two_sample_t_test</a>(xbar1, s1, n1, xbar2, s1, n2, type, pooled=False)</li>
 
   </ul>
 
@@ -808,6 +809,26 @@
         If the optional parameter of <i>freq</i> is provided, then the quartiles
         will be calculated using a weighted method, assuming that <i>freq</i>
         provides the frequency with which the values in <i>data</i> occur.
+    </p>
+
+    <h2 id="f_two_sample_t_test">two_sample_t_test(xbar1, s1, n1, xbar2, s2, n2, type, pooled=False)</h2>
+    <ul>
+        <li><b>xbar1, s1, n1</b> - <i>float</i>: summary statistics from sample 1</li>
+        <li><b>xbar2, s2, n2</b> - <i>float</i>: summary statistics from sample 2</li>
+        <li><b>type</b> - <i>string</i>: either "left", "right", or "two"</li>
+        <li><b>pooled</b> - <i>boolean</i></li>
+        <li>returns <i>tuple</i> containing two <i>floats</i></li>
+    </ul>
+    <p>
+        Calculates the p-value and test statistic for a two-sample t test for the mean.
+        The first inputs are the summary statistics for each sample, then the type of test
+        is specified with a string as either "left", "right", or "two" tailed. Finally,
+        a boolean is requested to decide if the sample variances should be pooled or not.
+        By default, these are not pooled. 
+    </p>
+    <p>
+        The return is a tuple, which contains first the summary test statistic, and then
+        the p-value related to the test.
     </p>
 
     <!-- DISPLAY MACROS ------------------------------------------------------>
