@@ -164,7 +164,13 @@ def linreg(x_data, y_data):
     r = result.rvalue
     n = len(x_data)
     t = r * math.sqrt( (n - 2) / (1 - (r) ** 2))
-    return (result.slope, result.intercept, result.rvalue, t, result.pvalue)
+    return (
+        float(result.slope), 
+        float(result.intercept), 
+        float(result.rvalue), 
+        float(t), 
+        float(result.pvalue)
+    )
 
 
 def two_sample_t_test(xbar1, s1, n1, xbar2, s2, n2, type, pooled=False):
